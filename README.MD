@@ -82,3 +82,10 @@ stacktable : sous licence MIT, disponible à l'adresse suivante : http://johnpol
 
 - Divers :
 Icones originaires de la police d'écriture font-awesome, sous licence SIL OFL 1.1 (police d'écriture) et MIT (CSS), disponible à l'adresse suivante : http://fortawesome.github.io/
+
+AUTEUR
+-------
+
+Ali BELLAMINE
+Vous pouvez me contacter à l'adresse suivante : contact@alibellamine
+Vous pouvez supporter le projet PAS à travers un don Paypal du montant de votre choix à contact@alibellamine.me
