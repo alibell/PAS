@@ -1,0 +1,27 @@
+survey - Module pour PAS 
+=======
+
+ccpc est un module destiné à être utilisé avec la plateforme d'évaluation de stage PAS.
+Ce dernier permet d'inclure des évaluations externes (surveyMonkey...) au sein de PAS.
+
+FONCTIONNALITES
+-------
+
+L'inclusion des évaluations externes se fait en configurant au sein de survey l'adresse du formulaire d'évaluation où rediriger l'utilisateur.
+Le seul pré-requis au bon fonctionnement de survey est que l'utilisateur soit redirigé vers PAS à la fin de l'évaluation.
+survey fournit alors une adresse à laquelle le formulaire doit rediriger l'utilisateur à la fin de l'évaluation.
+
+Pour SurveyMonkey, cette fonctionnalité n'est par exemple disponible que pour les utilisateurs disposant d'un compte professionnel.
+
+INSTALLATION
+-------
+
+Copier le dossier survey dans le dossier "evaluations" de PAS
+
+LICENCE
+-------
+
+Copyright 2015 - Ali BELLAMINE
+Ce programme est sous licence GPL v3
+Pour plus d'informations consulter le fichier LICENCE
+Pour plus d'informations sur la licence GPL, rendez-vous à l'adresse suivante : http://www.gnu.org/licences/gpl-3.0.en.html

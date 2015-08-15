@@ -1,0 +1,347 @@
+#adminPage {
+/*  height: calc(100vh - 150px); */
+/*  background-color: rgb(135, 135, 136); */
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+#barreLaterale {
+  width: 15%;
+  background-color: rgb(236, 232, 232);
+  height: 100%;
+  border-radius: 3px;
+  float: left;
+  overflow: hidden;
+}
+
+.barreLateraleFixe {
+	position: fixed;
+	left: 0;
+	top: 46px;
+	margin-top: 5px;
+	height: calc(100vh - 46px) !important;
+}
+
+#barreLateraleTitre {
+  padding: 5px;
+  width: calc(100% - 9px);
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  background-color: rgb(49, 99, 190);
+  color: white;
+}
+
+.mobileAdminMenuButton, .mobileAdminMenuButtonClose {
+	display: none;
+}
+
+ #corps {
+  width: calc(85% - 35px);
+  float: right;
+  margin-left: 10px;
+  height: calc(100% - 20px);
+  background-color: rgb(242, 242, 242);
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: solid 1px rgb(234, 222, 222);
+  margin-bottom: 10px;
+ }
+ 
+#barreLateraleMenu {
+	margin: 0;
+	padding: 0;
+}
+
+#barreLateraleMenu > a {
+	text-decoration: none;
+	color: black;
+}
+
+#barreLateraleMenu > a:hover {
+	color: rgb(64, 122, 199);
+}
+
+#barreLateraleMenu > a > li {
+	margin: 0;
+	padding: 15px;
+	text-align: center;
+}
+
+.barreLateraleSelected {
+	color: rgb(64, 122, 199) !important;
+	font-weight: bold;
+}
+
+#filtres {
+	width: 100%;
+	text-align: center;
+}
+
+.readonlyForm {
+	background-color: inherit;
+	color: inherit;
+	padding: 0;
+	border: none;
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.formTitle {
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	padding-top: 15px;
+	font-size: 2em;
+}
+
+a {
+	color: blue;
+	text-decoration: none;
+}
+
+/**
+	Propre à adminEvaluation
+**/
+
+.dateButton {
+	width: 300px;
+}
+
+#evaluationUserList {
+  overflow: auto;
+  position: relative;
+  padding-top: 25px;
+  height: calc(100% - 200px);
+  width: 100%;
+}
+
+.EvaluationListUserNom {
+  padding: 5px;
+  margin: 5px;
+  border: solid 1px rgb(177, 170, 183);
+  width: 300px;
+  display: inline-block;
+  box-shadow: 1px 1px rgb(196, 192, 192);
+ }
+ 
+.EvaluationListUserNom.evaluated, .EvaluationListUserNom.noselected {
+   background-color: rgba(6, 141, 6, 0.56);
+}
+
+.EvaluationListUserNom.noevaluated, .EvaluationListUserNom.selected  {
+   background-color: rgba(126, 10, 17, 0.56);
+}
+
+#evaluationUserListToolbox {
+	font-size: 2em;
+}
+
+#evaluationUserListToolbox .button {
+	margin: 5px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+#evaluationUserListToolbox .right {
+	float: right;
+}
+
+#EvaluationListUserNb {
+  text-align: center;
+  height: 23px;
+  font-size: 23px;
+}
+
+#addUsers {
+  color: white;
+  height: calc(100vh - 110px);
+  margin: 10px;
+  width: calc(100vw - 20px);
+  display: block;
+  position: fixed;
+  top: 90px;
+  left: 0;
+  background-color: rgba(181, 176, 176, 0.94);
+}
+
+#addUsersLeftPanel {
+  width: 80%;
+  height: 100%;
+  float: left;
+  overflow: auto;
+}
+
+#addUsersRightPanel {
+  width: 20%;
+  height: 100%;
+  float: right;
+  background-color: rgba(112, 112, 112, 0.72);
+}
+
+.addUsersRightPanelTitle {
+ clear: both;
+  width: calc(100% - 35px);
+  border: solid 1px black;
+  text-align: center;
+  padding: 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: rgb(224, 241, 255);
+  margin: 5px;
+ }
+ 
+ .closeButton {
+  position: absolute;
+  right: 0;
+  font-size: 3em !important;
+  color: rgba(0, 0, 0, 0.64);
+  cursor: pointer;
+ }
+ 
+ #addUsersLeftPanel {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+ }
+ 
+ .EvaluationListUserNomLastUpdate {
+   position: absolute;
+  bottom: 0;
+  right: 0;
+ }
+ 
+ 
+ /***
+	Media Queries
+ ***/
+ 
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	
+	#corps {
+		width: 90%;
+		margin: auto;
+		float: inherit;
+	}
+	
+	.body {
+		padding-top: 0;
+	}
+	
+	.mobileAdminMenuButton, .mobileAdminMenuButtonClose {
+	  display: block;
+	  width: 100%;
+	  cursor: pointer;
+	  text-align: center;
+	  font-size: 2em;	
+	}
+	
+	.mobileAdminMenuButtonClose {
+		position: fixed;
+		bottom: 10px;
+	}
+	
+	#barreLaterale {
+	  display: none;
+	  width: 100%;
+	  float: inherit;
+	  height: calc(100vh - 90px);
+	  overflow: auto;
+	}
+	
+	#barreLateraleTitre {
+		width: calc(100% - 10px);
+	}
+	
+	.formEvaluation fieldset table {
+		width: 260px;
+		margin: auto;
+	}
+	
+	.dateButton {
+		width: 150px;
+	}
+	
+	.EvaluationListUserNomLastUpdate {
+		position: fixed;
+		bottom: 5px;
+		left: 5px;
+	}
+	
+	/**
+		Panel d'ajout d'étudiant à une campagne d'évaluation
+	**/
+	
+	#addUsersRightPanel {
+		width: 95%;
+		position: fixed;
+		top: 50px;
+		height: calc(100vh - 230px);
+	    background-color: rgba(112, 112, 112,1);
+	}
+	
+	#addUsersLeftPanel {
+		position: fixed;
+		bottom: 10px;
+		width: 95%;
+		height: 165px;
+	}
+	
+	.closeButton {
+	  position: fixed;
+	  right: 0;
+	  top: 30px;
+	}
+}
+
+@media screen and (min-width: 721px) and (max-width: 1024px) {
+	
+	.mobileAdminMenuButton {
+	  display: block;
+	  cursor: pointer;
+	  font-size: 2em;	
+	  transform: rotate(-90deg);
+	  height: 30px;
+	  width: 30px;
+	  position: fixed;
+	  left: 0;
+	  top: calc(50vh - 20px);
+  }
+	
+	.mobileAdminMenuButtonClose {
+	  display: block;
+	  cursor: pointer;
+	  font-size: 2em;	
+	  transform: rotate(-90deg);
+	  height: 30px;
+	  width: 30px;
+	  position: absolute;
+	  right: 10px;
+	  top: 50%;
+	}
+	
+	#barreLaterale
+	{
+	  display: none;
+      width: 40%;
+	  position: fixed;
+	  z-index: 1;
+	  top: 40px;
+      left: 0;
+	  float: inherit;
+	  height: calc(100vh - 40px);
+	  overflow: auto;
+	}
+	
+	.formEvaluation fieldset table {
+		width: auto;
+		margin: auto;
+	}	
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<formulaire>
+	<categorie nom = "pedagogie" legend = "LANG_FORM_CCPC_FIELDSET_PEDAGOGIE">
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_TEMPSAPPRENTISSAGE" name = "tempsApprentissage" coefficient = "1" required = "1" nomBDD = "tempsApprentissage" radarPDFGraph = "1">
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_TEMPSAPPRENTISSAGE_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_TEMPSAPPRENTISSAGE_ITEM_MINUS1"></option>
+			<option value = "0" text = "LANG_FORM_CCPC_QUESTION_TEMPSAPPRENTISSAGE_ITEM_0"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_TEMPSAPPRENTISSAGE_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_TEMPSAPPRENTISSAGE_ITEM_PLUS2"></option>
+		</input>
+		<input type = "checkbox" label = "LANG_FORM_CCPC_QUESTION_PARTICIPATIONENSEIGNANTS" name = "participationEnseignants" secondPDFGraph = "1">
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_PARTICIPATIONENSEIGNANTS_ITEM_PUPH" value = "puph" nomBDD = "participationEnseignantsPUPH"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_PARTICIPATIONENSEIGNANTS_ITEM_CCA" value = "cca" nomBDD = "participationEnseignantsCCA"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_PARTICIPATIONENSEIGNANTS_ITEM_PH" value = "ph" nomBDD = "participationEnseignantsPH"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_PARTICIPATIONENSEIGNANTS_ITEM_INTERNE" value = "internes" nomBDD = "participationEnseignantsINTERNES"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_PARTICIPATIONENSEIGNANTS_ITEM_MG" value = "mg" nomBDD = "participationEnseignantsMG"></checkbox>
+		</input>
+		<input type = "checkbox" label = "LANG_FORM_CCPC_QUESTION_ACTIVITEPEDAGOGIQUE" name = "activitePedagogiques" secondPDFGraph = "1">
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_ACTIVITEPEDAGOGIQUE_ITEM_LITMALADE" value = "litmalade" nomBDD = "activitePedagogiquesLIT"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_ACTIVITEPEDAGOGIQUE_ITEM_COURS" value = "cours" nomBDD = "activitePedagogiquesCOURS"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_ACTIVITEPEDAGOGIQUE_ITEM_ARC" value = "arc" nomBDD = "activitePedagogiquesARC"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_QUESTION_ACTIVITEPEDAGOGIQUE_ITEM_SALLE" value = "salle" nomBDD = "activitePedagogiquesSALLE"></checkbox>
+		</input>
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_QUALITEENSEIGNEMENTS" name = "qualiteEnseignements" coefficient = "1" required = "1" nomBDD = "qualiteEnseignements" radarPDFGraph = "1">
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_QUALITEENSEIGNEMENTS_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_QUALITEENSEIGNEMENTS_ITEM_MINUS1"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_QUALITEENSEIGNEMENTS_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_QUALITEENSEIGNEMENTS_ITEM_PLUS2"></option>
+		</input>
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_ENCADREMENTEXTERNES" name = "encadrementExterne" coefficient = "1" required = "1" nomBDD = "encadrementExterne" radarPDFGraph = "1">
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_ENCADREMENTEXTERNES_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_ENCADREMENTEXTERNES_ITEM_MINUS1"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_ENCADREMENTEXTERNES_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_ENCADREMENTEXTERNES_ITEM_PLUS2"></option>
+		</input>
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_APPRENTISSAGEGARDES" name = "apprentissageGardes" coefficient = "0" required = "1" nomBDD = "apprentissageGardes">
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_APPRENTISSAGEGARDES_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_APPRENTISSAGEGARDES_ITEM_MINUS1"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_APPRENTISSAGEGARDES_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_APPRENTISSAGEGARDES_ITEM_PLUS2"></option>
+			<option value = "0" text = "LANG_FORM_CCPC_QUESTION_APPRENTISSAGEGARDES_ITEM_0"></option>
+		</input>
+	</categorie>
+	<categorie nom = "investissement" legend = "LANG_FORM_CCPC_FIELDSET_INVESTISSEMENT">
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE" name = "tempsService" coefficient = "1" nomBDD = "tempsService">
+			<option value = "-3" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS3"></option>
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS1"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS2"></option>
+			<option value = "3" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS3"></option>
+		</input>
+		<input type = "radio" label = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE" name = "rythmeServiceNbDemiJournee" required = "1" nomBDD = "rythmeServiceNbDemiJournee">
+			<radio value = "5dj" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_5DJ"></radio>
+			<radio value = "35dj" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_35DJ"></radio>
+			<radio value = "3dj" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_3DJ"></radio>
+		</input>
+		<input type = "radio" label = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE" name = "rythmeServiceOrganisationJournee" required = "1" nomBDD = "rythmeServiceOrganisationJournee">
+			<radio value = "matin" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_MATIN"></radio>
+			<radio value = "complet" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_COMPLET"></radio>
+			<radio value = "alternee" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_ALTERNEE"></radio>
+		</input>
+	</categorie>
+	<categorie nom = "ambiance" legend = "LANG_FORM_CCPC_FIELDSET_AMBIANCE">
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_AMBIANCESERVICE" name = "ambianceService" coefficient = "1" required = "1" nomBDD = "ambianceService" radarPDFGraph = "1">
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_AMBIANCESERVICE_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_AMBIANCESERVICE_ITEM_MINUS1"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_AMBIANCESERVICE_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_AMBIANCESERVICE_ITEM_PLUS2"></option>
+		</input>
+	</categorie>
+	<categorie nom = "bilan" legend = "LANG_FORM_CCPC_FIELDSET_BILAN">
+		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_NOTEFINAL" name = "noteFinal" coefficient = "1" required = "1" nomBDD = "noteFinal" mainPDFGraph = "1" radarPDFGraph = "1">
+			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_NOTEFINAL_ITEM_MINUS2"></option>
+			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_NOTEFINAL_ITEM_MINUS1"></option>
+			<option value = "0" text = "LANG_FORM_CCPC_QUESTION_NOTEFINAL_ITEM_0"></option>
+			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_NOTEFINAL_ITEM_PLUS1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_NOTEFINAL_ITEM_PLUS2"></option>
+		</input>
+		<input type = "text" label = "LANG_FORM_CCPC_QUESTION_POINTPOSITIFS" name = "pointPositifs" pdfComment = "1">
+			<text placeholder = "LANG_FORM_CCPC_QUESTION_POINTPOSITIF_1" name = "pointPositifs1" fullwidth = "1" nomBDD = "pointPositif1"></text>
+			<text placeholder = "LANG_FORM_CCPC_QUESTION_POINTPOSITIF_2" name = "pointPositifs2" fullwidth = "1" nomBDD = "pointPositif2"></text>
+			<text placeholder = "LANG_FORM_CCPC_QUESTION_POINTPOSITIF_3" name = "pointPositifs3" fullwidth = "1" nomBDD = "pointPositif3"></text>
+		</input>
+		<input type = "text" label = "LANG_FORM_CCPC_QUESTION_POINTNEGATIFS" name = "pointNegatifs" pdfComment = "1">
+			<text placeholder = "LANG_FORM_CCPC_QUESTION_POINTNEGATIF_1" name = "pointNegatifs1" fullwidth = "1" nomBDD = "pointNegatif1"></text>
+			<text placeholder = "LANG_FORM_CCPC_QUESTION_POINTNEGATIF_2" name = "pointNegatifs2" fullwidth = "1" nomBDD = "pointNegatif2"></text>
+			<text placeholder = "LANG_FORM_CCPC_QUESTION_POINTNEGATIF_3" name = "pointNegatifs3" fullwidth = "1" nomBDD = "pointNegatif3"></text>
+		</input>
+		<input type = "textarea" label = "LANG_FORM_CCPC_QUESTION_COMMENTAIRELIBRE" fullwidth = "1" name = "commentaireLibre" nomBDD = "commentaireLibre" pdfComment = "1">
+		</input>
+	</categorie>
+	<submit value = "LANG_FORM_CCPC_SUBMITBUTTON">
+	</submit>
+</formulaire>

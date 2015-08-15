@@ -1,0 +1,135 @@
+***************************************************************************************
+INFORMATIONS CONCERNANT LES FICHIERS PLUGIN D'EVALUATION
+***************************************************************************************
+
+Les plugins d'évaluation sont des modules permettant l'intégration de différents formulaires dans la plateforme d'évaluation.
+Un formulaire d'évaluation crée agissent alors comme une "instance" gouvernée par les fichiers du plugin d'évaluation.
+Ces derniers doivent être ajoutés dans le dossier "evaluations" situé à la racine de la plateforme d'évaluation.
+
+Leurs structure minimale est la suivante :
+
+- Fichier de configuration : MANIFEST.xml
+- Fichiers nécessaires au fonctionnement du plugin :
+* displayEvaluation.php
+* displayEvaluationResult.php
+
+Les fichiers doivent être encodés en UTF-8.
+
+/*** MANIFEST.xml ***/
+
+Il s'agit d'un fichier xml contenant les informations sur le plugin, ce dernier est de la structure suivante :
+
+"
+<?xml version="1.0" encoding="utf-8"?>
+
+<informations>
+	<nom>[INSERER LE NOM DU PLUGIN]</nom>
+</informations>
+"
+
+Ce dernier doit au minimum posséder une baliser <nom></nom> sinon quoi le plugin ne sera pas valide et par conséquent non chargé par la plateforme.
+D'autres informations peuvent être ajoutées tel que par exemple la version du plugin, l'auteur, la date de création...
+
+/***
+displayEvaluation.php
+***/
+
+Ce fichier est chargé lorsqu'un utilisateur demande à remplir une évaluation.
+Ce dernier doit contenir :
+- La partie chargée de gérer l'affichage du formulaire 
+- La partie chargée d'envoyer les informations dans la base de donnée une fois le formulaire correctement remplis
+	* Les responses au formulaires devront être stockées dans une table de la base de donnée qui lui est spécifique
+		- Ces dernieres ne doivent pas systématique contenir l'identifiant de l'utilisateur si cela n'est pas nécessaire
+		- Il est préférable d'inclure le prefixe "eval_" suivie d'un second prefixe spécifique au formulaire d'évaluation, afin d'éviter les doublons et d'améliorer la lisibilité (exemple : eval_ccpc_)
+		- La page doit par conséquent contenir une portion de code chargée de créer cette table si cette dernière n'existe pas (entre autre au premier chargement du plugin)
+	* Une fois le formulaire enregistré, le page doit appeler la fonction validateEvaluation(); qui sera chargée de la validation de l'évaluation pour l'utilisateur (séparée de l'enregistrement des résultats afin de garantir l'anonymat) ainsi que la redirection de l'utilisateur
+		- Cette fonction doit par conséquent être appelée APRES l'enregistrement des informations spécifiques au formulaire
+		
+/***
+displayEvaluationResult.php
+***/
+
+Ce fichier est chargé lorsqu'un utilisateur demande à consulter les réponses aux évaluations
+Ce dernier sera donc chargé de récupérer les résultats de la table spécifique au formulaire d'évaluation.
+L'affichage des évaluations pourra par conséquent s'adapter librement aux spécificités de chaque type d'évaluation.
+
+
+/*****************
+******************
+  FACULTATIF
+******************
+******************/
+ 
+ /***
+	Page settings.php
+ ***/
+ 
+ Fichier chargé au début du chargement du module, il est possible d'y définir des paramètres propres au module.
+ Usuellement, les paramètres sont définit sous forme de constante : define('nom du paramètre', 'valeur du paramètre'), il est alors recommandé de les nommer de la façon suivante : CONFIG_EVAL_NOMDUMODULE_NOMDUPARAMETRE, ce afin d'éviter les conflits avec d'autres nom de constante existant.
+
+ Un paramètre particulier : ALLOW_LOGIN_AS, ce dernier doit être définit avec la valeur TRUE si vous voulez autoriser un administrateur à accéder au module lorsqu'il est connecté au nom d'un autre utilisateur. Si vous désirez autoriser cela, il est important de prendre en compte si l'utilisateur connecté est l'utilisateur réel ou l'administrateur qui se connecte au nom de l'utilisateur. Cela notamment  lors de l'enregistrement des évaluations.
+ Il est possible de vérifier si il s'agit d'une connection au nom d'un autre utilisateur à l'aide de la variable $isLogedAs. Si c'est le cas, cette dernière retourne TRUE.
+ 
+ Pour éviter tout problème, la valeur par défaut de ALLOW_LOGIN_AS est FALSE.
+ 
+ /***
+	Page configEvaluation.php
+ ***/
+
+ Ce fichier permet de proposer une page de configuration de chaque instance d'évaluation crée à partir du plugin.
+ Cela permet une meilleure personalisation des formulaires d'évaluation.
+ Les options de configuration seront alors disponibles à travers la page de création des évaluations.
+ Le fichier de configuration pourra stocker ses informations dans une table de la base de donnée qui lui sera spécifique et que le plugin devra créer lui même, où bien dans un fichier texte.
+ Une fois la configuration enregistré, il est nécessaire d'appeler la fonction validateEvaluationSettings() qui sera chargé d'annoncer la fin du chargement du script.
+ 
+ /***
+	Inclusion du javascript
+ ***/
+ 
+	Il est possible d'inclure du javascript dans les pages du plugin d'évaluation.
+	Ces derniers doivent être stockés dans le dossier "js" du plugin, et doivent porter un nom spécifique.
+	Voici les fichiers qui peuvent être crées :
+		- js/main.js : chargé dans toutes les pages du plugin.
+		- js/displayEvaluation.js : chargé uniquement dans la page displayEvaluation.php
+		- js/displayEvaluationResult.js : chargé uniquement dans la page displayEvaluationResult.php
+		- js/configEvaluation.js : chargé uniquement dans la page configEvaluation.php
+
+ /***
+	Feuille de style CSS
+ ***/
+
+	Une feuille de style CSS spécifique au plugin peut être intégrée, celle-ci doit se trouver dans le dossier "css" de ce dernier, et doit être nommée "main.css"
+
+ /***
+	Fonctions, variables et constantes
+ ***/
+ 
+Les plugins ont accès à l'intégralité des fonctions, variables et contantes de la plateforme d'évaluation.  Ainsi qu'à l'intégralité de la base de donnée aussi bien en lecture qu'en écriture,  Il convient pas conséquent de n'installer uniquement des plugins issus d'une source fiable.
+Voici quelques données utiles :
+
+- Variables :
+	$db : object PDO de la connexion à la base de donnée
+	$evaluationData : array contenant les données relatives à l'évaluation sélectionnée
+	$evaluationTypeData : array contenant le type d'évaluation sélectionnée
+	$isLogedAs : true si l'utilisateur est un administrateur connecté au nom d'un autre utilisateur, false sinon
+	$_SESSION : informations sur l'utilisateur :
+		"rang" : 0 invité, 1 étudiant, 2 enseignant, 3 administration, 4 super administrateur
+	
+	Les instances d'évaluation peuvent contenir, pour chaque utilisateur, des données. Cela permet entre autre de stocker temporairement le contenu d'une d'évaluation pour qu'elle soit complétée ensuite.
+	Le contenue stockés est accessible via : $evaluationData['register']['data'] ou à travers la fonction getEvaluationRegisterData().
+	Les données peuvent être écrites à travers la fonction : setEvaluationRegisterData($data)
+		
+- Fonctions :
+	- getUserData : renvoie un array d'informations sur l'utilisateur
+	- getServiceInfo : retourne un array d'informations sur un service
+	- DatetimeToTimestamp // TimestampToDatetime : convertis les datetime fournis par mysql en timestamp, il est préférable de stocker les dates dans la base de donnée au format datetime
+	- getEvaluationRegisterData / setEvaluationRegisterData (voir ci dessus)
+	Pour toutes les autres fonctions, consulter la documentation accessible à : http://[URL DE VOTRE SITE]/doc
+	
+	
+- Constantes :
+	Les chemins de fichiers doivent être des chemins absolus, la racine du site est :
+		$_SERVER['DOCUMENT_ROOT'].'/'.LOCAL_PATH.'/'
+	La racine du plugin est :
+		$_SERVER['DOCUMENT_ROOT'].'/'.LOCAL_PATH.'/evaluations/[NOM DU PLUGIN]'
+	Cette dernière est accessible via la constante PLUGIN_PATH.'/'

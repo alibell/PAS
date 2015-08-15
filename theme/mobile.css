@@ -1,0 +1,214 @@
+/**
+	Petit écrans
+**/
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	/*
+		On masque le logo et le titre
+	*/
+	
+	 #headerTitle, #headerLogo {
+        display: none;
+    }
+	
+	/*
+		Taille du header
+	*/
+	
+	#header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 40px;
+	}
+	
+	/*
+		Menu
+	*/
+	
+	#menuButton {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  display: block;
+	  color: white;
+	  height: 25px;
+      width: 60px;
+      font-size: 15px;
+	  text-align: center;
+	  margin: 5px;
+	  margin-top: 10px;	
+	  cursor: pointer;
+	}
+	
+	#headerMenu {
+	  display: none;
+	  width: 100%;
+	  position: fixed;
+	  text-align: center;
+	  top: 40px;
+	  height: calc(100vh - 40px);
+	  overflow: auto;
+	  background-color: gray;
+	}
+	
+	#headerMenu ul {
+		height: 45px;
+	}
+	
+	#headerMenu ul > li {
+	  width: 100%;
+	  background-color: rgb(44, 134, 208);
+	  margin-bottom: 5px;
+	  display: table;
+	}
+	
+	#userPanel {
+		padding: 2px;
+		padding-left: 10px;
+	}
+	
+	.secondaryMenu {
+		display: none;
+		visibility: inherit !important;
+		background-color: gray;
+	}
+	
+	.secondaryMenu li {
+	  width: 90% !important;
+	  margin: auto !important;
+	  margin-top: 5px !important;
+	}
+		
+	/**
+		Corps de la page
+	**/
+	
+	#body {
+		position: fixed;
+		top: 40px;
+		height: calc(100% - 40px);
+		overflow: auto;
+	}
+	
+	/**
+		Formulaires
+	**/
+	
+	select {
+		width: 90%;
+	}
+	
+	/**
+		Tableaux
+	**/
+	
+	table {
+		overflow-x: auto;
+		display: block;
+	}
+
+	.stacktable.small-only {
+		display: table;
+		font-size: 13px;
+	}
+
+	.stacktable.small-only i {
+		font-size: 20px;
+	}
+	
+	
+	.small-only .bodyTR th.st-head-row {
+		padding: 5px;
+	    background-color: #676767;
+		color: white;
+	}
+	
+	.stacktable.large-only {
+		display: none;
+	}
+	
+	/**
+		Pages
+	**/
+	
+		/* Acceuil */
+		
+		#presentation {
+			height: inherit;
+		}
+		
+		.presentationLeft {
+			display: none;
+		}
+		
+		.presentationRight {
+			float: inherit;
+			width: 100%;
+		}
+}
+
+/**
+	Ecrans tailles moyennes
+**/
+
+@media screen and (min-width: 721px) and (max-width: 1024px) {
+	/*
+		On masque le logo et le titre
+	*/
+	
+	 #headerLogo {
+        display: none;
+    }
+	
+	#headerTitle {
+		  position: fixed;
+		  top: 0;
+		  width: 100%;	
+		  z-index: 0;
+	}
+	
+	#menuButton, #userPanel {
+		z-index: 1;
+	}
+	
+	/*
+		Menu
+	*/
+	
+	#headerMenu {
+	  width: 40%;
+	}
+	
+	#headerMenu ul {
+		height: 45px;
+	}
+	
+	/**
+		Tableaux
+	**/
+	
+	table {
+		text-align: center;
+		display: block;
+		overflow-x: auto;
+		border-bottom: inherit; 
+		border-left: inherit; 
+		border-right: inherit; 
+		box-shadow: inherit;
+  }
+	
+	tbody {
+		display: inline-block;
+		text-align: left;
+	}
+	
+	/**
+		Pages
+	**/
+	
+		/* Evaluations */
+		#selectTypeEvaluation {
+			  text-align: center;
+		}		
+}

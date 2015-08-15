@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<formulaire>
+	<categorie nom = "example1" legend = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_LEGENG">
+		<input type = "select" label = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SELECT_LABEL" name = "select" coefficient = "1" required = "1" nomBDD = "select">
+			<option value = "1" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SELECT_ITEM1"></option>
+			<option value = "2" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SELECT_ITEM2"></option>
+			<option value = "3" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SELECT_ITEM3"></option>
+			<option value = "4" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SELECT_ITEM4"></option>
+			<option value = "5" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SELECT_ITEM5"></option>
+		</input>
+		<input type = "checkbox" label = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_CHECKBOX_LABEL" name = "checkbox">
+			<checkbox text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_CHECKBOX_LABEL_ITEM_1" value = "1" nomBDD = "checkboxvalue1"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_CHECKBOX_LABEL_ITEM_2" value = "2" nomBDD = "checkboxvalue2"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_CHECKBOX_LABEL_ITEM_3" value = "3" nomBDD = "checkboxvalue3"></checkbox>
+			<checkbox text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_CHECKBOX_LABEL_ITEM_4" value = "4" nomBDD = "checkboxvalue4"></checkbox>
+		</input>
+		<input type = "radio" label = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_RADIO_LABEL" name = "radio" required = "1" nomBDD = "radio">
+			<radio value = "1" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_RADIO_ITEM1"></radio>
+			<radio value = "2" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_RADIO_ITEM2"></radio>
+			<radio value = "3" text = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_RADIO_ITEM3"></radio>
+		</input>
+		<input type = "text" label = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_TEXT_LABEL" name = "text" pdfComment = "1">
+			<text placeholder = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_TEXT1" name = "text1" fullwidth = "1" nomBDD = "text1"></text>
+			<text placeholder = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_TEXT2" name = "text2" fullwidth = "1" nomBDD = "text2"></text>
+		</input>
+		<input type = "textarea" label = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_TEXTAREA_LABEL" fullwidth = "1" name = "textarea" nomBDD = "textarea" pdfComment = "1">
+	</categorie>
+	<submit value = "LANG_FORM_CCPC_EXAMPLE_CAT_EXAMPLE1_SUBMIT">
+	</submit>
+</formulaire>

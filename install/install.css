@@ -1,0 +1,94 @@
+#header {
+    color: white;
+    width: 100%;
+    line-height: 90px;
+    font-size: 2em;
+	text-align: center;
+}
+
+.body {
+    overflow: auto;
+    height: calc(100vh - 120px);
+}
+
+.rightBox {
+    width: calc(80% - 10px);
+    float: right;
+    height: 100%;
+    overflow: auto;
+}
+
+.leftPanel {
+    width: 20%;
+	max-width: 200px;
+    float: left;
+    height: 100%;
+}
+
+.leftPanel a {
+    text-decoration: none;
+}
+
+.leftPanel ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.leftPanel ul li {
+    display: block;
+    padding: 10px;
+	color: #F5B76A;
+	font-weight: bold;
+}
+
+.leftPanel .done {
+	color: green;
+}
+
+.leftPanel .notdone {
+	color: red;
+	font-weight: normal;
+}
+
+
+#requirementListDiv {
+	text-align: center;
+	width: 100%:
+}
+
+.requirementList {
+    border: solid 1px;
+    display: inline-block;
+    text-align: left;
+    min-width: 50%;
+    padding: 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px #D4CFCF;
+    background-color: whitesmoke;
+}
+
+.requirementList li {
+    display: block;
+    margin: 10px;
+    width: 100%;
+    padding: 0;
+}
+
+@media screen and (min-width: 360px) and (max-width: 1024px) {
+	.rightBox {
+		float: inherit;
+		width: 90%;
+		margin: auto;
+		height: auto;
+	}
+
+	.leftPanel {
+	    float: inherit;
+		width: 90%;
+		height: auto;
+		text-align: center;
+		margin: auto;
+	}	
+}

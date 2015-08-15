@@ -1,0 +1,125 @@
+ccpc - Module pour PAS 
+=======
+
+ccpc est un module d'évaluation de stage destiné à être utilisé avec la plateforme d'évaluation de stage PAS.
+Ce dernier permet de faire évaluer les stages par les étudiants et d'en analyser les résultats de façon simplifié.
+L'enregistrement des évaluations se fait de manière totalement anonyme.
+
+FONCTIONNALITES
+-------
+
+
+- Evaluation des stages :
+
+Récupération automatique pour chaque évaluation des données suivantes : promotion, nombre d'étudiant durant la période du stage, période du stage (début et fin), date de l'évaluation, promotion dans laquelle est inscrite la personne évaluant le stage
+Le reste des informations est récupéré à partir du formulaire d'évaluation remplis pas l'étudiant.
+Le formulaire d'évaluation est généré automatiquement à partir du fichier "formulaire.xml", au format XML, contenant l'intégralité des données propre au formulaire.
+Plus d'information dans la partie "COMMENT CONFIGURER LE FORMULAIRE D'EVALUATION".
+
+Pour un même étudiant, si ce dernier est affecté dans plusieurs services durant la période d'évaluation, il est invité à évaluer chaque service un par un.
+L'évaluation est considéré comme complête uniquement une fois que l'étudiant a évalué tous les services.
+
+- Consultation des résultats d'évaluation :
+
+Les résultats d'évaluation sont affichés par service.
+Il est possible de trier les résultats par promotion, date, hopital, certificat (unité d'enseignement) et spécialité...
+La liste des services est alors affiché accompagné de notes calculés à partir des données d'évaluation et du formulaire d'évaluation.
+Une note est attribuée pour chaque catégorie du formulaire d'évaluation (voir "COMMENT CONFIGURER LE FORMULAIRE D'EVALUATION").
+Il est possible d'exporter l'intégralité des résultats dans un fichier au format CSV.
+
+Une fois un service sélectionné, plusieurs onglets sont disponible :
+- Statistiques : l'intégralité des données d'évaluation sont affichés sous forme de graphique
+- Evolution : évoluation des notes du service dans le temps
+- Données brutes : consultation des évaluations, anonymes, une par une
+
+Il est possible de filtrer les résultats par période temporelle et par promotion.
+Il est possible de télécharger une fiche évaluation au format PDF et de récupérer les données au format CSV
+
+- Filtres
+
+Il est possible, pour les administrateurs, de détecter automatiquement des services.
+A l'aide de la réalisation des filtres.
+Les filtres nécessitent de spécifier, sous forme de requêtes, les conditions que le service doit vérifier.
+Il est alors possible d'envoyer automatiquement un email aux responsables de service accompagné des résultats d'évaluations et / ou de la fiche PDF du service.
+
+INSTALLATION
+-------
+
+- Copier le dossier ccpc dans le dossier "evaluations" de PAS
+- Vérifiez que le serveur dispose des droits d'écritures sur les dossiers "cache" et "img" de ccpc (CHMOD 755)
+- Vous pouvez configurer ccpc en éditant le fichier "settings.php"
+- Configurez le formulaire d'évaluation en modifiant le fichier "formulaire.xml"
+
+COMMENT CONFIGURER LE FORMULAIRE D'EVALUATION
+-------
+
+Le formulaire d'évaluation se configure en modifiant le fichier "formulaire.xml" à la racine de ccpc.
+Le fichier doit commencer par "<?xml version="1.0" encoding="utf-8"?><formulaire>" et finir par "</formulaire>", entre les 2 se trouve les données du formulaire.
+
+Ces dernieres sont de la forme :
+<categorie attribut = "valeur de l'attribut">
+	<input attribut = "valeur de l'attribut">
+		Données relatives à l'input
+	</input>
+</categorie>
+[...]
+<submit attribut = "valeur de l'attribut">
+</submit>
+
+Les valeurs accompagné d'un 
+
+- Catégories : les questions du formulaire sont rangés par catégories, les catégories font l'objet d'une note lors de la consultation des résultats d'évaluation. Les attributs des catégories sont les suivant (* lorsqu'ils sont obligatoires) :
+	+ nom : nom de la catégorie, deux catégories ne peuvent pas avoir le même nom (*)
+	+ legend : nom qui sera affiché dans le formulaire (*) (+)
+	
+- Input : correspond au type de question que l'on va poser.  Les attributs d'input sont les suivant (* lorsqu'ils sont obligatoires) :
+	+ type : type de question (cf ci-dessous) parmis ceux de la liste suivante : "select", "checkbox", "radio", "text", "textarea" (*)
+	+ label : question posé (*) (+)
+	+ name : nom de la question, doit être unique (*)
+	+ coefficient : pour les questions de type "select", il s'agit du poids de la question au sein de la catégorie lors du calcul de la note (*)
+	+ nomBDD : nom de la colonne occupé par la réponse à la question dans la base de donnée, doit être unique, obligatoire uniquement pour les champs de type : "select", "radio" et "textarea"  (+/- *)
+	+ required : vaut 1 si la réponse à la question est obligatoire
+	+ fullwidth : pour les champs de type textarea, vaut 1 si on souhaite que le champs prenne toute la largeur
+	+ radarPDFGraph : pour les questions de type "select", vaut 1 si on souhaite que la note moyenne à la question apparaisse dans le graphique de type radar récapitulatif dans la feuille PDF du service, possibilité de le mettre sur plusieurs champs input
+	+ mainPDFGraph : pour les questions de type "select", vaut 1 si on souhaite que le graphique des résultats à la question apparaisse dans la feuille PDF du service. Il n'est recommandé de ne mettre l'attribut que sur un seul service, afin d'éviter les programmes de mise en page du PDF.
+	
+
+Différents types d'input disponibles et données relative à l'input :
+	+ select : il s'agit d'un choix dans un menu déroulant, chaque réponse se voit attribuer une valeur numérique. Données au format :
+		<option value = "valeur numérique de l'option" text = "texte décrivant l'option (+)"></option>
+		
+	+ radio : choix parmis plusieurs options, ces derniers peuvent ne pas être numérique. Une seule option peut être sélectionnée. Données au format :
+		<radio value = "valeur de l'option" text = "texte décrivant l'option (+)"></option>
+				
+	+ checkbox : choix parmis plusieurs options, ces derniers peuvent ne pas être numérique. Une seule option peuvent être sélectionnés. Données au format :
+		<checkbox text = "texte décrivant l'option (+)" value = "valeur de l'option" nomBDD = "nom de la colonne occupé par la réponse à la question dans la base de donnée, doit être unique"></checkbox>
+				
+	+ text : champ text d'une seule ligne. Données au format :
+		<text placeholder = "texte décrivant la question posé (+)" name = "Nom du champ texte, doit être unique" fullwidth = "1" (<= facultatif, si présent le champ prend l'intégralité de la largeur de la page) nomBDD = "nom de la colonne occupé par la réponse à la question dans la base de donnée, doit être unique"></text>
+		
+	+ textarea : champ texte de plusieurs lignes, ne nécessite pas de donner des données supplémentaires
+		
+Pour finir, on ajoute le bouton de validation, via la balise <submit></submit>. Il prend les attributs suivants :
+	+ value : texte à afficher dans le bouton (*) (+)
+	
+L'intégralité des valeurs accompagnées d'un (+) doivent être noté en majuscule et être définis sous forme de constante dans les fichiers de langue (dossier "lang").
+L'enregistrement du text dans le fichier lang se fait de la forme : define('NOM_DU_TEXT_EN_MAJUSCULE', 'Text à afficher');
+Ces derniers doivent être accompagnés dans les fichiers lang d'une version raccourcis (utilisé dans les graphiques).
+Pour un texte nommé "TEXT", la version raccourcis portera le nom "TEXT_SHORT".
+
+Il est recommandé de nommer l'intégralité des textes sous la forme : "LANG_FORM_CCPC_".
+Deux constantes ne pouvant pas porter le même nom, cela permet d'éviter les conflit au sein de PAS.
+		
+LICENCE
+-------
+
+Copyright 2015 - Ali BELLAMINE
+Ce programme est sous licence GPL v3
+Pour plus d'informations consulter le fichier LICENCE
+Pour plus d'informations sur la licence GPL, rendez-vous à l'adresse suivante : http://www.gnu.org/licences/gpl-3.0.en.html
+
+Le programme inclut les librairies suivantes :
+
+- Librairies PHP :
+FPDF 1.7 disponible à l'adresse suivante : http://www.fpdf.org/
+pChart 2.1.4 : sous licence GPL v3, disponible à l'adresse suivante : http://pchart.net

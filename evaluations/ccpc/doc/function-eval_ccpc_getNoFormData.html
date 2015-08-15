@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Function eval_ccpc_getNoFormData | PAS Documentation</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+		</div>
+
+
+
+		<div id="elements">
+
+
+
+
+
+			<h3>Functions</h3>
+			<ul>
+				<li><a href="function-eval_ccpc_applyFilter.html">eval_ccpc_applyFilter</a></li>
+				<li><a href="function-eval_ccpc_checkFilterExistence.html">eval_ccpc_checkFilterExistence</a></li>
+				<li><a href="function-eval_ccpc_checkFiltre.html">eval_ccpc_checkFiltre</a></li>
+				<li><a href="function-eval_ccpc_clearCache.html">eval_ccpc_clearCache</a></li>
+				<li><a href="function-eval_ccpc_exploreQuery.html">eval_ccpc_exploreQuery</a></li>
+				<li><a href="function-eval_ccpc_exploreQuery_operatorAction.html">eval_ccpc_exploreQuery_operatorAction</a></li>
+				<li><a href="function-eval_ccpc_genGraphBar.html">eval_ccpc_genGraphBar</a></li>
+				<li><a href="function-eval_ccpc_genGraphLine.html">eval_ccpc_genGraphLine</a></li>
+				<li><a href="function-eval_ccpc_genGraphPie.html">eval_ccpc_genGraphPie</a></li>
+				<li><a href="function-eval_ccpc_genGraphRadar.html">eval_ccpc_genGraphRadar</a></li>
+				<li><a href="function-eval_ccpc_genGraphSimpleBar.html">eval_ccpc_genGraphSimpleBar</a></li>
+				<li><a href="function-eval_ccpc_getFilterDetails.html">eval_ccpc_getFilterDetails</a></li>
+				<li><a href="function-eval_ccpc_getFilterList.html">eval_ccpc_getFilterList</a></li>
+				<li class="active"><a href="function-eval_ccpc_getNoFormData.html">eval_ccpc_getNoFormData</a></li>
+				<li><a href="function-generateAllCSV.html">generateAllCSV</a></li>
+				<li><a href="function-generateCSV.html">generateCSV</a></li>
+				<li><a href="function-generatePDF.html">generatePDF</a></li>
+				<li><a href="function-getCssPercentageValue.html">getCssPercentageValue</a></li>
+				<li><a href="function-getEvaluationCCPCFullData.html">getEvaluationCCPCFullData</a></li>
+				<li><a href="function-getEvaluationCCPCPartialData.html">getEvaluationCCPCPartialData</a></li>
+				<li><a href="function-initTable.html">initTable</a></li>
+				<li><a href="function-makeHorizontalBar.html">makeHorizontalBar</a></li>
+				<li><a href="function-processCCPCformData.html">processCCPCformData</a></li>
+				<li><a href="function-registerCCPCformData.html">registerCCPCformData</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li class="active">
+<span>Function</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="function">
+	<h1>Function eval_ccpc_getNoFormData</h1>
+
+
+	<div class="description">
+	<p>eval_ccpc_getNoFormData - Récupère les informations non contenues dans le formulaire au cours d'une évaluation</p>
+	</div>
+
+	<div class="info">
+		
+		
+				<b>Category:</b>
+				: eval_ccpc_functions<br>
+				<b>Author:</b>
+				<p>Ali Bellamine</p>
+
+<p>Contenu de l'array retourné :<br>
+['data'][identifiant du service où est affecté l'utilisateur]['date'] => (string) Date de remplissage de l'évaluation, sous forme de timestamp<br>
+['data'][identifiant du service où est affecté l'utilisateur]['promotion'] => (int) Identifiant de la promotion de l'utilisateur<br>
+['data'][identifiant du service où est affecté l'utilisateur]['debutStage'] => (string) Date de début de l'affectation de l'étudiant dans le service<br>
+['data'][identifiant du service où est affecté l'utilisateur]['finStage'] => (string) Date de fin de l'affectation de l'étudiant dans le service<br>
+['data'][identifiant du service où est affecté l'utilisateur]['service'] => (int) Identifiant du service<br>
+['data'][identifiant du service où est affecté l'utilisateur]['nbExternesPeriode'] => (int) Nombre d'étudiants actuellement enregistrés dans le service<br>
+['erreur'][identifiant du service où est affecté l'utilisateur][] => (array) Array contenant la liste des erreurs rencontrés</p><br>
+		<b>Located at</b>
+		<a href="source-function-eval_ccpc_getNoFormData.html#3-83" title="Go to source code">
+			fnDisplayEvaluation.php
+		</a><br>
+	</div>
+
+
+	<table class="summary" id="parameters">
+	<caption>Parameters summary</caption>
+	<tr id="$evaluationData">
+		<td class="name"><code>array</code></td>
+		<td class="value"><code><var>$evaluationData</var></code></td>
+		<td>Array contenant les informations relatives à l'évaluation</td>
+	</tr>
+	<tr id="$erreur">
+		<td class="name"><code>array</code></td>
+		<td class="value"><code><var>$erreur</var></code></td>
+		<td>Array contenant la liste des erreurs rencontrées avant execution de la fonction</td>
+	</tr>
+	</table>
+
+	<table class="summary" id="returns">
+	<caption>Return value summary</caption>
+	<tr>
+		<td class="name"><code>
+			array
+		</code></td>
+		<td>
+			Array contenant les informations non contenues dans le formulaire et les erreurs rencontrés lors de l'execution de la fonction
+		</td>
+	</tr>
+	</table>
+
+
+</div>
+
+	<div id="footer">
+		PAS Documentation API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
+<script src="elementlist.js?3dbcb313967eee7b4d3fd185e43ed54d3768e9c8"></script>
+</body>
+</html>

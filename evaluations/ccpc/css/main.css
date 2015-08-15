@@ -1,0 +1,618 @@
+#divResultats{
+/*	height: calc(100vh - 150px); */
+/*	background-color: rgb(135, 135, 136); */
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-top: 10px;
+	padding: 5px;
+}
+
+.mobileCCPCMenuButton, .mobileCCPCMenuButtonClose {
+	display: none;
+}
+
+#evalccpcFiltres {
+	width: 20%;
+	background-color: rgb(236, 232, 232);
+	height: calc(100vh - 110px);
+	border-radius: 3px;
+	float: left;
+	overflow: hidden;
+}
+
+.evalccpcFiltresFixe {
+	position: fixed;
+	left: 0;
+	top: 46px;
+	margin-top: 5px;
+	height: calc(100vh - 46px) !important;
+}
+
+#evalccpcFiltresContent {
+  text-align: center;
+  color: white;
+}
+
+.evalccpcFiltresContentItem {
+  display: inline-block;
+  vertical-align: top;
+  margin: 5px;
+}
+
+#evalccpcFiltresContent form {
+  display: inline-block;
+  background: rgb(67, 138, 208);
+  box-shadow: 1px 1px 1px 1px rgb(67, 138, 208);
+  margin: auto;
+  padding: 5px;
+  text-align: center;
+}
+
+#evalccpcFiltres form {
+	height: calc(100% - 60px);
+}
+
+#evalccpcFiltresFormContent {
+	height: calc(100% - 60px);
+	overflow-y: auto;
+	overflow-x: hidder;
+}
+
+#evalccpcFiltresFormContent label {
+	width: 90%;
+}
+
+#evalccpcFiltresFormValidate {
+	height: 50px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
+#evalccpcFiltresTitre {
+	padding: 5px;
+	width: calc(100% - 9px);
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	background-color: rgb(49, 99, 190);
+	color: white;
+}
+
+#evalccpcContent{
+	width: calc(80% - 32px);
+	float: right;
+	margin-left: 10px;
+	height: calc(100% - 20px);
+	background-color: rgb(242, 242, 242);
+	padding: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: solid 1px rgb(234, 222, 222);
+	margin-bottom: 10px;
+}
+
+#evalccpcContentUnique {
+position: relative;
+width: calc(100% - 30px);
+margin: auto;
+height: calc(100% - 20px);
+background-color: rgb(242, 242, 242);
+padding: 10px;
+overflow-y: auto;
+overflow-x: hidden;
+}
+
+#evalccpcContentUnique > img {
+  display: block;
+  margin: auto;
+}
+
+#evalccpcContentUniqueNom {
+	text-align: center;
+	padding: 10px;
+	font-size: 1.3em;
+	text-shadow: 0px 1px 0px rgb(180, 182, 189);
+}
+
+#evalccpcContentUniqueRetour {
+	position: fixed;
+	left: 0;
+	top: 50vh;
+
+	/* position: absolute;
+	height: calc(100vh - 220px);
+	line-height: calc(100vh - 220px); */
+	text-align: center;
+	color: black;
+	width: 30px;
+	font-size: 30px;
+
+}
+
+#evalccpcContentUniqueRetour:hover {
+	color: rgb(26, 108, 187);
+}
+
+#download {
+  position: absolute;
+  right: 10px;
+  padding: 10px;
+  top: 10px;
+  font-size: 2em;
+}
+
+#download a {
+	color: inherit;
+}
+
+#download > div {
+	display: inline-block;
+}
+
+#download > div:hover {
+	cursor: pointer;
+}
+
+.evalccpcFiltreCategorie {
+	display: block;
+	width: calc(100% - 20px);
+	text-align: center;
+	padding: 10px;
+	font-weight: bold;
+	clear: both;
+	font-size: 1.1em;
+}
+
+.horizontalBarMain {
+	background-color: rgb(223, 229, 231);
+	border: solid 1px rgb(157, 152, 152);
+	border-radius: 3px;
+	margin: auto;
+}
+
+.horizontalBar{
+	position: relative;
+	height: 100%;
+	width: 0;
+}
+
+.catEvaluationData {
+	width: 95%;
+	margin: auto;
+	text-align: center;
+	background-color: rgb(224, 224, 224);
+	border-radius: 5px;
+	box-shadow: 1px 1px 0px 1px rgb(219, 219, 231);
+	width: 95%;
+	margin: auto;
+	background-color: rgb(224, 224, 224);
+	border-radius: 5px;
+	box-shadow: 1px 1px 0px 1px rgb(219, 219, 231);
+	margin-top: 15px;
+}
+
+.catEvaluationData h1 {
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+	margin-top: 0;
+	background-color: rgb(67, 138, 208);
+	color: white;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#evaluationDataDisplayUserReponse .catEvaluationData {
+  text-align: left;
+}
+
+.EvaluationData {
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+	margin: 10px;
+	padding: 10px;
+	border: solid 1px rgb(171, 171, 171);
+	border-radius: 5px;
+	background-color: rgb(210, 210, 210);
+}
+
+.EvaluationData img {
+  display: block;
+  margin: auto;
+}
+
+.EvaluationDataHistory {
+	text-align: center;
+}
+
+.EvaluationDataText {
+  height: 300px;
+  max-width: 450px;
+  overflow: auto;
+}
+
+.EvaluationDataTextFullWidth {
+	width: 95%;
+	max-width: inherit;
+	margin: auto;
+}
+
+.EvaluationDataText {
+  margin: 5px;
+  padding: 5px;
+  border: solid 1px rgb(47, 30, 157);
+  border-radius: 5px;
+  background-color: whitesmoke;
+}
+
+.EvaluationDataTextDiv {
+	margin-top: 10px;
+}
+
+.moderateText {
+  background-color: rgba(195, 12, 12, 0.43);
+}
+
+.moderateText .modereComment {
+  background-color: rgb(136, 130, 130);
+}
+
+.EvaluationData h2 {
+	margin-top: 0;
+	width: 100%;
+	background-color: rgb(171, 171, 171);
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 2px;
+	padding-right: 2px;
+	border-radius: 5px;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.EvaluationDataGraph {
+	background-color: rgb(242, 242, 242);
+	border-radius: 5px;
+}
+
+.EvaluationDataGraph ul {
+	padding: 5px;
+}
+
+.EvaluationDataGraph li {
+	font-weight: bold;
+	display: block;
+}
+
+.mobileCommentFullscreenButton {
+  display: inline-block !important;
+  padding-left: 10px;
+  color: white;
+  float: left;
+}
+
+.high{
+	font-weight: bold;
+	color: green;
+}
+
+.medium{
+	font-weight: bold;
+	color: orange;
+}
+
+.low{
+	font-weight: bold;
+	color: red;
+}
+
+.listItem {
+	border-top: solid 2px black;
+	border-bottom: solid 2px black;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-bottom: 5px;
+	background-color: white;
+	text-align: center;
+	display: block;
+}
+
+canvas {
+	display: block;
+	margin: auto;
+}
+
+.evalccpcFiltreCategorieDate {
+	text-align: center;
+}
+
+#currentDateFilter {
+	text-align: center;
+	padding: 3px;
+}
+
+#currentDateFilter > span {
+	padding: 3px;
+	display: inline-block;
+	border: solid 1px rgb(249, 167, 19);
+	border-radius: 5px;
+	background-color: rgb(255, 206, 117);
+}
+
+#dateRangeSelector {
+	display: block;
+	margin: auto;
+}
+
+#evaluationDataDisplayUserReponse {
+	display: none;
+}
+
+#evaluationDataDisplayUserReponse .catEvaluationData {
+	padding: 5px;
+}
+
+.evaluationDataDisplay {
+	display: none;
+}
+
+.evaluationDataDisplayText {
+	width: 100%;
+	clear: both;
+	padding: 10px;
+}  
+
+.evaluationDataDisplaySelected {
+	font-weight: bold;
+}
+
+.bodyTR:hover {
+	cursor: pointer;
+}
+
+#evalccpcAdminSelectFiltre {
+  width: calc(100% - 10px);
+  padding: 5px;
+}
+
+.helpBox {
+	display: none;
+}
+
+#evalccpcAdminSelectFiltre {
+	height: 50px;
+}
+
+#evalccpcAdminSelectFiltre a, #evalccpcAdminContent a {
+  color: rgb(86, 86, 184);
+}
+
+#evalccpcAdminContent {
+	height: calc(100% - 60px);
+}
+
+#listePeriodeStage {
+  height: calc(100% - 20px);
+  text-align: center;
+  float: left;
+  padding: 10px;
+  overflow: auto;
+  width: 200px;
+}
+
+#listePeriodeStage ul {
+	list-style: none;
+	padding: 5px;
+	margin: 0;
+}
+
+#listePeriodeStage ul li {
+	padding: 5px;
+}
+
+#listePeriodeStage ul li a {
+	text-decoration: none;
+}
+
+#listeServices {
+  width: calc(100% - 240px);
+  float: right;
+  height: calc(100% - 20px);
+  overflow: auto;
+}
+
+#toolbox {
+width: calc(100% - 30px);
+  margin: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(222, 223, 226);
+}
+
+/**
+	Fullscreen
+**/
+
+div:-webkit-full-screen {
+  width: calc(100vw - 20px) !important;
+  height: calc(100vh - 20px) !important;
+  max-width: calc(100vw - 20px) !important;
+  max-height: calc(100vh - 20px) !important:
+  margin: 10px;
+}
+div:-moz-full-screen {
+  width: calc(100vw - 20px) !important;
+  height: calc(100vh - 20px) !important;
+  max-width: calc(100vw - 20px) !important;
+  max-height: calc(100vh - 20px) !important:
+  margin: 10px;
+}
+div:-ms-fullscreen {
+  width: calc(100vw - 20px) !important;
+  height: calc(100vh - 20px) !important;
+  max-width: calc(100vw - 20px) !important;
+  max-height: calc(100vh - 20px) !important:
+  margin: 10px;
+}
+div:fullscreen {
+  width: calc(100vw - 20px) !important;
+  height: calc(100vh - 20px) !important;
+  max-width: calc(100vw - 20px) !important;
+  max-height: calc(100vh - 20px) !important:
+  margin: 10px;
+}
+
+ /***
+	Media Queries
+ ***/
+ 
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+	
+	#evalccpcContent {
+		width: 90%;
+		margin: auto;
+		float: inherit;
+	}
+	
+	.body {
+		padding-top: 0;
+	}
+	
+	#divResultats {
+		height: calc(100vh - 50px);
+	}
+	
+	.mobileCCPCMenuButton, .mobileCCPCMenuButtonClose {
+	  display: block;
+	  cursor: pointer;
+	  width: 100%;
+	  text-align: center;
+	  font-size: 2em;	
+	}
+	
+	.mobileCCPCMenuButtonClose {
+		position: fixed;
+		bottom: 20px;
+	}
+	
+	#evalccpcFiltres
+	{
+	  display: none;
+	  width: 100%;
+	  float: inherit;
+	  height: calc(100vh - 90px);
+	  overflow: auto;
+	}
+	
+	#evalccpcFiltresTitre {
+		width: calc(100% - 10px);
+	}
+	
+	#evalccpcAdminSelectFiltre select {
+		display: block;	
+		width: 90%;
+		height: inherit;
+		margin: auto;
+	}
+	
+	#listePeriodeStage {
+		width: 90%;
+		margin: auto;
+		height: auto;		
+		margin-top: 20px;
+		float: inherit;
+	}
+	
+	#listeServices {
+		width: 90%;
+		margin: auto;
+		margin-top: 10px;
+		float: inherit;
+	}
+	
+	#download {
+		position: inherit;
+		text-align: right;
+	}
+	
+	.EvaluationData img {
+		max-width: 90%;
+	}
+	
+	.catEvaluationData {
+		width: 100%;
+	}
+	
+	.EvaluationData {
+		text-align: center;
+	}
+	
+	.EvaluationDataText {
+		text-align: left !important;	
+	}
+	
+	.EvaluationData, .EvaluationDataText  , .EvaluationDataTextFullWidth {
+		width: 90%;
+	}	
+}
+
+@media screen and (min-width: 721px) and (max-width: 1024px) {
+	
+	.mobileCCPCMenuButton {
+	  display: block;
+	  cursor: pointer;
+	  font-size: 2em;	
+	  transform: rotate(-90deg);
+	  height: 30px;
+	  width: 30px;
+	  position: fixed;
+	  left: 0;
+	  top: calc(50vh - 20px);
+  }
+	
+	.mobileCCPCMenuButtonClose {
+	  display: block;
+	  cursor: pointer;
+	  font-size: 2em;	
+	  transform: rotate(-90deg);
+	  height: 30px;
+	  width: 30px;
+	  position: absolute;
+	  right: 10px;
+	  top: 50%;
+	}
+	
+	#evalccpcFiltres
+	{
+	  display: none;
+      width: 40%;
+	  position: fixed;
+	  z-index: 1;
+	  top: 40px;
+      left: 0;
+	  float: inherit;
+	  height: calc(100vh - 40px);
+	  overflow: auto;
+	}
+	
+	.EvaluationData {
+		text-align: center;
+	}
+	
+	.EvaluationDataText {
+		text-align: left !important;	
+	}
+	
+	.EvaluationData, .EvaluationDataText  , .EvaluationDataTextFullWidth {
+		width: 45%;
+	}
+	
+	.EvaluationDataText  , .EvaluationDataTextFullWidth {
+		max-width: 90%;
+		width: 90%;
+	}
+}

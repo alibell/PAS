@@ -1,0 +1,648 @@
+body {
+	margin: 3px;
+	word-break: initial;
+}
+
+#body {
+	background-color: rgb(234, 234, 237);
+	width: 100%;
+	min-height: calc(100vh - 100px);
+	position: absolute;
+	top: 80px;
+	left: 0;
+}
+
+.body {
+	padding: 15px;
+}
+
+
+/*
+	MESSAGES, ERREURS...
+*/
+
+.erreur, .msg {
+	display: block;
+	width: calc(100% - 40px);
+	margin: 10px;
+	padding: 10px;
+}
+
+.erreur {
+	background-color: rgb(245, 113, 113);
+	border: solid 1px rgb(98, 11, 11);
+}
+
+.msg {
+	background-color: rgb(90, 232, 113);
+	border: solid 1px rgb(51, 123, 26);
+}
+
+.erreur > li, .msg > li {
+	display: block;
+}
+
+/**
+	LISTES
+**/
+
+	.list {
+		width: calc(100% - 40px);
+		margin: 15px;
+		padding: 5px;
+		background-color: rgb(199, 220, 253);
+		border: solid 1px rgb(102, 132, 179);
+	}
+	
+	.list:hover {
+		background-color: rgb(211, 225, 249);
+	}
+	
+	.list li {
+		display: inline;
+	}
+	
+	.list a {
+		color: black;
+		text-decoration: none;
+		display: block;
+	}
+	
+/*
+	BOUTONS
+*/
+
+.barreNavigation {
+  text-align: center;
+  padding-top: 15px;	
+}
+
+.barreNavigationBouton {
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(42, 46, 53);
+  color: white;
+  cursor: pointer;
+  font-size: 1.2em !important;
+  border-radius: 5px;
+}
+
+.bouton {
+  font-size: 2em;
+  color: rgb(12, 69, 144);
+}
+
+.bouton:hover {
+	color: rgb(28, 114, 226);
+}
+
+/*
+	HEADER
+*/
+
+#userPanel {
+	position: fixed;
+	display: table;
+	text-align: right;
+	right: 0px;
+	padding: 3px;
+	padding-left: 10px;
+	border-bottom-left-radius: 5px;
+	height: 35px;
+	font-size: 25px;
+	background-color: rgb(31, 11, 11);
+	color: white;
+}
+
+#userName {
+	display: inline-block;
+	vertical-align: middle;
+    font-size: 0.5em;
+    padding: 5px;
+	font-family: monospace;
+}
+
+#userName a {
+	color: inherit;
+}
+
+.userPanelFixe {
+	position: fixed !important;
+	top: 0 !important;
+	right: 0 !important;
+	width: 20% !important;
+	overflow: auto !important;
+	border-radius: 0 !important;
+	height: 40px !important;
+}
+
+#userPanel > div {
+	display: table-cell;
+	text-align: right;
+	vertical-align: middle;
+	height: 35px;
+}
+
+#userPanel div > a {
+	color: white;
+}
+
+#userPanel div > a:hover {
+	color: rgb(113, 202, 240);
+}
+
+#header{
+	width: 100%;
+	height: 90px;
+	background-color: rgb(92, 92, 110);
+	user-select: none;
+		-khtml-user-select: none;
+		-webkit-user-select: none;
+		-moz-user-select: -moz-none;
+		-ms-user-select: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+}
+	  
+#headerLogo{
+	background: url('img/logo.png');
+	width: 230px;
+	height: 90px;
+	background-color: whitesmoke;
+	border-top-right-radius: 5px;
+	float: left;
+}
+
+#headerTitle {
+	float: right;
+	width: calc(100% - 234px);
+	height: 40px;
+	text-align: center;
+	font-size: 30px;
+	color: white;
+	padding: 2px;
+}
+
+#headerMenu {
+	float: right;
+	width: calc(100% - 230px);
+	height: 46px;
+	font-size: 28px;
+	background-color: rgb(44, 134, 208);
+}
+
+#menuButton {
+	display: none;
+}
+
+#headerMenu ul {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+}
+
+#headerMenu ul > li {
+	display: inline-block;
+	height: 100%;
+	line-height: 46px;
+	min-width: 180px;
+	color: white;
+	text-align: center;
+	float: left;
+}
+
+#headerMenu li:hover {
+	background-color: rgb(69, 69, 113);
+	cursor: pointer;
+}
+
+.primaryMenuText {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.mainMenu li a {
+	color: white;
+	display: block;
+	text-decoration: none;
+}
+
+#headerMenu li.activeMenu {
+	background-color: rgb(69, 69, 113);
+}
+
+.secondaryMenu {
+	visibility: hidden;
+	background-color: rgb(199, 221, 237);
+	font-size: 0.7em;
+}
+
+.secondaryMenu li {
+	padding-left: 5px;
+	padding-right: 5px;
+	display: block !important;
+	float: inherit !important;
+	background-color: rgb(199, 221, 237);
+	border-bottom: solid 1px rgb(156, 179, 239);
+}
+
+.secondaryMenu li a {
+	color: black;
+	display: block;
+	text-decoration: none;
+}
+
+.secondaryMenu li:hover {
+	background-color: rgb(208, 204, 204) !important;
+	color: white;
+}
+
+.headerFixe {
+position: fixed;
+width: 80% !important;
+top: 0;
+left: 0;
+}
+
+/**
+	FOOTER
+**/
+
+#bug {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+#bugForm {
+	width: 90vw;
+	overflow: auto;
+	border: solid 1px rgb(125, 125, 197);
+	background-color: rgb(182, 182, 215);
+	text-align: center;
+	border-radius: 5px;
+}
+
+#bugForm h1 {
+	text-shadow: 0px 7px rgb(186, 186, 186);
+	font-size: 1.5em;
+	color: rgb(57, 57, 95);
+}
+
+#bugForm label {
+	text-align: left;
+	padding: 10px;
+	font-size: 1.2em;
+	padding-left: 10%;
+}
+
+#bugForm textarea {
+	width: 80%;
+	border-radius: 5px;
+	height: 200px;
+}
+
+/**
+	TITRES
+**/
+
+h1 {
+  display: block;
+  text-align: center;
+  padding: 5px;
+  margin: auto;
+  color: rgb(8, 7, 7);
+  text-shadow: 0px 1px rgb(103, 106, 112);
+}
+
+h2 {
+  padding: 5px;
+  font-size: 1.5em;
+  text-shadow: none;
+  font-weight: inherit;
+}
+
+/**
+	Evaluation
+**/
+
+.evaluationDone {
+	background-color: rgba(8, 139, 8, 0.43) !important;
+}
+
+.formEvaluation {
+	position: relative;
+}
+
+.formEvaluation fieldset {
+	border: 1px solid rgb(183, 203, 239);
+	box-shadow: 1px 1px 1px rgb(184, 184, 197);
+	background-color: white;
+	padding: 15px;
+	margin-top: 10px;
+	padding-bottom: 40px;
+}
+
+.formEvaluation legend {
+	padding: 5px;
+	font-size: 2em;
+	display: block;
+	width: 100%;
+	text-align: center;
+	background-color: rgb(199, 220, 253);
+	border: 1px solid rgb(8, 8, 8);
+}
+
+/**
+	Formulaire
+**/
+
+label {
+	display: block;
+	width: 70%;
+	float: left;
+	min-height: 35px;
+	line-height: 35px;
+	font-size: 15px;
+}
+
+select {
+	padding: 5px;
+	font-size: 15px;
+	height: 35px;
+	border-radius: 3px;
+	margin-top: 5px;
+}
+
+/** FIX de CHOSEN pour le style des select *//
+.chosen-container {
+	width: 204px !important;
+	height: 35px !important;
+}
+.chosen-container-single .chosen-single {
+	background: none !important;
+	padding: 5px !important;
+	height: 100% !important;
+	margin-bottom: 3px !important;
+}
+.chosen-container-single .chosen-single span {
+	font-size: 15px !important;
+	color: black !important;
+	font-weight: normal !important;
+}
+.chosen-single div {
+	top: 5px !important;
+}
+
+fieldset {
+	clear: both;
+}
+
+input[type = "text"], input[type = "url"], input[type = "number"], input[type = "email"], input[type = "password"]{
+	padding: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+input[type="submit"]{
+	margin: auto;
+	margin-top: 10px;
+	padding: 10px;
+	display: block;
+}
+
+input[type="submit"].inlineSubmit {
+	margin: 10px;
+	padding: 10px;
+	display: inline-block;
+}
+
+.titleLabel {	
+	margin-top: 5px;
+	font-size: 17px;
+}
+
+textarea {
+	padding: 10px;
+	margin: 5px;
+}
+
+input[type="button"]{
+	margin: 10px;
+	padding: 10px;
+	display: inline-block;
+}
+
+input {
+	clear: both;
+}
+
+.separator {
+	height: 10px;
+	width: 100%;
+	display: inline-block;
+	clear: both;
+}
+
+.smallSeparator {
+	width: 100%;
+	display: inline-block;
+	clear: both;
+}
+
+.fullwidth {
+	width: calc(100% - 30px);
+}
+
+.uploadBox {
+  width: 400px;
+  padding: 10px;
+  border: solid 1px rgb(178, 178, 185);
+  border-radius: 5px;
+  background-color: rgb(236, 236, 243);
+  box-shadow: 1px 1px 1px rgb(133, 133, 181);
+}
+
+/**
+	Tableaux
+**/
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-bottom: solid 1px black;
+	border-left: solid 1px gray;
+	border-right: solid 1px gray;
+	box-shadow: 1px 1px 1px black;
+}
+
+table .headTR {
+	background-color: rgb(67, 138, 208);
+	height: 40px;
+	color: white;
+}
+
+.headTR a {
+	text-decoration: none;
+	color: white;
+}
+
+th {
+	font-size: 1.1em;
+	text-align: center;
+}
+
+td {
+	padding: 10px;
+}
+
+.bodyTR a {
+	text-decoration: none;
+	color: black;
+}
+
+.bodyTR a:hover {
+	color: rgb(68, 92, 186);
+}
+
+.bodyTR:hover {
+    background-color: rgb(237, 236, 171) !important;
+}
+
+.bodyTR:nth-child(even) {
+background-color:#CCCCCC;
+}
+
+.bodyTR:nth-child(odd) {
+background-color:#FFFFFF
+}
+
+.stacktable.small-only {
+	display: none;
+}
+
+.stacktable.large-only {
+	display: block;
+}
+
+
+/**
+	Pagination
+**/
+
+#pagination {
+	text-align: center;
+	margin-top: 20px;
+}
+
+#pagination > a {
+	text-decoration: none;
+}
+
+.pageBouton {
+	padding: 5px;
+	border-radius: 5px;
+	background-color: white;
+	border: solid 1px rgb(74, 60, 60);
+	color: black;
+	text-decoration: none;
+}
+
+.pageBouton:hover {
+	background-color: rgb(104, 106, 153);
+	color: white;
+}
+
+span.pageBouton.pageActuelle {
+	background-color: rgb(27, 31, 124);
+	color: white;
+}
+
+/**
+	Page de présentation
+**/
+
+#presentation {
+  height: calc(100vh - 115px);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  border: solid 2px rgb(167, 161, 203);
+  background: linear-gradient(rgb(250, 250, 255), rgb(241, 238, 247));
+}
+
+.divBox {
+	width: 100%;
+}
+
+#aboutPAS {
+	width: auto;
+    text-align: right;
+    margin-right: 20px;
+    margin-top: 25px;
+}
+
+#aboutPAS a {
+	text-decoration: none;
+}
+
+.presentationLeft {
+	float: left; 
+	width: 50%;
+}
+
+.presentationLeft img {
+	height: calc(100vh - 130px);
+	max-width: 100%;
+}
+
+.presentationRight {
+	float: right; 
+	text-align: center; 
+	width: 50%;
+}
+
+.presentationRight #titre {
+	display: block; 
+	margin-top: 15px; 
+	font-weight: bold; 
+	font-size: 2em; 
+	color: rgb(90, 85, 85); 
+	text-shadow: 0px 1px 5px rgb(173, 171, 171);
+}
+
+.presentationRight ul {
+	text-align: left; 
+	margin: 0; 
+	margin-top: 25px; 
+	padding: 0;
+}
+
+.presentationRight ul > li {
+	padding: 20px;
+	font-size: 1.2em;
+	display: block;
+}
+
+.connexionBouton {
+  padding: 15px;
+  font-size: 1.5em;
+  background: linear-gradient(rgb(130, 141, 245),rgb(26, 102, 203));
+  color: white;
+  border-radius: 10px;
+  margin: 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.connexionBouton:hover {
+	background: linear-gradient(rgb(135, 145, 240),rgb(98, 146, 210));
+}
