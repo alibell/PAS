@@ -110,7 +110,7 @@
 		$sqlData = array('id' => $id);
 		$sqlNbDate = 'SELECT COUNT(DISTINCT e.date) nombreDate FROM eval_ccpc_resultats e WHERE e.service = :id '; // Permet de calculer le nombre de date d'évaluations différentes dispo
 		$sqlNbStudent = 'SELECT COUNT(DISTINCT u.id) nombreEtudiant FROM affectationexterne ae INNER JOIN user u ON u.id = ae.userId WHERE ae.service = :id '; // Permet de calculer le nombre d'étudiants en stage sur la période considérée
-		$sql = 'SELECT e.id evaluationId, e.service serviceId, e.date evaluationDate, p.nom promotionNom, e.promotion promotionId';
+		$sql = 'SELECT e.id evaluationId, e.service serviceId, e.date evaluationDate, p.nom promotionNom, e.promotion promotionId ';
 		foreach ($listEvaluationItems AS $key => $value)
 		{
 			$sql .= ', e.'.$key.' '.$key.' ';
@@ -386,7 +386,7 @@
 		**/
 		
 		$sqlData = array('id' => $id);
-		$sql = 'SELECT e.id evaluationId, e.moderation moderation';
+		$sql = 'SELECT e.id evaluationId, e.moderation moderation ';
 		foreach ($listEvaluationItems AS $key => $value)
 		{
 			$sql .= ', e.'.$key.' '.$key.' ';
