@@ -59,7 +59,7 @@ Pour installer PAS, effectuez les étapes suivantes :
 LICENCE
 -------
 
-Copyright 2015 - Ali BELLAMINE  
+Auteur : Ali BELLAMINE  
 Ce programme est sous licence GPL v3  
 Pour plus d'informations consulter le fichier LICENCE  
 Pour plus d'informations sur la licence GPL, rendez-vous à l'adresse suivante : http://www.gnu.org/licences/gpl-3.0.en.html  
