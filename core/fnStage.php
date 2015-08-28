@@ -502,6 +502,7 @@
 			{
 				$service['id'] = $res_f['serviceId'];
 				$service['nom'] = $res_f['serviceNom'];
+				$service['hopital']['id'] = $res_f['hopitalId'];
 				$service['hopital']['nom'] = $res_f['hopitalNom'];
 				$service['hopital']['alias'] = $res_f['hopitalAlias'];
 				

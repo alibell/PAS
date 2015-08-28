@@ -394,6 +394,34 @@
 				<fieldset>
 					<legend><?php echo LANG_ADMIN_UTILISATEURS_CAT_INFOSGENERALES; ?></legend>
 					
+					<!-- Chef du service -->
+					<label for = "chef"><?php echo LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_CHEF; ?></label>
+					<select id = "chef" name = "chef" class = "<?php if ($action == 'view' || $action == 'delete') echo 'readonlyForm'; ?>" <?php if ($action == 'view' || $action == 'delete') echo 'disabled'; ?>>
+						<?php
+							$listeChef = getEnseignantList();
+							if (isset($_POST['chef']))
+							{
+								$defaultValue = $_POST['chef'];
+							}
+							else if (isset($serviceInfo['chef']['id']))
+							{
+								$defaultValue = $serviceInfo['chef']['id'];
+							}
+							else
+							{
+								$defaultValue = FALSE;
+							}
+							
+							foreach ($listeChef AS $chefId => $chefData)
+							{
+								?>
+									<option value = "<?php echo $chefId; ?>"  <?php if ($chefId == $defaultValue) { echo 'selected'; } ?> /><?php echo $chefData['prenom'].' '.$chefData['nom']; ?></option>
+								<?php
+							}
+						?>
+					</select>
+					<br />
+
 					<!-- Nom du service -->
 					<label for = "nom"><?php echo LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_NOM; ?></label>
 					<input type = "text"  id = "nom" name = "nom" class = "<?php if ($action == 'view' || $action == 'delete') echo 'readonlyForm'; ?>" value = "<?php if (isset($_POST['nom'])) { echo $_POST['nom']; } else if (isset($serviceInfo['nom'])) { echo $serviceInfo['nom']; } ?>" <?php if ($action == 'view' || $action == 'delete') echo 'readonly'; ?> />
@@ -455,34 +483,6 @@
 						?>
 					</select>
 					<?php if ($action == "add" || $action == "edit") { ?><a href = "<?php echo ROOT.CURRENT_FILE.'?page=specialite'; ?>"><i class="fa fa-cog"></i></a><?php } ?>
-					<br />
-					
-					<!-- Chef du service -->
-					<label for = "chef"><?php echo LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_CHEF; ?></label>
-					<select id = "chef" name = "chef" class = "<?php if ($action == 'view' || $action == 'delete') echo 'readonlyForm'; ?>" <?php if ($action == 'view' || $action == 'delete') echo 'disabled'; ?>>
-						<?php
-							$listeChef = getEnseignantList();
-							if (isset($_POST['chef']))
-							{
-								$defaultValue = $_POST['chef'];
-							}
-							else if (isset($serviceInfo['chef']['id']))
-							{
-								$defaultValue = $serviceInfo['chef']['id'];
-							}
-							else
-							{
-								$defaultValue = FALSE;
-							}
-							
-							foreach ($listeChef AS $chefId => $chefData)
-							{
-								?>
-									<option value = "<?php echo $chefId; ?>"  <?php if ($chefId == $defaultValue) { echo 'selected'; } ?> /><?php echo $chefData['prenom'].' '.$chefData['nom']; ?></option>
-								<?php
-							}
-						?>
-					</select>
 					<br />
 					
 					<!-- Certificats associés au service -->
