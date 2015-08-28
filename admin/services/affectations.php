@@ -560,9 +560,11 @@
 					?>
 					</table>
 					<br />
-					<a class = "bouton" href = "<?php echo ROOT.CURRENT_FILE.'?page=affectations&action=affectation&action2=add&id='.$userData['id']; ?>" title = "<?php echo LANG_ADMIN_AFFECTATIONS_ADD_AFFECTATION; ?>"><i class="fa fa-plus-circle"></i></a>
 					<?php
 				}
+				?>
+					<a class = "bouton" href = "<?php echo ROOT.CURRENT_FILE.'?page=affectations&action=affectation&action2=add&id='.$userData['id']; ?>" title = "<?php echo LANG_ADMIN_AFFECTATIONS_ADD_AFFECTATION; ?>"><i class="fa fa-plus-circle"></i></a>
+			<?php
 			}
 			else if ($action2 == 'add' || $action2 == 'edit' || $action2 == 'view' || $action2 == 'delete')
 			{
