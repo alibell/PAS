@@ -252,7 +252,7 @@ else if ($action == 'view' || $action == 'delete' || $action == 'edit')
 			</div>
 			
 			<br />
-			<a class = "bouton" href = "<?php echo ROOT.CURRENT_FILE.'?page=certificat&action=add&id='.$certificat['id']; ?>" title = "<?php echo LANG_ADMIN_CERTIFICAT_ADD_CERTIFICAT; ?>"><i class="fa fa-plus-circle"></i></a>
+			<a class = "bouton" href = "<?php echo ROOT.CURRENT_FILE.'?page=certificat&action=add'; ?>" title = "<?php echo LANG_ADMIN_CERTIFICAT_ADD_CERTIFICAT; ?>"><i class="fa fa-plus-circle"></i></a>
 <?php
 	}
 	else if ($action == 'view')
