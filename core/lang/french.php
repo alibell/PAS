@@ -170,7 +170,7 @@ define('LANG_MONTH_12','Decembre');
 	
 	define('LANG_ACCUEIL_DESCRIPTION_1',"<strong>Evaluez</strong> vos stages et vos ateliers"); 
 	define('LANG_ACCUEIL_DESCRIPTION_2',"<strong>Consultez</strong> les données d'évaluations antérieures en toute simplicité"); 
-	define('LANG_ACCUEIL_DESCRIPTION_3',"<strong>Vérifiez</strong> que vous avez remplis toutes vos évaluations"); 
+	define('LANG_ACCUEIL_DESCRIPTION_3',"<strong>Vérifiez</strong> que vous avez rempli toutes vos évaluations"); 
 	define('LANG_ACCUEIL_CONNEXION',"Connexion"); 
 	define('LANG_ACCUEIL_ABOUT',"A propos de PAS"); 
 
@@ -327,7 +327,7 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_OBJET', 'Object');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_OBJET_DEFAULT', 'RAPPEL : Evaluation non remplie');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG', 'Message');
-			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG_DEFAULT', 'Vous n\'avez pas remplis l\'évaluation suivante : %s.<br />Veuillez vous rendre à l\'adresse suivante afin de la remplir : %s (copier-coller le lien dans votre barre d\'adresse)');
+			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG_DEFAULT', 'Vous n\'avez pas rempli l\'évaluation suivante : %s.<br />Veuillez vous rendre à l\'adresse suivante afin de la remplir : %s (copier-coller le lien dans votre barre d\'adresse)');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_CANCEL', 'Annuler l\'envoie');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_ADD','Ajouter une évaluation');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_DELETE','Supprimer l\'évaluation et l\'ensemble des données associées');
