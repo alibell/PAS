@@ -18,7 +18,7 @@
 **/
 
 	/*
-		22/02/15 - fnMenu.php - Ali Bellamine
+		22/02/15 - fnStage.php - Ali Bellamine
 		Fonctions relatives à la gestion des stages
 	*/
 	
@@ -487,7 +487,7 @@
 		{
 
 			// Récupérations des données du service
-			$sql = 'SELECT s.id serviceId, s.nom serviceNom, h.nom hopitalNom, h.alias hopitalAlias, sp.id specialiteId, sp.nom specialiteNom, u.nom chefNom, u.prenom chefPrenom, u.id chefId
+			$sql = 'SELECT s.id serviceId, s.nom serviceNom, h.id hopitalId, h.nom hopitalNom, h.alias hopitalAlias, sp.id specialiteId, sp.nom specialiteNom, u.nom chefNom, u.prenom chefPrenom, u.id chefId
 					  FROM service s
 					  INNER JOIN hopital h on h.id = s.hopital
 					  LEFT JOIN specialite sp on sp.id = s.specialite
