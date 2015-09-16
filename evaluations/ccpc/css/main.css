@@ -1,6 +1,4 @@
 #divResultats{
-/*	height: calc(100vh - 150px); */
-/*	background-color: rgb(135, 135, 136); */
 	margin-left: -15px;
 	margin-right: -15px;
 	margin-top: 10px;
@@ -92,6 +90,10 @@
 	margin-bottom: 10px;
 }
 
+.tableHiddenService {
+    background: /* On "top" */ repeating-linear-gradient( 45deg, transparent, transparent 10px, #F37878 10px, #CA4E4E 20px ), /* on "bottom" */ linear-gradient( to bottom, transparent, transparent);
+}
+
 #evalccpcContentUnique {
 position: relative;
 width: calc(100% - 30px);
@@ -140,6 +142,19 @@ overflow-x: hidden;
   padding: 10px;
   top: 10px;
   font-size: 2em;
+}
+
+#hideService {
+    position: absolute;
+    left: 10px;
+    padding: 10px;
+    top: 10px;
+    font-size: 1em;
+}
+
+.serviceHidden {
+    color: red !important;
+    background-color: rgb(64, 56, 56) !important;
 }
 
 #download a {
@@ -537,6 +552,12 @@ div:fullscreen {
 	#download {
 		position: inherit;
 		text-align: right;
+	}
+	
+	#hideService {
+	    position: inherit;
+		float: left;
+		text-align: left;
 	}
 	
 	.EvaluationData img {

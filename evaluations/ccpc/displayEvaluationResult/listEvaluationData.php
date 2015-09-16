@@ -161,6 +161,19 @@
 		}
 		
 		/*
+			Ne pas afficher les services masqués si il s'agit d'un étudiant
+		*/
+		
+		if ($_SESSION['rang'] <= 1)
+		{
+			if ($whereSqlFilter == '') { $whereSqlFilter .= 'WHERE '; } else { $whereSqlFilter .= ' AND '; }
+			if ($whereSqlContent == '') { $whereSqlContent .= 'WHERE '; } else { $whereSqlContent .= ' AND '; }
+			
+			$whereSqlFilter .= ' e.hide = 0';
+			$whereSqlContent .= ' e.hide = 0';
+		}
+		
+		/*
 			Ne pas afficher les evaluations vielles de plus d'un mois aux étudiants
 		*/
 		

@@ -36,6 +36,7 @@
 	  *	['service']['date']['max'] => (string) Borne supérieure de l'intervalle sur lequel on a récupéré les évaluations<br>
 	  *	['service']['nbEvaluation'] => (int) Nombre total d'évaluations<br>
 	  *	['service']['promotion'][id de la promotion][] => (int) Promotions représentés dans les résultats d'évaluations<br>
+	  * ['service']['hide'] => (int) 1 si le service est masqué de la liste pour les utilisateurs, 0 sinon
 	  *   	['donnees'] => (array) Contient les données d'évaluation individuelles<br>
 	  * 	['donnees'][identifiant de l'évaluation]['infos']['date'] => (string) Date de l'évaluation<br>
 	  * 	['donnees'][identifiant de l'évaluation]['infos']['promotion']['id'] => (int) Identifiant de la promotion de l'utilisateur ayant remplis l'évaluation<br>
@@ -110,7 +111,7 @@
 		$sqlData = array('id' => $id);
 		$sqlNbDate = 'SELECT COUNT(DISTINCT e.date) nombreDate FROM eval_ccpc_resultats e WHERE e.service = :id '; // Permet de calculer le nombre de date d'évaluations différentes dispo
 		$sqlNbStudent = 'SELECT COUNT(DISTINCT u.id) nombreEtudiant FROM affectationexterne ae INNER JOIN user u ON u.id = ae.userId WHERE ae.service = :id '; // Permet de calculer le nombre d'étudiants en stage sur la période considérée
-		$sql = 'SELECT e.id evaluationId, e.service serviceId, e.date evaluationDate, p.nom promotionNom, e.promotion promotionId ';
+		$sql = 'SELECT e.hide hide, e.id evaluationId, e.service serviceId, e.date evaluationDate, p.nom promotionNom, e.promotion promotionId';
 		foreach ($listEvaluationItems AS $key => $value)
 		{
 			$sql .= ', e.'.$key.' '.$key.' ';
@@ -178,6 +179,8 @@
 		while ($res_f = $res -> fetch())
 		{
 		
+			$serviceEvaluation['service']['hide'] = $res_f['hide'];
+
 			/*
 				On enregistre les données de l'évaluation
 			*/
@@ -386,7 +389,7 @@
 		**/
 		
 		$sqlData = array('id' => $id);
-		$sql = 'SELECT e.id evaluationId, e.moderation moderation ';
+		$sql = 'SELECT e.id evaluationId, e.moderation moderation';
 		foreach ($listEvaluationItems AS $key => $value)
 		{
 			$sql .= ', e.'.$key.' '.$key.' ';
@@ -651,6 +654,7 @@
 					  `nbExternesPeriode` int(3) NOT NULL,
 					  `date` datetime NOT NULL,
 					  `moderation` text NOT NULL,
+					  `hide` int(11) NOT NULL DEFAULT 0,
 					  PRIMARY KEY (`id`),
 					  KEY `promotion` (`promotion`),
 					  KEY `service` (`service`)
