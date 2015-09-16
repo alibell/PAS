@@ -192,7 +192,7 @@
 										$currentLien = ROOT.CURRENT_FILE.'?'.$urlPage.'&service='.$evaluation['service']['id'];
 										?>
 									<tr class = "bodyTR" data-lien = "<?php echo $currentLien; ?>">
-										<td><?php echo $evaluation['service']['FullName']; ?></td>
+										<td class = "<?php if ($evaluation['service']['hide'] == 1) { echo 'tableHiddenService'; } ?>"><?php echo $evaluation['service']['FullName']; ?></td>
 										<td style = "text-align: center;"><?php echo $evaluation['nb']; ?></td>
 										<?php
 											// Affichage des moyennes

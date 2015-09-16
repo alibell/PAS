@@ -91,6 +91,7 @@
 				$tempGET = $_GET;
 				unset($tempGET['service']);
 				unset($tempGET['evaluationContentType']);
+				unset($tempGET['hideService']);
 				$urlPage = http_build_query($tempGET);
 				?>
 				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.$urlPage; ?>">
@@ -181,6 +182,7 @@
 					<?php
 						$tempGET = $_GET;
 						unset($tempGET['evaluationContentType']);
+						unset($tempGET['hideService']);
 					?>
 					<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&evaluationContentType=stat'; ?>"><i class="fa fa-bar-chart barreNavigationBouton"></i></a>
 					<?php
@@ -222,7 +224,32 @@
 						}
 					}
 					
+					/**
+						Masquage du service
+					**/
+					
+					if (isset($_GET['hideService']) && $_SESSION['rang'] >= 3)
+					{
+						unset($_GET['hideService']);
+						
+						if ($evaluationData['service']['hide'] == 1) { $setHideValue = 0; }
+						else { $setHideValue = 1; }
+						
+						$sql = 'UPDATE eval_ccpc_resultats SET hide = '.$setHideValue.' WHERE service = ?';
+						$res = $db -> prepare($sql);
+						if ($res -> execute(array($evaluationData['service']['id'])))
+						{
+							$evaluationData['service']['hide'] = $setHideValue;							
+						}
+					}					
 					?>
+					
+					<?php
+					if ($_SESSION['rang'] >= 3) {?>
+					<div id = "hideService">
+						<div><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&hideService'; ?>"><i class="fa fa-ban barreNavigationBouton <?php if ($evaluationData['service']['hide'] == 1) { echo 'serviceHidden'; } ?>"></i></a></div>
+					</div>
+					<?php } ?>
 					
 					<div id = "download">
 						<div id = "downloadCSV"><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&download=csv'; ?>" target = "_blank"><i class="fa fa-file-excel-o" style = "color: green;"></i></a></div>
