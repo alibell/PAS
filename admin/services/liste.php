@@ -128,11 +128,11 @@
 				Création de l'array à retourner
 			*/
 			
-			$servicesCSV = array(array('id', LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_HOPITAL, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_SPECIALITE, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_CHEF, LANG_ADMIN_SERVICES_NOM));
+			$servicesCSV = array(array('id', LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_HOPITAL, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_SPECIALITE, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_CHEF, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_CHEF, LANG_ADMIN_SERVICES_NOM));
 			
 			foreach (getServiceList() AS $service)
 			{
-				$servicesCSV[] = array($service['id'], $service['hopital']['nom'], $service['specialite']['nom'], $service['chef']['nom'], $service['nom']);
+				$servicesCSV[] = array($service['id'], $service['hopital']['nom'], $service['specialite']['nom'], $service['chef']['nom'], $service['chef']['prenom'], $service['nom']);
 			}
 			// Téléchargement du CSV
 			downloadCSV($servicesCSV, 'services.csv');
