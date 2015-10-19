@@ -5,3 +5,22 @@ LISTE DES MODIFICATIONS
 -------
 
 1.0.0 : Mise en ligne de la première version de PAS - 31/07/2015
+
+1.0.1 :
+Correction de fautes d'orthographe
+Correction de Bug : hopitalId n'était pas demandé dans la requête.
+Mise à jour de CCPC [1.1.0] : Ajout de la possibilité de masquer un service.
+Correction de bug  : Une erreur s'affiche lorsqu'on veut charger la liste des certificats et qu'aucuns certificat n'est enregistré.
+Correction de bug  : Le bouton "ajouter une affectation" ne s'affichait pas lorsqu'il n'y avait aucune affectation enregistré.
+Modification page des services : Affiche le chef de service en premier, afin d'améliorer la lisibilité.
+Correction de bug  : Mauvais affichage de l'hopital dans le profil d'un service.
+Correction de bug  : Requêtes SQL posant problème.
+
+1.1.0 : 
+
+Ajout du prénom dans le CSV de la liste des services
+Ajout de fonctionnalité : possibilité de tester les réglages mail 
+Correction de bug : fond lors du plein écran
+Correction de bug : fond noir lors du plein écran avec Firefox 
+Modification du CSV contenant la liste des services 
+Mise à jour de CCPC [1.2] : Selection de la date s'appliquant à une campagne d'évaluation 
