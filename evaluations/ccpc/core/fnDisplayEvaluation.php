@@ -44,11 +44,14 @@
 		$data = array();
 		
 		/**
-			On remplit l'array $data['data']
+			On remplit l'array $data['date']
 		**/
 		
 			// Date
 			$tempData['date'] = TimestampToDatetime(time());
+			
+			// On récupère les dates à tester
+			$evaluationSettings = eval_ccpc_getSettings($evaluationData['id']);
 		
 			// Promotion de l'utilisateur
 			if ($userData = getUserData($_SESSION['id']) && isset($tempData['promotion']))
@@ -66,10 +69,11 @@
 			// Informations concernant le service et la durée du stage
 			$sql = 'SELECT ae.service service, ae.dateDebut dateDebut, ae.dateFin dateFin
 						FROM affectationexterne ae
-						WHERE ae.dateDebut <= :dateDebutEval AND ae.dateFin >= :dateDebutEval AND userId = :id';
+						WHERE ae.dateDebut >= :dateDebutEval AND ae.dateFin >= :dateDebutEval AND ae.dateDebut <= :dateFinEval AND ae.dateFin <= :dateFinEval AND userId = :id';
 			$res = $db -> prepare($sql);
 			$res -> execute(array(
-										'dateDebutEval' => TimestampToDatetime($evaluationData['date']['debut']),
+										'dateDebutEval' => TimestampToDatetime($evaluationSettings['dateDebut']),
+										'dateFinEval' => TimestampToDatetime($evaluationSettings['dateFin']),
 										'id' => $_SESSION['id']
 									));
 			if ($res)
@@ -374,4 +378,115 @@
 			return false;
 		}
 	}
+	
+	/**
+	  * eval_ccpc_getSettings - Retourne les réglages de l'évaluation sélectionnée
+	  *
+	  * @category : eval_ccpc_functions
+	  * @param int $id int ID de l'évaluation dont on souhaite récupérés les réglages
+	  * @return array Array contenant les réglages de l'évaluation
+	  * 
+	  * Contenu de l'array retourné :<br>
+	  *	['id'] => (int) Identifiant de l'évaluation<br>
+	  *	['dateDebut'] => (timestamp) Marge inférieure de la période à évaluer<br>
+	  *	['dateFin'] => (timestamp) Marge supérieure de la période à évaluer<br>
+	  *
+	  * @Author Ali Bellamine
+	  *
+	  */
+	
+	function eval_ccpc_getSettings($id)
+	{
+		initTable(); // S'assure de l'existence de la table dans la BDD
+		global $db;
+		
+		$settings = array();
+
+		if (count(checkEvaluation($id, array())) == 0)
+		{
+			$settings['id'] = $id;
+			
+			// On récupère les données de la base de donnée
+			$sql = 'SELECT s.dateDebut dateDebut, s.dateFin dateFin FROM eval_ccpc_settings s WHERE s.id_evaluation = ? LIMIT 1';
+			$res = $db -> prepare($sql);
+			$res -> execute(array($id));
+			$res_f = $res -> fetch();
+			
+			// On enregistre les dates
+			if (isset($res_f['dateDebut']) && isset($res_f['dateFin']) && is_numeric(DatetimeToTimestamp($res_f['dateFin'])) && is_numeric(DatetimeToTimestamp($res_f['dateDebut'])) && DatetimeToTimestamp($res_f['dateDebut']) <= DatetimeToTimestamp($res_f['dateFin']))
+			{
+				$settings['dateDebut'] = DatetimeToTimestamp($res_f['dateDebut']);
+				$settings['dateFin'] = DatetimeToTimestamp($res_f['dateFin']);
+			}
+			else
+			{
+				$settings['dateDebut'] = FALSE;
+				$settings['dateFin'] = FALSE;
+			}
+		}
+		
+		return $settings;
+	}
+	
+	/**
+	  * eval_ccpc_setSettings - Enregistre les réglages de l'évaluation sélectionnée
+	  *
+	  * @category : eval_ccpc_functions
+	  * @param array $settings array Array contenant les données d'évaluation à enregistrer, correspond à la même structure que l'array retourné par eval_ccpc_setSettings
+	  * @return boolean TRUE si l'opération s'est déroulé avec succès
+	  * 
+	  * @Author Ali Bellamine
+	  *
+	  */
+	
+	function eval_ccpc_setSettings($settings)
+	{
+		initTable(); // S'assure de l'existence de la table dans la BDD
+		global $db;
+		
+		if (isset($settings['id']) && count(checkEvaluation($settings['id'], array())) == 0)
+		{
+			// On vérifie les données à enregistrer
+			if (isset($settings['dateDebut']) && isset($settings['dateFin']) && is_numeric($settings['dateFin']) && is_numeric($settings['dateDebut']) && $settings['dateDebut'] <= $settings['dateFin'])
+			{
+				// On prépare l'array
+				$settings['dateDebut'] = TimestampToDatetime($settings['dateDebut']);
+				$settings['dateFin'] = TimestampToDatetime($settings['dateFin']);
+				
+				// On vérifie si l'évaluation existe déjà dans la base settings
+				$sql = 'SELECT count(*) FROM eval_ccpc_settings WHERE id_evaluation = ? LIMIT 1';
+				$res = $db -> prepare($sql);
+				$res -> execute(array($settings['id']));
+				$res_f = $res -> fetch();
+				
+				if ($res_f[0] == 0)
+				{
+					$sql = 'INSERT INTO eval_ccpc_settings (id_evaluation, dateDebut, dateFin) VALUES (:id, :dateDebut, :dateFin)';
+				}
+				else
+				{
+					$sql = 'UPDATE eval_ccpc_settings SET dateDebut = :dateDebut, dateFin = :dateFin WHERE id_evaluation = :id';
+				}
+				
+				$res2 = $db -> prepare($sql);
+				if ($res2 -> execute($settings))
+				{
+					return TRUE;
+				}
+				else
+				{
+					return FALSE;
+				}
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
 ?>

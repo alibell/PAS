@@ -164,9 +164,17 @@ define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_NOCOMMENT','Sans commentaires
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT','Avec commentaires (modérés)');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT','Avec commentaires (non modérés)');
 
+/* Paramètres */
+define('LANG_FORM_CCPC_SETTINGS_TITLE','Paramètres de l\'évaluation');
+define('LANG_FORM_CCPC_SETTINGS_PERIOD_TITLE','Période à évaluer');
+define('LANG_FORM_CCPC_SETTINGS_PERIOD_START','Date de début (JJ/MM/AAAA)');
+define('LANG_FORM_CCPC_SETTINGS_PERIOD_END','Date de fin (JJ/MM/AAAA)');
+define('LANG_FORM_CCPC_SETTINGS_SUBMIT','Valider');
+
 
 /* Erreurs  */
 
+define('LANG_ERROR_CCPC_INVALIDDATE','La date de début doit être située avant la date de fin.');
 define('LANG_ERROR_CCPC_INCOMPLETEFORM','Veuillez compléter tous les champs du formulaire.');
 define('LANG_ERROR_CCPC_NOPROMOTION','Erreur interne - Impossible de récupérer la promotion de l\'utilisateur.');
 define('LANG_ERROR_CCPC_NONBEXTERNE','Erreur interne - Impossible de calculer le nombre d\'externes affecté au service.');
