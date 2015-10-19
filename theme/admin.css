@@ -118,6 +118,8 @@ a {
   padding-top: 25px;
   height: calc(100% - 200px);
   width: 100%;
+  border-radius: 10px;
+  background-color: white;
 }
 
 .EvaluationListUserNom {

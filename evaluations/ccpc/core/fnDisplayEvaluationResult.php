@@ -631,7 +631,7 @@
 	}
 	
 	/**
-	  * initTable - Crée les table eval_ccpc_resultats, eval_ccpc_filtres et eval_ccpc_filtres_detected dans la base de donnée si ces derniers n'existent pas. Table nécessaires au fonctionnement du module d'évaluation.
+	  * initTable - Crée les table eval_ccpc_resultats, eval_ccpc_settings, eval_ccpc_filtres et eval_ccpc_filtres_detected dans la base de donnée si ces derniers n'existent pas. Table nécessaires au fonctionnement du module d'évaluation.
 	  *
 	  * @category : eval_ccpc_functions
 	  * @return boolean TRUE si l'opération s'est effectué avec succès, FALSE si une erreur a été rencontrée
@@ -773,6 +773,23 @@
 						ADD CONSTRAINT `eval_ccpc_filtres_detected_ibfk_1` FOREIGN KEY (`id_filtre`) REFERENCES `eval_ccpc_filtres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 					SET FOREIGN_KEY_CHECKS=1;';
 					
+		$db -> query($sql);
+		
+		// On crée eval_ccpc_settings
+		$sql = 'CREATE TABLE IF NOT EXISTS `eval_ccpc_settings` (
+					  `id` int(11) NOT NULL AUTO_INCREMENT,
+					  `id_evaluation` INT NOT NULL,
+					  `dateDebut` datetime NOT NULL,
+					  `dateFin` datetime NOT NULL,
+					  PRIMARY KEY (`id`),
+					  KEY `id_evaluation` (`id_evaluation`)
+					) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;';
+					
+		// Clé étrangère
+		$sql .= 'ALTER TABLE `eval_ccpc_settings`
+						ADD CONSTRAINT `eval_ccpc_settings_ibfk_1` FOREIGN KEY (`id_evaluation`) REFERENCES `evaluation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+					SET FOREIGN_KEY_CHECKS=1;';
+
 		$db -> query($sql);
 	}
 	

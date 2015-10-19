@@ -170,7 +170,7 @@ define('LANG_MONTH_12','Decembre');
 	
 	define('LANG_ACCUEIL_DESCRIPTION_1',"<strong>Evaluez</strong> vos stages et vos ateliers"); 
 	define('LANG_ACCUEIL_DESCRIPTION_2',"<strong>Consultez</strong> les données d'évaluations antérieures en toute simplicité"); 
-	define('LANG_ACCUEIL_DESCRIPTION_3',"<strong>Vérifiez</strong> que vous avez rempli toutes vos évaluations"); 
+	define('LANG_ACCUEIL_DESCRIPTION_3',"<strong>Vérifiez</strong> que vous avez remplis toutes vos évaluations"); 
 	define('LANG_ACCUEIL_CONNEXION',"Connexion"); 
 	define('LANG_ACCUEIL_ABOUT',"A propos de PAS"); 
 
@@ -327,7 +327,7 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_OBJET', 'Object');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_OBJET_DEFAULT', 'RAPPEL : Evaluation non remplie');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG', 'Message');
-			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG_DEFAULT', 'Vous n\'avez pas rempli l\'évaluation suivante : %s.<br />Veuillez vous rendre à l\'adresse suivante afin de la remplir : %s (copier-coller le lien dans votre barre d\'adresse)');
+			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG_DEFAULT', 'Vous n\'avez pas remplis l\'évaluation suivante : %s.<br />Veuillez vous rendre à l\'adresse suivante afin de la remplir : %s (copier-coller le lien dans votre barre d\'adresse)');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_CANCEL', 'Annuler l\'envoie');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_ADD','Ajouter une évaluation');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_DELETE','Supprimer l\'évaluation et l\'ensemble des données associées');
@@ -363,6 +363,11 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_PARAMETRE_VALEUR_CAS_SERVER_VALIDATEURI','Adresse de validation des connexions au CAS');
 			define('LANG_ADMIN_PARAMETRE_VALEUR_CAS_SERVER_CERTIFICATPATH','Certificat pour le CAS');
 			define('LANG_ADMIN_PARAMETRE_VALEUR_LANG','Langue');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST','Envoyer un email de Test');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_ADRESS','Adresse email du destinataire.');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_TITLE','[PAS] Email de test');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_CONTENT','Ceci est un email de test. Si vous recevez ce message, vos paramètres email de PAS sont correctement configurés.');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_SEND','Envoyer');
 			
 		// Gestion des bugs
 		
@@ -384,7 +389,7 @@ define('LANG_MONTH_12','Decembre');
 		define('LANG_EVAL_LIST_NOSTUDENT', 'Il n\'a aucun étudiant dans le service pour la période sélectionnée.');
 		
 	// A propos
-		define('LANG_ABOUT_DESCRIPTION', '%1$s est un logiciel de gestion des évaluations de stage.<br />Souple et modulable, %1$s est à adaptable à toutes les situations.');
+		define('LANG_ABOUT_DESCRIPTION', '%1$s est un logiciel de gestion des évaluations de stage.<br />Souple et modulable, %1$s est adaptable à toutes les situations.');
 		define('LANG_ABOUT_LICENCE', '%1$s est distribué sous licence GPL V3.');
 		define('LANG_ABOUT_LIBRAIRIE', 'L\'envoi d\'email se fait à l\'aide de librairie <a href = "http://swiftmailer.org/">SwiftMailer</a>, aucune modification n\'a été apporté au code source de la librairie.<br />Les icones sont issues de la police d\'écriture <a href = "http://swiftmailer.org/">FontAwesome</a>.');	
 		define('LANG_ABOUT_CONTACT', 'Contact : <a href = "mailto:contact@alibellamine.me">contact@alibellamine.me</a>');

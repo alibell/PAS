@@ -164,9 +164,17 @@ define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_NOCOMMENT','Without comments'
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT','With comments (moderate)');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT','With commentaires (no moderate)');
 
+/* Paramètres */
+define('LANG_FORM_CCPC_SETTINGS_TITLE','Evaluation settings');
+define('LANG_FORM_CCPC_SETTINGS_PERIOD_TITLE','Time interval');
+define('LANG_FORM_CCPC_SETTINGS_PERIOD_START','From (DD/MM/YYYY)');
+define('LANG_FORM_CCPC_SETTINGS_PERIOD_END','To (DD/MM/YYYY)');
+define('LANG_FORM_CCPC_SETTINGS_SUBMIT','Valider');
+
 
 /* Erreurs  */
 
+define('LANG_ERROR_CCPC_INVALIDDATE','Invalid date.');
 define('LANG_ERROR_CCPC_INCOMPLETEFORM','Please complete all form inputs.');
 define('LANG_ERROR_CCPC_NOPROMOTION','Internal error - Could not get user\'s class.');
 define('LANG_ERROR_CCPC_NONBEXTERNE','Internal error - Could not determine the number of student affected to the service.');

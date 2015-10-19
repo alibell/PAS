@@ -363,6 +363,11 @@ define('LANG_MONTH_12','December');
 			define('LANG_ADMIN_PARAMETRE_VALEUR_CAS_SERVER_VALIDATEURI','CAS Validation Adress');
 			define('LANG_ADMIN_PARAMETRE_VALEUR_CAS_SERVER_CERTIFICATPATH','CAS Certificat');
 			define('LANG_ADMIN_PARAMETRE_VALEUR_LANG','Language');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST','Send a mail test');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_ADRESS','Email adress.');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_TITLE','[PAS] Test mail');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_CONTENT','This message is a test message. If you received it, it means your mail settings are working.');
+			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_SEND','Send');
 
 		// Gestion des bugs
 		
