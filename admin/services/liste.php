@@ -89,7 +89,7 @@
 				
 			// ORDER : si non spécifié, il s'agit du nom
 						
-			$allowedORDER = array('nom' => 's.nom', 'hopital' => 'h.nom', 'chef' => 'u.nom', 'specialite' => 'sp.nom'); // Liste des order autorisés
+			$allowedORDER = array('nom' => 's.nom', 'hopital' => 'h.nom', 'chef' => 'u.nom', 'specialite' => 'sp.nom', 'id' => 's.id'); // Liste des order autorisés
 			if (isset($_GET['order']) && isset($allowedORDER[$_GET['order']]))
 			{
 				$orderSQL = ' ORDER BY '.$allowedORDER[$_GET['order']].' ';
@@ -128,13 +128,12 @@
 				Création de l'array à retourner
 			*/
 			
-			$servicesCSV = array(array('id', LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_NOM));
+			$servicesCSV = array(array('id', LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_HOPITAL, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_SPECIALITE, LANG_ADMIN_SERVICES_LISTE_TABLE_TITLE_CHEF, LANG_ADMIN_SERVICES_NOM));
 			
 			foreach (getServiceList() AS $service)
 			{
-				$servicesCSV[] = array($service['id'], $service['FullName']);
+				$servicesCSV[] = array($service['id'], $service['hopital']['nom'], $service['specialite']['nom'], $service['chef']['nom'], $service['nom']);
 			}
-			
 			// Téléchargement du CSV
 			downloadCSV($servicesCSV, 'services.csv');
 		}
