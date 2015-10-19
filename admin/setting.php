@@ -59,6 +59,12 @@
 		}
 	}
 	
+	// Envoie du mail de test
+	if (isset($_GET['mail']) && filter_var($_GET['mail'], FILTER_VALIDATE_EMAIL))
+	{
+		sendMail($_GET['mail'], LANG_ADMIN_PARAMETRE_MAIL_TEST_TITLE, LANG_ADMIN_PARAMETRE_MAIL_TEST_CONTENT);
+	}
+	
 	/**
 		3. Affichage des données
 	**/
@@ -96,6 +102,13 @@
 				}
 			?>
 		</table>
+		
+		<!-- Envoie des emails de test -->
+		<h1><?php echo LANG_ADMIN_PARAMETRE_MAIL_TEST; ?></h1>
+		<form>
+			<input type = "mail" name = "mail" placeholder = "<?php echo LANG_ADMIN_PARAMETRE_MAIL_TEST_ADRESS; ?>" style = "height: 25px; padding: 5px; border-radius: 5px; display: block; width: 90%; margin: auto;" required />
+			<input type = "submit" value = "<?php echo LANG_ADMIN_PARAMETRE_MAIL_TEST_SEND; ?>" />
+		</form>
 	<?php
 	
 	require '../core/footer.php';
