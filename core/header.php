@@ -91,6 +91,7 @@
 	<script type="text/javascript" src="<?php echo ROOT.'JS/chosen-1.4.2/chosen.jquery.min.js'; ?>"></script> <!-- chosen.js, license MIT -->
 	<script type="text/javascript" src="<?php echo ROOT.'JS/featherlight.min.js'; ?>"></script> <!-- featherlight.min.js, license MIT -->
 	<script type="text/javascript" src="<?php echo ROOT.'JS/tinymce/tinymce.min.js'; ?>"></script> <!-- tinymce 4.2.1, license LGPL -->
+	<script type="text/javascript" src="<?php echo ROOT.'JS/stacktable/stacktable.js'; ?>"></script> <!-- stacktable, license MIT -->
 </head>
 
 <body>
@@ -147,7 +148,7 @@
 		?>
 		
 		<div id = "menuButton">
-			<i class="fa fa-bars"></i>
+			<i class="fa fa-bars"></i> <?php echo LANG_ADMIN_MENU_TITLE; ?>
 		</div>
 		
 		<div id = "headerLogo">
