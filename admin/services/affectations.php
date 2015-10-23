@@ -562,7 +562,7 @@
 					<br />
 					<?php
 				}
-				?>
+			?>
 					<a class = "bouton" href = "<?php echo ROOT.CURRENT_FILE.'?page=affectations&action=affectation&action2=add&id='.$userData['id']; ?>" title = "<?php echo LANG_ADMIN_AFFECTATIONS_ADD_AFFECTATION; ?>"><i class="fa fa-plus-circle"></i></a>
 			<?php
 			}

@@ -483,7 +483,7 @@
 						?>
 					</select>
 					<?php if ($action == "add" || $action == "edit") { ?><a href = "<?php echo ROOT.CURRENT_FILE.'?page=specialite'; ?>"><i class="fa fa-cog"></i></a><?php } ?>
-					<br />
+					<br />					
 					
 					<!-- Certificats associés au service -->
 					<div class = "formTitle"><?php echo LANG_ADMIN_SERVICES_CAT_CERTIFICATS; ?> <?php if ($action == "add" || $action == "edit") { ?><a href = "<?php echo ROOT.CURRENT_FILE.'?page=certificat'; ?>"><i class="fa fa-cog"></i></a><?php } ?></div>

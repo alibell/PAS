@@ -23,7 +23,7 @@
 </html>
 
 <!-- Bouton permettant de signaler un bug -->
-<div id = "bug"><i class="fa fa-bug" title = "Signaler un problème"></i></div>
+<div id = "bug"><i class="fa fa-exclamation-triangle" title = "Signaler un problème"></i></div>
 <div style = "display: none;">
 	<div id = "bugForm">
 		<form>
@@ -43,4 +43,45 @@
 	<script type="text/javascript" src="<?php echo ROOT.'JS/bugButton.js'; ?>"></script> <!-- Signalement des bugs -->
 	<script>
 		var ajaxBugURI = "<?php echo getPageUrl('ajaxBug'); ?>";
+		
+		<!-- Variables indiquant si on est sur un mobile / une tablette ou non -->
+		function getDevice() {			
+			if (window.matchMedia('screen and (max-width: 1024px) and (min-width: 320px)').matches == true)
+			{
+				isMobile = true;
+				if (window.matchMedia('screen and (min-width: 721px) and (max-width: 1024px)').matches == true)
+				{
+					mobileSize = 'mid';
+				}
+				else
+				{
+					mobileSize = 'small';
+				}
+			}
+			else
+			{
+				isMobile = false;
+			}
+		}
+
+		<!-- Gestion de l'affichage des tableaux -->
+		function mobileTableDisplay () {
+			if (isMobile)
+			{
+				$('table').each(function(){
+					if ($(this).hasClass('stacktable') == false)
+					{
+						$(this).stacktable();
+					}
+				});
+			}
+		}
+		
+		$(window).on('resize', function(){
+			getDevice();
+			mobileTableDisplay();
+		});
+		
+		getDevice();
+		mobileTableDisplay();
 	</script>
