@@ -43,7 +43,7 @@
 	
 	if (isset($_POST) && count($_POST) > 0)
 	{
-		if (isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'updateValue' && isset($_POST['key']) && isset($paramList[$_POST['key']]) && isset($_POST['value']) && $_POST['value'] != '' && $_POST['value'] != $paramList[$_POST['key']])
+		if (isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'updateValue' && isset($_POST['key']) && isset($paramList[$_POST['key']]) && isset($_POST['value']) && $_POST['value'] != $paramList[$_POST['key']])
 		{
 			ob_end_clean();
 				$sql = 'UPDATE setting SET valeur = ? WHERE alias = ? LIMIT 1';
