@@ -24,3 +24,7 @@ Correction de bug : fond lors du plein écran
 Correction de bug : fond noir lors du plein écran avec Firefox 
 Modification du CSV contenant la liste des services 
 Mise à jour de CCPC [1.2] : Selection de la date s'appliquant à une campagne d'évaluation 
+
+1.1.1 :
+
+Possibilité de mettre des valeurs vides dans les réglages (mot de passe SMTP...)
