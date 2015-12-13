@@ -16,7 +16,9 @@
 	with this program; if not, write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 **/
+
 ?>
+
 <div id = "evalccpcContentUnique">
 <?php
 	if (isset($evaluationData) && count($evaluationData) > 0)
@@ -207,6 +209,50 @@
 				
 				if ($evaluationContentType == 'stat')
 				{
+					/**
+						Notes du service, nombre d'évaluations
+					**/
+					
+					?>
+					
+					<div class = "catEvaluationData" style = "padding: 5px";>
+						<?php	
+						// Date des données d'évaluation
+						echo '<div style = "padding-bottom: 5px;"><b>'.date('d/m/Y', $evaluationData['service']['date']['min']).' - '.date('d/m/Y', $evaluationData['service']['date']['max']).'</b></div>';
+						
+						// Nombre d'évaluations
+						echo '<div><b>'.LANG_FORM_CCPC_LISTSERVICE_NBEVAL_TITLE.' : </b>'.$evaluationData['nb'].'</div>';
+						
+						// Notes du service
+						if  ($form = simplexml_load_file(PLUGIN_PATH.'formulaire.xml'))
+						{
+							foreach ($form -> categorie AS $categorie)
+							{
+								foreach ($categorie -> input AS $input)
+								{
+									if ($input['type'] == 'select')
+									{
+										$moyenne = (string) $categorie['nom'];
+										if (isset($evaluationData[$moyenne]))
+										{
+											?>
+											<div style = "display: inline-block; vertical-align: bottom; padding: 10px; font-weight: bold;">
+												<?php
+												echo constant((string) $categorie['legend']).' : '.($evaluationData[$moyenne]['moyenne']+5).'/10';
+												?>
+												<?php makeHorizontalBar(100, 30, -5, 'red', 5, 'green', $evaluationData[$moyenne]['moyenne']); ?>
+											</div>
+											<?php
+										}
+										break;
+									}
+								}
+							}
+						}
+						?>
+					</div>
+					
+					<?php
 
 					/**
 						Bouton de téléchargement
@@ -258,8 +304,7 @@
 					
 					<div style = "width: 100%; text-align: center;">
 					<?php
-						// Nombre d'évaluations
-						echo '<b>'.LANG_FORM_CCPC_LISTSERVICE_NBEVAL_TITLE.' : </b>'.$evaluationData['nb'];
+						
 					?>
 					</div>
 

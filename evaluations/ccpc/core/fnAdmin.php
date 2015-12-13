@@ -559,11 +559,11 @@
 					if (isset($promotion) && is_numeric($promotion) && count(checkPromotion($promotion, array())) == 0)
 					{
 						$sqlData['promotion'] = $promotion;
-						$sql = 'SELECT id_filtre id FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage >= :debutStage AND finStage <= :finStage AND (promotion = :promotion OR promotion IS NULL)';
+						$sql = 'SELECT id_filtre id FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage = :debutStage AND finStage = :finStage AND (promotion = :promotion OR promotion IS NULL)';
 					}
 					else
 					{
-						$sql = 'SELECT id_filtre filtre FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage >= :debutStage AND finStage <= :finStage';
+						$sql = 'SELECT id_filtre filtre FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage = :debutStage AND finStage = :finStage';
 					}
 
 					$res = $db -> prepare($sql);

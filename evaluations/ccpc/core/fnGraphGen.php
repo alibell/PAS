@@ -98,11 +98,11 @@
 					/* On crée l'objet pPie */
 					$PieChart = new pPie($myPicture,$MyData);
 
-					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/MankSans.ttf',"FontSize"=>13,"R"=>223,"G"=>223,"B"=>223));
-					$PieChart->draw3DPie($width/2,($height-75)/2,array("Radius"=>100,"DataGapAngle"=>12, "WriteValues" => TRUE, "DataGapRadius"=>10,"Border"=>TRUE));
+					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/verdana.ttf',"FontSize"=>13,"R"=>223,"G"=>223,"B"=>223));
+					$PieChart->draw3DPie($width/2,($height-75)/2,array("Radius"=>100,"DataGapAngle"=>12, "WriteValues" => TRUE, "DataGapRadius"=>10,"Border"=>TRUE, 'ValueR' => 0, 'ValueG' => 0, 'ValueB' => 0));
 					
-					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/MankSans.ttf',"FontSize"=>10,"R"=>80,"G"=>80,"B"=>80));
-					$PieChart->drawPieLegend(10,$height-75,array("Style"=>LEGEND_ROUND,"Mode"=>LEGEND_VERTICAL));
+					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/verdana.ttf',"FontSize"=>8,"R"=>255,"G"=>255,"B"=>255));
+					$PieChart->drawPieLegend(10,$height-75,array("Style"=>LEGEND_ROUND,"Mode"=>LEGEND_VERTICAL, "R" => 0, "B" => 0, "G" => 0));
 					$myPicture->render($filePath);
 
 					return $filePathURI;
@@ -467,8 +467,8 @@
 			$filePath = PLUGIN_PATH.'cache/'.$hash.'.png';
 			$filePathURI = ROOT.'evaluations/ccpc/cache/'.$hash.'.png';
 
-			// Si le hash existe déjà : on renvoie le lien de l'image // sinon en crée le graphique
 			if (is_file($filePath)) 
+			// Si le hash existe déjà : on renvoie le lien de l'image // sinon en crée le graphique
 			{
 				return $filePathURI; 
 			}
@@ -514,7 +514,7 @@
 					
 					$myPicture = new pImage($width,$height,$MyData, TRUE);				
 
-					$myPicture->setFontProperties(array("FontName"=>PLUGIN_PATH.'core/pChart2.1.4/fonts/MankSans.ttf',"FontSize"=>14,"R"=>80,"G"=>80,"B"=>80));
+					$myPicture->setFontProperties(array("FontName"=>PLUGIN_PATH.'core/pChart2.1.4/fonts/verdana.ttf',"FontSize"=>10,"R"=>0,"G"=>0,"B"=>0));
 										
 					// On détermine les limites
 					$myPicture->setGraphArea(0,0,$width,$height-30);

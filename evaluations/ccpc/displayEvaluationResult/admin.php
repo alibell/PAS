@@ -48,7 +48,7 @@
 		);
 		
 		// On récupère la variable action
-		$allowedAction = array('view', 'add', 'edit', 'delete', 'mail');
+		$allowedAction = array('view', 'add', 'edit', 'delete', 'mail', 'update');
 		
 		if (isset($_GET['action']) && in_array($_GET['action'], $allowedAction))
 		{
@@ -95,6 +95,61 @@
 		}
 	}
 	
+	// Mise à jour des données stages détectées par un filtre
+	if ($action == 'update' && isset($filtreData))
+	{
+		// 1. On récupère la liste de tous les services
+		$listeServices = getServiceList();
+		
+		// 2. Pour chaque service on teste le filtre sur une période de 1 an
+		
+			// Détermination des dates minimales et maximales
+			$DateMax = time();
+			$DateMin = time()-365*24*3600;
+			
+			// On lance la recherche pour chaque service
+			foreach ($listeServices AS $service)
+			{
+				$listePromotion = array();
+				$listeDate = array();
+				
+				// On détermine la liste des promotions représentées dans le service
+				$sql = 'SELECT DISTINCT promotion FROM `eval_ccpc_resultats` WHERE service = ?';				
+				
+				$res = $db -> prepare ($sql);
+				$res -> execute(array($service['id']));
+				
+				while ($res_f = $res -> fetch())
+				{
+					$listePromotion[] = $res_f[0];
+				}
+				
+				// On détermine les couples de dates à tester
+				$sql = 'SELECT DISTINCT debutStage, finStage FROM `eval_ccpc_resultats` WHERE service = ? AND debutStage >= ? AND finStage <= ?';
+				$res = $db -> prepare ($sql);
+				$res -> execute(array($service['id'], TimestampToDatetime($DateMin), TimestampToDatetime($DateMax)));
+				
+				while ($res_f = $res -> fetch())
+				{
+					$listeDate[] = array('DateMin' => DatetimeToTimestamp($res_f['debutStage']), 'DateMax' => DatetimeToTimestamp($res_f['finStage']));
+				}
+				
+				// On peux lancer le scan du service
+				
+				foreach ($listeDate AS $IntervalleDates)
+				{
+					foreach ($listePromotion AS $promotionId)
+					{
+						eval_ccpc_applyFilter($service['id'], $promotionId, $IntervalleDates['DateMin'], $IntervalleDates['DateMax']);
+					}
+				}
+			}
+			
+			$tempGET = $_GET;
+			unset($tempGET['action']);
+			header('Location: '.ROOT.CURRENT_FILE.'?'.http_build_query($tempGET));
+	}
+	
 	// Ajout et edition des filtres
 	if (isset($_POST) && count($_POST) > 0)
 	{
@@ -139,7 +194,7 @@
 					$size['height'] = $size[1];
 					if (isset($size['mime']) && isset($size['width']) && isset($size['height']))
 					{
-						if ($size['mime'] != 'image/png' || $size['width'] != 256 || $size['width'] != 256)
+						if ($size['mime'] != 'image/png' || $size['width'] != 128 || $size['width'] != 128)
 						{
 							$erreur['LANG_FORM_CCPC_ADMIN_FILTER_ERROR_FORMAT'] =  TRUE;
 							unset($_POST[$key]);
@@ -382,6 +437,11 @@
 					$tempGet = $_GET;
 					unset($tempGet['action']);
 					unset($tempGet['page']);
+					
+					$tempGetInnerPage = $_GET;
+					unset($tempGetInnerPage['action']);
+					unset($tempGetInnerPage['msg']);
+					unset($tempGetInnerPage['erreur']);	
 				?>
 				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGet); ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa fa-arrow-circle-left"></i></span></a>				
 				<!-- On met toutes les variables $_GET en hidden -->
@@ -409,17 +469,20 @@
 				</select>
 				
 				<!-- Bouton d'ajout de filtre -->
-				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&action=add'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa fa-plus-circle"></i></span></a>
+				
+				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGetInnerPage).'&action=add'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa fa-plus-circle"></i></span></a>
 				<!-- Bouton d'édition et de suppression de filtre -->
 				<?php
 					if (isset($_GET['filtreId']))
 					{
 						?>
-						<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&action=edit'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa  fa-pencil-square-o"></i></span></a>
-						<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&action=delete'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa  fa-trash-o"></i></span></a>
+						<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGetInnerPage).'&action=edit'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa  fa-pencil-square-o"></i></span></a>
+						<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGetInnerPage).'&action=delete'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa  fa-trash-o"></i></span></a>
 						<?php
 					}
 				?>
+				<!-- Bouton d'actualisation des données d'un filtre -->
+				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGetInnerPage).'&action=update'; ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa fa-refresh"></i></span></a>
 			</form>
 			<?php
 			}
@@ -546,6 +609,9 @@
 									unset($tempGET['dateDebut']);
 									unset($tempGET['dateFin']);
 									
+									// Garde en mémoire la liste des combinaisons de dates affichés, au format DateDebut-DateFin
+									$listDisplayed = array();
+									
 									if (isset($filtreData['detected']))
 									{
 										foreach ($filtreData['detected'] AS $value)
@@ -554,9 +620,13 @@
 											{
 												foreach ($value2 AS $service)
 												{
-												?>
-													<li data-Annee = "<?php echo date('Y', $service['date']['fin']); ?>"><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&dateDebut='.$service['date']['debut'].'&dateFin='.$service['date']['fin']; ?>"><?php echo date('d/m/Y', $service['date']['debut']).' - '.date('d/m/Y', $service['date']['fin']); ?></a></li>
-												<?php
+													if (!isset($listDisplayed[$service['date']['debut'].'-'.$service['date']['fin']]))
+													{
+														?>
+															<li data-Annee = "<?php echo date('Y', $service['date']['fin']); ?>"><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&dateDebut='.$service['date']['debut'].'&dateFin='.$service['date']['fin']; ?>"><?php echo date('d/m/Y', $service['date']['debut']).' - '.date('d/m/Y', $service['date']['fin']); ?></a></li>
+														<?php
+														$listDisplayed[$service['date']['debut'].'-'.$service['date']['fin']] = TRUE;
+													}
 												}
 											}
 										}
@@ -583,16 +653,21 @@
 											<td><?php echo LANG_FORM_CCPC_FILTER_SERVICE_TITLE; ?></td>
 											<td>PDF</td>
 											<td>CSV</td>
+											<td></td>
 										</tr>
 										<?php
 										foreach ($filtreData['detected'][$_GET['dateFin']][$_GET['dateDebut']] AS $serviceDetection)
 										{
+											// On détermine le lien à générer
+											$linkGetData = array('evaluationType' => 1, 'service' => $serviceDetection['service']['id'], 'FILTER' => array('date' => array('min' => $serviceDetection['date']['debut'], 'max' => $serviceDetection['date']['fin'])));
+											
 											$serviceData = getServiceInfo($serviceDetection['service']['id']); // Infos sur le service											
 											?>
 												<tr class = "bodyTR" syle = "cursor: auto;">
 													<td><?php echo $serviceData['FullName']; ?></td>
 													<td><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&serviceId='.$serviceData['id'].'&download=PDFnoComment'; ?>"><?php echo LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_NOCOMMENT; ?></a> - <a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&serviceId='.$serviceData['id'].'&download=PDFmoderateComment'; ?>"><?php echo LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT; ?></a> - <a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&serviceId='.$serviceData['id'].'&download=PDFunmoderateComment'; ?>"><?php echo LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT; ?></a></td>
 													<td><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&serviceId='.$serviceData['id'].'&download=CSVmoderateComment'; ?>"><?php echo LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT; ?></a> - <a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&serviceId='.$serviceData['id'].'&download=CSVunmoderateComment'; ?>"><?php echo LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT; ?></a></td>
+													<td><a href = "<?php echo getPageUrl('evalView', $linkGetData); ?>"><i class="fa fa-bar-chart"></i></a></td>
 												</tr>
 											<?php
 										}

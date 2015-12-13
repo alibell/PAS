@@ -175,7 +175,7 @@
 				  `right2` int(1) NOT NULL,
 				  `right3` int(1) NOT NULL,
 				  `right4` int(1) NOT NULL
-				) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;';
+				) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;';
 	$sql .= "INSERT INTO `page` (`id`, `name`, `alias`, `file`, `css`, `right0`, `right1`, `right2`, `right3`, `right4`) VALUES
 					(1, 'LANG_PAGE_INDEX', 'index', 'index.php', '', 1, 1, 1, 1, 1),
 					(2, 'LANG_PAGE_EVAL', 'eval', 'content/evaluation/index.php', '', 0, 1, 1, 1, 1),
@@ -190,11 +190,12 @@
 					(12, 'LANG_PAGE_SETTINGS', 'settings', 'admin/setting.php', 'admin.css', 0, 0, 0, 0, 1),
 					(13, 'LANG_PAGE_AJAXBUG', 'ajaxBug', 'ajax/ajaxBug.php', '', 1, 1, 1, 1, 1),
 					(14, 'LANG_PAGE_BUG_ADMIN', 'bugAdmin', 'admin/bug.php', '', 0, 0, 0, 0, 1),
-					(15, 'LANG_PAGE_ABOUT', 'about', 'about.php', '', '1', '1', '1', '1', '1');";
+					(15, 'LANG_PAGE_ABOUT', 'about', 'about.php', '', '1', '1', '1', '1', '1'),
+					(16, 'LANG_PAGE_CHARTE', 'adminChart', 'admin/chart.php', 'admin.css', '0', '0', '0', '1', '1');";
 	$sql .= 'ALTER TABLE `page`
 					ADD PRIMARY KEY (`id`);';
 	$sql .= 'ALTER TABLE `page`
-					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;';
+					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;';
 					
 	// promotion
 	
@@ -214,7 +215,7 @@
 				  `name` varchar(255) NOT NULL,
 				  `page` int(11) NOT NULL,
 				  `menuOrder` int(11) NOT NULL
-				) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;';
+				) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;';
 	$sql .= "INSERT INTO `secondaryMenu` (`id`, `mainMenuId`, `name`, `page`, `menuOrder`) VALUES
 					(1, 1, 'LANG_MENU_SECONDARY_MYSTUDENT', 11, 1),
 					(3, 3, 'LANG_MENU_SECONDARY_ACCUEIL', 1, 1),
@@ -223,12 +224,13 @@
 					(6, 4, 'LANG_MENU_SECONDARY_SERVICES', 8, 2),
 					(7, 4, 'LANG_MENU_SECONDARY_EVALUATIONS', 9, 3),
 					(8, 2, 'LANG_MENU_SECONDARY_MYEVAL', 2, 1),
-					(9, 4, 'LANG_MENU_SECONDARY_SETTINGS', 12, 5),
-					(10, 4, 'LANG_MENU_SECONDARY_BUG_MANAGER', 14, 4);";
+					(9, 4, 'LANG_MENU_SECONDARY_SETTINGS', 12, 6),
+					(10, 4, 'LANG_MENU_SECONDARY_BUG_MANAGER', 14, 4),
+					(11, 4, 'LANG_MENU_SECONDARY_CHARTE', 16, 5);";
 	$sql .= 'ALTER TABLE `secondaryMenu`
 					ADD PRIMARY KEY (`id`), ADD KEY `mainMenuId` (`mainMenuId`,`page`), ADD KEY `page` (`page`);';
 	$sql .= 'ALTER TABLE `secondaryMenu`
-					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;';
+					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;';
 	
 	// service
 	
@@ -261,8 +263,10 @@
 	$sql .= 'CREATE TABLE IF NOT EXISTS `setting` (
 				  `id` int(11) NOT NULL,
 				  `alias` varchar(255) NOT NULL,
-				  `valeur` varchar(255) NOT NULL
+				  `valeur` TEXT NOT NULL
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
+	$sql .= "INSERT INTO `setting` (`alias`, `valeur`) VALUES
+					('CHARTE', '')";
 	$sql .= 'ALTER TABLE `setting`
 					ADD PRIMARY KEY (`id`);';
 	$sql .= 'ALTER TABLE `setting`

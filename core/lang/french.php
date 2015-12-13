@@ -65,6 +65,7 @@ define('LANG_MENU_SECONDARY_USERS', 'Utilisateurs');
 define('LANG_MENU_SECONDARY_SERVICES', 'Services');
 define('LANG_MENU_SECONDARY_EVALUATIONS', 'Evaluations');
 define('LANG_MENU_SECONDARY_SETTINGS', 'Paramètres');
+define('LANG_MENU_SECONDARY_CHARTE', 'Charte d\'évaluation');
 define('LANG_MENU_SECONDARY_BUG_MANAGER', 'Gestion des bugs');
 
 /*
@@ -84,6 +85,7 @@ define('LANG_PAGE_MYSTUDENT', 'Mes étudiants');
 define('LANG_PAGE_SETTINGS', 'Paramètres');
 define('LANG_PAGE_AJAXBUG', 'Ajax de la signalisation des bugs');
 define('LANG_PAGE_BUG_ADMIN', 'Gestion des bugs');
+define('LANG_PAGE_CHARTE', 'Charte d\'évaluation');
 define('LANG_PAGE_ABOUT', 'A propos de PAS');
 	
 /*
@@ -368,6 +370,12 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_TITLE','[PAS] Email de test');
 			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_CONTENT','Ceci est un email de test. Si vous recevez ce message, vos paramètres email de PAS sont correctement configurés.');
 			define('LANG_ADMIN_PARAMETRE_MAIL_TEST_SEND','Envoyer');
+
+		// Charte
+		
+			define('LANG_ADMIN_CHART_TITLES','Charte d\'évaluation');	
+			define('LANG_ADMIN_CHART_SUBMIT','Valider');	
+			define('LANG_ADMIN_CHART_VALID','J\'accepte les termes de la charte et je m’engage à les respecter.');	
 			
 		// Gestion des bugs
 		

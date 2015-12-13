@@ -31,8 +31,8 @@
 		Vérification de l'évaluation sélectionnée
 			1. : Vérification de l'existence du formulaire
 			2. : Vérification de l'installation du type de formulaire
-			3. Verification que le formulaire n'a pas déjà été complété
-			4 : Chargement du script
+			3. : Verification que le formulaire n'a pas déjà été complété
+			4. : Chargement du script
 	**/
 	/**
 		1. Vérification de l'existence du formulaire
@@ -84,35 +84,61 @@
 
 	if (count($erreur) == 0)
 	{
-	// Récupération des informations concernant le script
-	$evaluationTypeData = getEvalTypeData($evaluationData['type']['id']);
-	
-	// On déclare la constante PLUGIN_PATH contenant le chemin du plugin
-	define('PLUGIN_PATH', $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/evaluations/'.$evaluationTypeData['dossier'].'/');
-	
-	// On charge la page
-	?>
-	<div class = "formEvaluation">
-	<?php
-		// On charge le fichier de config si il est présent
-		if (is_file(PLUGIN_PATH.'settings.php'))
+		// Enregistre l'accord du Disclaimer
+		if (isset($_POST['chartValidation']))
 		{
-			include(PLUGIN_PATH.'settings.php');
+			$_SESSION['DISCLAIMER'] = TRUE;
 		}
 		
-		// On refuse de charger le plugin si on est connecté en tant qu'un autre utilisateur et que cela n'a pas été autorisé
-		if (isset($_SESSION['loginAS']) && (!defined('ALLOW_LOGIN_AS') || constant('ALLOW_LOGIN_AS') == FALSE))
+		// Si Disclaimer non accepté => affiche le disclaimer, l'accord vaut pour la durée de la session
+		if (!isset($_SESSION['DISCLAIMER']))
 		{
-			header('Location: '.getPageUrl('eval', array('erreur' => serialize(array(33 => TRUE)))));
+			?>
+			<div style = "width: 80%; display: block; margin: auto;">
+				<div style = "display: inline-block;">
+				<?php
+					echo CHARTE;
+				?>
+				</div>
+				<form method = "POST">
+					<input type = "hidden" name = "chartValidation" />
+					<input type = "submit" value = "<?php echo LANG_ADMIN_CHART_VALID; ?>" style = "color: white; background-color: #117D11; border-radius: 5px;" />
+				</form>
+			</div>
+			<?php
+		}
+		else
+		{
+			// Récupération des informations concernant le script
+			$evaluationTypeData = getEvalTypeData($evaluationData['type']['id']);
+			
+			// On déclare la constante PLUGIN_PATH contenant le chemin du plugin
+			define('PLUGIN_PATH', $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/evaluations/'.$evaluationTypeData['dossier'].'/');
+			
+			// On charge la page
+			?>
+			<div class = "formEvaluation">
+			<?php
+				// On charge le fichier de config si il est présent
+				if (is_file(PLUGIN_PATH.'settings.php'))
+				{
+					include(PLUGIN_PATH.'settings.php');
+				}
+				
+				// On refuse de charger le plugin si on est connecté en tant qu'un autre utilisateur et que cela n'a pas été autorisé
+				if (isset($_SESSION['loginAS']) && (!defined('ALLOW_LOGIN_AS') || constant('ALLOW_LOGIN_AS') == FALSE))
+				{
+					header('Location: '.getPageUrl('eval', array('erreur' => serialize(array(33 => TRUE)))));
 
-			// On arrête l'execution du script
-			exit();
+					// On arrête l'execution du script
+					exit();
+				}
+				
+				include(PLUGIN_PATH.'displayEvaluation.php');
+			?>
+			</div>
+			<?php			
 		}
-		
-		include(PLUGIN_PATH.'displayEvaluation.php');
-	?>
-	</div>
-	<?php
 	}
 	else
 	{

@@ -159,7 +159,7 @@ define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_CONTENT','Contenue des mails aut
 define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_PROMOTION','Restreindre l\'application du filtre à une promotion');
 define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_ICON','Icone');
 define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_SEND','Envoyer les messages');
-define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_RULES','Format PNG, Taille : 256px * 256px');
+define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_RULES','Format PNG, Taille : 128px * 128px');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_NOCOMMENT','Sans commentaires');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT','Avec commentaires (modérés)');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT','Avec commentaires (non modérés)');
