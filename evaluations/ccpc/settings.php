@@ -22,7 +22,8 @@
 	**/
 	
 	define('ALLOW_LOGIN_AS', TRUE); // Autorise les connexion "en tant que" à charger le plugin, FALSE par défaut, l'administrateur ne pourra pas dans tout les cas valider l'évaluation à la place de l'utilisateur
-	define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL', 30); // Délai en jours avant de permettre l'accès aux évaluations pour les étudiants, 30 jours par défaut
+	define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL_STUDENT', 15); // Délai en jours avant de permettre l'accès aux évaluations pour les étudiants
+	define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL_TEACHER', 30); // Délai en jours avant de permettre l'accès aux évaluations pour les enseignants
 	define('CONFIG_EVAL_CCPC_NBEVALPARPAGE', 10); // Nombre d'évaluations à afficher par page, 10 par défaut
 	
 ?>

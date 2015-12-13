@@ -34,6 +34,16 @@
 
 	// On nettoie le cache --> supprime tous les fichiers de + de 30 jours : afin d'éviter la surconsommation d'espace disque
 	eval_ccpc_clearCache();
+	
+	// Détermination du délai avant de pouvoir consulter les évaluations
+	if ($_SESSION['rang'] == 1)
+	{
+		define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL', CONFIG_EVAL_CCPC_DELAIDISPOEVAL_STUDENT);		
+	}
+	else
+	{
+		define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL', CONFIG_EVAL_CCPC_DELAIDISPOEVAL_TEACHER);
+	}
 
 	$erreur = array();
 	$urlPage = http_build_query($_GET); // URL avec les $_GET

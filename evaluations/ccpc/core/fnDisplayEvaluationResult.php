@@ -1012,6 +1012,7 @@
 	  */
 	
 	function generatePDF ($data, $comment = FALSE, $commentMSG = FALSE) {
+		
 		// Array contenant les résultats
 		$output = array();
 	
@@ -1155,19 +1156,34 @@
 										}
 									}
 									
-							// On affiche l'icone des filtres
+							// On affiche l'icone des filtres : maximum 4
 							$filtres = eval_ccpc_checkFilterExistence($data['service']['id'], $data['service']['date']['min'], $data['service']['date']['max'], $promotion); 
-
+							
+							$numberOfIcons = 0; // Compte le nombre d'icones ajoutées
+							$leftCornerX = 0.8*$A4Height-5;
+							$leftCornerY = 3*$titleSize-5;
+							
 							if (is_array($filtres))
 							{
 								foreach ($filtres AS $filtre)
 								{
-									if (isset($filtre['icone']))
+									if (isset($filtre['icone']) && $numberOfIcons < 4)
 									{ 
-										$pdf -> Image($filtre['icone'], 0.8*$A4Height, 3*$titleSize, floor(0.2*$A4Height), 0, 'PNG');
+										$pdf -> Image($filtre['icone'], $leftCornerX, $leftCornerY, floor(0.1*$A4Height), 0, 'PNG');									
+										$numberOfIcons++;
+										
+										if ($numberOfIcons == 1) { $leftCornerX = 0.9*$A4Height-3; }
+										else if ($numberOfIcons == 2) { $leftCornerX = 0.8*$A4Height-5; $leftCornerY += 0.1*$A4Height+1; }
+										else if ($numberOfIcons == 3) { $leftCornerX = 0.9*$A4Height-3; }
 										break;
 									}
 								}
+							}
+							
+							if ($numberOfIcons == 0)
+							{
+								// On ajoute l'icone neutre si aucune icone n'est présente
+								$pdf -> Image(PLUGIN_PATH.'/css/img/neutral.png', $leftCornerX, $leftCornerY, floor(0.1*$A4Height), 0, 'PNG');
 							}
 									
 						// Deuxième ligne

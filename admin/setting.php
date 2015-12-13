@@ -34,7 +34,10 @@
 		$res = $db -> query($sql);
 		while ($res_f = $res -> fetch())
 		{
-			$paramList[$res_f['nom']] = $res_f['valeur'];
+			if ($res_f['nom'] != 'CHARTE')
+			{
+				$paramList[$res_f['nom']] = $res_f['valeur'];				
+			}
 		}
 		
 	/**

@@ -190,6 +190,7 @@
 									if (isset($evaluation['service']) && count($evaluation['service']) > 0)
 									{
 										$currentLien = ROOT.CURRENT_FILE.'?'.$urlPage.'&service='.$evaluation['service']['id'];
+										if (!isset($_GET['FILTER']['date']['min']) && !isset($_GET['FILTER']['date']['max'])) { $currentLien .= '&'.http_build_query(array('FILTER' => array ('date' => $evaluation['service']['date']))); }
 										?>
 									<tr class = "bodyTR" data-lien = "<?php echo $currentLien; ?>">
 										<td class = "<?php if ($evaluation['service']['hide'] == 1) { echo 'tableHiddenService'; } ?>"><?php echo $evaluation['service']['FullName']; ?></td>

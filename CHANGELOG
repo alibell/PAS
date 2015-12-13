@@ -25,6 +25,12 @@ Correction de bug : fond noir lors du plein écran avec Firefox
 Modification du CSV contenant la liste des services 
 Mise à jour de CCPC [1.2] : Selection de la date s'appliquant à une campagne d'évaluation 
 
-1.1.1 :
-
-Possibilité de mettre des valeurs vides dans les réglages (mot de passe SMTP...)
+1.2.0 :
+Correction de bug relatif à la gestion des dates dans la consultation des données d'évaluation.
+Mise à jour de CCPC [1.3] : Amélioration de la lisiblité des graphiques
+Mise à jour de CCPC [1.3] : Affichage des notes des services au sein de leurs fiche
+Mise à jour de CCPC [1.3] : Ajout d'un bouton permettant de balayer les filtre et de détecter les services remplissant les critères (limité à une période temporelle de 1 an)
+Mise à jour de CCPC [1.3] : Ajout d'un lien pointant directement vers une page d'évaluation depuis la liste des services détectés par les filtres
+Mise à jour de CCPC [1.3] : La création d'une fiche PDF de service ajoute un émoticone neutre par défaut si absence d'émoticone relatifs aux filtres
+Mise à jour de CCPC [1.3] : Présence d'un Disclaimer avant de remplir une évaluation, ce dernier est configurable depuis l'espace d'administration
+Mise à jour de CCPC [1.3] : Passage du délai de consultation des évaluations à : 15j pour les étudiants, 7 pour les enseignants
