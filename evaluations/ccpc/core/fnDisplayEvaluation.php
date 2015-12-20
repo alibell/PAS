@@ -46,7 +46,6 @@
 		/**
 			On remplit l'array $data['date']
 		**/
-		
 			// Date
 			$tempData['date'] = TimestampToDatetime(time());
 			
@@ -54,13 +53,10 @@
 			$evaluationSettings = eval_ccpc_getSettings($evaluationData['id']);
 		
 			// Promotion de l'utilisateur
-			if ($userData = getUserData($_SESSION['id']) && isset($tempData['promotion']))
+			$userData = getUserData($_SESSION['id']);
+			if (isset($userData['promotion']['id']))
 			{
 				$tempData['promotion'] = $userData['promotion']['id'];
-			}
-			else if ($userData = getUserData($_SESSION['id']) && !isset($tempData['promotion']))
-			{
-				$tempData['promotion'] = 'NULL';
 			}
 			else {
 				$tempErreur['LANG_ERROR_CCPC_NOPROMOTION'] = true;
@@ -348,8 +344,8 @@
 			On crée la requête SQL
 		*/
 		
-		$SQLColumn = '(promotion, service, debutStage, finStage, nbExternesPeriode, date';
-		$SQLValues = '(:promotion, :service, :debutStage, :finStage, :nbExternesPeriode, :date';
+		$SQLColumn = ' (promotion, service, debutStage, finStage, nbExternesPeriode, date';
+		$SQLValues = ' (:promotion, :service, :debutStage, :finStage, :nbExternesPeriode, :date';
 		
 		foreach ($listeSQL AS $itemSQL)
 		{
@@ -364,7 +360,7 @@
 		$SQLValues .= ')';
 		
 		$sql = 'INSERT INTO eval_ccpc_resultats'.$SQLColumn.' VALUES '.$SQLValues;
-						
+
 		$res = $db -> prepare($sql);
 		if ($res -> execute($formData))
 		{
