@@ -45,6 +45,7 @@ define('LANG_FORM_CCPC_PDF_EVALUATIONNB','Nombre d\'évaluations remplis');
 	Formulaire de l'évaluation
 **/
 
+define('LANG_FORM_CCPC_VALIDATE_WARNING','Attention vous êtes sur le point de valider l\'évaluation. Une fois validé, il est impossible de modifier le contenue de cette dernière. Confirmer ?');
 define('LANG_FORM_CCPC_FIELDSET_PEDAGOGIE','Pédagogie');
 define('LANG_FORM_CCPC_FIELDSET_INVESTISSEMENT','Investissement personnel');
 define('LANG_FORM_CCPC_FIELDSET_AMBIANCE','Ambiance');
