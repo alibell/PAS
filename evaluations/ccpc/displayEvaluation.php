@@ -149,3 +149,11 @@
 		require PLUGIN_PATH.'displayEvaluation/form.php';
 	?>
 	
+	<script>
+	$('form').on('submit', function(e){
+		if (!confirm("<?php echo LANG_FORM_CCPC_VALIDATE_WARNING; ?>"))
+		{
+			e.preventDefault();
+		}
+	});
+	</script>
