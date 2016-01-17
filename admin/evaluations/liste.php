@@ -126,7 +126,7 @@
 						$temp = explode('/', $value);
 						if(isset($value) && count($temp) >= 3 && checkdate($temp[1], $temp[0], $temp[2]))
 						{
-							$convertedDate = DatetimeToTimestamp(FrenchdateToDatetime($value)); // Date au format timestamp
+							$convertedDate = DatetimeToTimestamp(FrenchdateToDatetime($value))+86399; // Date au format timestamp
 							$validDate = TRUE;
 							
 							// Si dateDebut : on refuse le cas où la date est supérieure à la marge sup

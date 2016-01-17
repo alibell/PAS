@@ -34,3 +34,6 @@ Mise à jour de CCPC [1.3] : Ajout d'un lien pointant directement vers une page 
 Mise à jour de CCPC [1.3] : La création d'une fiche PDF de service ajoute un émoticone neutre par défaut si absence d'émoticone relatifs aux filtres
 Mise à jour de CCPC [1.3] : Présence d'un Disclaimer avant de remplir une évaluation, ce dernier est configurable depuis l'espace d'administration
 Mise à jour de CCPC [1.3] : Passage du délai de consultation des évaluations à : 15j pour les étudiants, 7 pour les enseignants
+
+1.2.1 :
+Correction de bug : la fin de la campagne d'évaluation n'était pas fixé à minuit.
