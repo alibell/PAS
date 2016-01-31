@@ -329,16 +329,7 @@ function getPageUrl ($alias, $get = array()) {
 			$url = ROOT.$res_f['file'].'?';
 			if (isset($get) && is_array($get) && count($get) > 0)
 			{
-				$separator = FALSE;
-				foreach ($get AS $key => $value)
-				{
-					if (!is_array($value))
-					{
-						if ($separator) { $url .= '&'; }
-						else { $separator = TRUE; }
-						$url .= $key.'='.$value;
-					}
-				}
+				$url .= http_build_query($get);
 			}
 			
 			return $url;
