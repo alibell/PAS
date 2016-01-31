@@ -157,6 +157,7 @@
 		$sql .= 'ORDER BY e.date DESC';
 		$res = $db -> prepare($sql);
 		$res -> execute($sqlData);
+		$res_fall = $res -> fetchAll();
 		$res2 = $db -> prepare($sqlNbDate);
 		$res2 -> execute($sqlData);
 		$res2_f = $res2 -> fetch();
@@ -167,121 +168,144 @@
 		/*
 			Array contenant les résultats
 		*/
-		$serviceEvaluation = array();	
-		$serviceEvaluation['service'] = getServiceInfo($id);
-		$serviceEvaluation['service']['nbDate'] = $res2_f['nombreDate'];
-		$serviceEvaluation['service']['date']['min'] = $dateMin;
-		$serviceEvaluation['service']['date']['max'] = $dateMax;
+		$serviceEvaluation = array();
 		
-		// On ajoute le nombre total d'étudiants pendant la période de stage considéré
-		$serviceEvaluation['service']['nbEvaluation'] = $res3_f['nombreEtudiant'];		
-		
-		while ($res_f = $res -> fetch())
+		// Chemin du fichier temporaire		
+		$hash = md5(serialize($res_fall));
+		$filePath = PLUGIN_PATH.'cache/'.$hash.'.txt';
+
+		// Si le hash existe déjà : on récupère les calculs stockés dans le cache
+		if (is_file($filePath)) 
 		{
-		
-			$serviceEvaluation['service']['hide'] = $res_f['hide'];
-
-			/*
-				On enregistre les données de l'évaluation
-			*/
-			$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['date'] = DatetimeToTimestamp($res_f['evaluationDate']);
-			$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['promotion']['id'] = $res_f['promotionId'];
-			$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['promotion']['nom'] = $res_f['promotionNom'];
+			$file = fopen($filePath, 'r');
+			$serviceEvaluation = (unserialize(fread($file, filesize($filePath))));
+			fclose($file);
 			
-				// On stocke la liste des promotions rencontrées dans $serviceEvaluation['service']['promotion']
-				if (!isset($serviceEvaluation['service']['promotion'][$res_f['promotionId']]))
-				{
-					$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['id'] = $res_f['promotionId'];
-					$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['nom'] = $res_f['promotionNom'];					
-					$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['nb'] = 1;					
-				}
-				else
-				{
-					$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['nb']++; // On compte le nombre de fois que chaque promotion apparait
-				}
-
-			/*
-				On récupère les données d'évaluation
-			*/
-			foreach ($res_f AS $key => $value)
-			{
-				if (isset($listEvaluationItems[$key]))
-				{
-					// On incrémente pour le calcul de moyenne
-					if (isset($serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne']))
-					{
-						$serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne'] = $serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne'] + $value;
-					}
-					else
-					{
-						$serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne'] = $value;
-					}
-					
-					// On dénombre le nombre d'évaluation pour l'item (permettant de calculer la moyenne)
-					$listEvaluationItems[$key]['nb']++;
-					
-					// On enregistre la valeur
-					$serviceEvaluation['donnees'][$res_f['evaluationId']][$listEvaluationItems[$key]['type']][$key] = $value;
-				}
-			}			
-		}
-
-		/*
-			On calcule les moyennes
-				D'abord des item
-				Puis des catégories rapporté sur 5
-		*/
-		
-		if (isset($serviceEvaluation['donnees'])) 
-		{
-			$serviceEvaluation['nb'] = count($serviceEvaluation['donnees']);
-			
-			foreach($listEvaluationItems AS $key => $value)
-			{
-				if (isset($serviceEvaluation[$value['type']][$key]['moyenne']))
-				{
-					if (!isset($serviceEvaluation[$value['type']]['sommeCoefficients']))
-					{
-						$serviceEvaluation[$value['type']]['sommeCoefficients'] = 0; // Somme des coefficients permettant le calcul de la note						
-					}
-					
-					if ($listEvaluationItems[$key]['nb'] > 0)
-					{
-						$serviceEvaluation[$value['type']][$key]['moyenne'] = round($serviceEvaluation[$value['type']][$key]['moyenne']/$listEvaluationItems[$key]['nb'],2);						
-					}
-					else
-					{
-						$serviceEvaluation[$value['type']][$key]['moyenne'] = 0;
-					}
-					
-					if (isset($serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne']))
-					{
-						$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = $serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] + round((5 * $serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient'])/($value['max']),1);
-					}
-					else
-					{
-						$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = round((5 * $serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient'])/($value['max']),1);
-					}
-
-					$serviceEvaluation[$value['type']]['sommeCoefficients'] = $serviceEvaluation[$value['type']]['sommeCoefficients'] + $listEvaluationItems[$key]['coefficient'];
-				}
-			}
-			
-			foreach ($listCat AS $value)
-			{
-				if (isset($serviceEvaluation[$value]['moyenne']))
-				{
-					if ($serviceEvaluation[$value]['sommeCoefficients'] > 0)
-					{
-						$serviceEvaluation[$value]['moyenne'] = round($serviceEvaluation[$value]['moyenne']/$serviceEvaluation[$value]['sommeCoefficients'],2);						
-					}
-					else
-					{
-						$serviceEvaluation[$value]['moyenne'] = 0;
-					}
-				}
-			}
 			return $serviceEvaluation;
+		} // Sinon on recalcule tout
+		else
+		{
+			$serviceEvaluation['service'] = getServiceInfo($id);
+			$serviceEvaluation['service']['nbDate'] = $res2_f['nombreDate'];
+			$serviceEvaluation['service']['date']['min'] = $dateMin;
+			$serviceEvaluation['service']['date']['max'] = $dateMax;
+			
+			// On ajoute le nombre total d'étudiants pendant la période de stage considéré
+			$serviceEvaluation['service']['nbEvaluation'] = $res3_f['nombreEtudiant'];		
+			
+			foreach ($res_fall AS $res_f)
+			{
+			
+				$serviceEvaluation['service']['hide'] = $res_f['hide'];
+
+				/*
+					On enregistre les données de l'évaluation
+				*/
+				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['date'] = DatetimeToTimestamp($res_f['evaluationDate']);
+				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['promotion']['id'] = $res_f['promotionId'];
+				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['promotion']['nom'] = $res_f['promotionNom'];
+				
+					// On stocke la liste des promotions rencontrées dans $serviceEvaluation['service']['promotion']
+					if (!isset($serviceEvaluation['service']['promotion'][$res_f['promotionId']]))
+					{
+						$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['id'] = $res_f['promotionId'];
+						$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['nom'] = $res_f['promotionNom'];					
+						$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['nb'] = 1;					
+					}
+					else
+					{
+						$serviceEvaluation['service']['promotion'][$res_f['promotionId']]['nb']++; // On compte le nombre de fois que chaque promotion apparait
+					}
+
+				/*
+					On récupère les données d'évaluation
+				*/
+				foreach ($res_f AS $key => $value)
+				{
+					if (isset($listEvaluationItems[$key]))
+					{
+						// On incrémente pour le calcul de moyenne
+						if (isset($serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne']))
+						{
+							$serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne'] = $serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne'] + $value;
+						}
+						else
+						{
+							$serviceEvaluation[$listEvaluationItems[$key]['type']][$key]['moyenne'] = $value;
+						}
+						
+						// On dénombre le nombre d'évaluation pour l'item (permettant de calculer la moyenne)
+						$listEvaluationItems[$key]['nb']++;
+						
+						// On enregistre la valeur
+						$serviceEvaluation['donnees'][$res_f['evaluationId']][$listEvaluationItems[$key]['type']][$key] = $value;
+					}
+				}			
+			}
+
+			/*
+				On calcule les moyennes
+					D'abord des item
+					Puis des catégories rapporté sur 5
+			*/
+			
+			if (isset($serviceEvaluation['donnees'])) 
+			{
+				$serviceEvaluation['nb'] = count($serviceEvaluation['donnees']);
+				
+				foreach($listEvaluationItems AS $key => $value)
+				{
+					if (isset($serviceEvaluation[$value['type']][$key]['moyenne']))
+					{
+						if (!isset($serviceEvaluation[$value['type']]['sommeCoefficients']))
+						{
+							$serviceEvaluation[$value['type']]['sommeCoefficients'] = 0; // Somme des coefficients permettant le calcul de la note						
+						}
+						
+						if ($listEvaluationItems[$key]['nb'] > 0)
+						{
+							$serviceEvaluation[$value['type']][$key]['moyenne'] = round($serviceEvaluation[$value['type']][$key]['moyenne']/$listEvaluationItems[$key]['nb'],2);						
+						}
+						else
+						{
+							$serviceEvaluation[$value['type']][$key]['moyenne'] = 0;
+						}
+						
+						if (isset($serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne']))
+						{
+							$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = $serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] + round((5 * $serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient'])/($value['max']),1);
+						}
+						else
+						{
+							$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = round((5 * $serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient'])/($value['max']),1);
+						}
+
+						$serviceEvaluation[$value['type']]['sommeCoefficients'] = $serviceEvaluation[$value['type']]['sommeCoefficients'] + $listEvaluationItems[$key]['coefficient'];
+					}
+				}
+				
+				foreach ($listCat AS $value)
+				{
+					if (isset($serviceEvaluation[$value]['moyenne']))
+					{
+						if ($serviceEvaluation[$value]['sommeCoefficients'] > 0)
+						{
+							$serviceEvaluation[$value]['moyenne'] = round($serviceEvaluation[$value]['moyenne']/$serviceEvaluation[$value]['sommeCoefficients'],2);						
+						}
+						else
+						{
+							$serviceEvaluation[$value]['moyenne'] = 0;
+						}
+					}
+				}
+
+				// On enregistre le calcul dans le cache
+				$file = fopen($filePath, 'w+');
+				fputs($file, serialize($serviceEvaluation));
+				fclose($file);
+				
+				return $serviceEvaluation;
+			}			
 		}
 	}
 	
