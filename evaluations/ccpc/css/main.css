@@ -433,6 +433,14 @@ canvas {
 	text-decoration: none;
 }
 
+#listePeriodeStage ul .selected {
+	background: #1C7BF1;
+}
+
+#listePeriodeStage ul .selected a {
+	color: white;
+}
+
 #listeServices {
   width: calc(100% - 240px);
   float: right;
