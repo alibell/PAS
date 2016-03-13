@@ -78,7 +78,7 @@
 }
 
 #evalccpcContent{
-	width: calc(80% - 32px);
+	width: calc(80% - 35px);
 	float: right;
 	margin-left: 10px;
 	height: calc(100% - 20px);

@@ -1182,7 +1182,6 @@
 									
 							// On affiche l'icone des filtres : maximum 4
 							$filtres = eval_ccpc_checkFilterExistence($data['service']['id'], $data['service']['date']['min'], $data['service']['date']['max'], $promotion); 
-							
 							$numberOfIcons = 0; // Compte le nombre d'icones ajoutées
 							$leftCornerX = 0.8*$A4Height-5;
 							$leftCornerY = 3*$titleSize-5;
@@ -1191,9 +1190,9 @@
 							{
 								foreach ($filtres AS $filtre)
 								{
-									if (isset($filtre['icone']) && $numberOfIcons < 4)
-									{ 
-										$pdf -> Image($filtre['icone'], $leftCornerX, $leftCornerY, floor(0.1*$A4Height), 0, 'PNG');									
+									if (isset($filtre['icone']) && strlen($filtre['icone']) > 1 && $numberOfIcons < 4)
+									{
+										$pdf -> Image($filtre['icone'], $leftCornerX, $leftCornerY, floor(0.1*$A4Height), 0, 'PNG');								
 										$numberOfIcons++;
 										
 										if ($numberOfIcons == 1) { $leftCornerX = 0.9*$A4Height-3; }

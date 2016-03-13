@@ -68,6 +68,139 @@ body {
 		display: block;
 	}
 	
+/**
+	Barre de chargements : ajuster le width de .loadingbox div pour varier le chargement
+**/	
+
+	.loadingBox {
+		width: 90%;
+		margin: auto;
+		margin-top: 10px;
+		border: solid 1px black;
+		border-radius: 5px;
+		height: 20px;
+		background-color: white;
+	}
+	
+	.loadingBox div {
+		background-color: blue;
+		height: 100%;
+	}
+
+ /**
+	Module d'envoi de mails
+ **/
+ 
+ #message {
+	text-align: center;
+	float: right;
+    width: calc(75% - 10px);
+    margin-top: 15px;
+    height: calc(100vh - 160px);
+    background-color: #C2C7C5;
+	overflow: auto;
+ }
+ 
+ #message h1 {
+	padding: 10px;
+    color: #2F2F2F;
+    text-shadow: #FCFCFF 1px 1px 1px;
+ }
+ 
+ #destinatairesTitle {
+	font-size: 1.8em;
+    border: solid 1px;
+    width: 90%;
+    border-radius: 5px;
+    color: white;
+    background: #0E2754;
+ }
+ 
+ #destinataires {
+	width: 25%;
+    float: left;
+	overflow: auto;
+	height: calc(100vh - 210px);
+ }
+ 
+ #destinataires ul {
+	width: 100%;
+    padding: 0;
+ }
+ 
+ #destinataires li {
+	display: block;
+    width: calc(100% - 30px);
+    padding: 10px;
+    margin: 5px;
+    background-color: #AB8D91;
+	cursor: pointer;
+ }
+ 
+  #destinataires li.sent {
+    background-color: #8DAB8D;
+ }
+ 
+ #sendMailButton {
+    margin-top: 20px;
+    width: 25%;
+    height: 40px;
+	color: white;
+    background-color: #154915;
+    border-radius: 3px;
+    border-color: #144C06;
+    font-size: 1.3em;
+    font-weight: bold;
+	cursor: pointer;
+ }
+ 
+  #sendMailButton:disabled {
+    background-color: #051705;
+    border-color: #292F27;
+    opacity: 0.5;
+ } 
+ 
+ .sendMailBox {
+    position: fixed;
+    top: 40vh;
+    left: 40vw;
+    width: 20vw;
+    height: 20vh;
+    background-color: #FFFDFD;
+    z-index: 9999;
+    text-align: center;
+    line-height: 30vh;
+    border-radius: 20px;
+ }
+ 
+ #grayBackground {
+	background-color: black;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+	opacity: 0.5;
+	display: none;
+  }
+  
+ #mailattachment {
+	text-align: left;
+    margin-top: 20px;	
+ }
+ 
+  #mailattachment div {
+	margin: 20px;
+    padding: 15px;
+    border: solid 1px #9A9090;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #ECECEC;
+    cursor: pointer;
+ }
+	
+	
 /*
 	BOUTONS
 */

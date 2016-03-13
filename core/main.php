@@ -19,7 +19,7 @@
 
 
 	// Afficher les erreurs à l'écran
-ini_set('display_errors', 1);
+	ini_set('display_errors', 0);
 
 
 	session_start();
@@ -56,6 +56,7 @@ ini_set('display_errors', 1);
 	require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/fnEvaluation.php';
 	require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/fnUser.php';
 	require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/fnStage.php';
+	require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/fnMail.php';
 		
 	// Fichier de language
 	if (is_file($_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/lang/'.LANG.'.php'))

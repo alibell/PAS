@@ -66,6 +66,7 @@ define('LANG_MENU_SECONDARY_SERVICES', 'Services');
 define('LANG_MENU_SECONDARY_EVALUATIONS', 'Evaluations');
 define('LANG_MENU_SECONDARY_SETTINGS', 'Settings');
 define('LANG_MENU_SECONDARY_CHARTE', 'Disclaimer');
+define('LANG_MENU_SECONDARY_MAIL', 'Mail Campaign');
 define('LANG_MENU_SECONDARY_BUG_MANAGER', 'Bug Manager');
 
 /*
@@ -86,6 +87,7 @@ define('LANG_PAGE_SETTINGS', 'Settings');
 define('LANG_PAGE_AJAXBUG', 'Bug notification\s ajax');
 define('LANG_PAGE_BUG_ADMIN', 'Bug manager');
 define('LANG_PAGE_CHARTE', 'Disclaimer');
+define('LANG_PAGE_ADMINMAIL','Mail sending campaign');
 define('LANG_PAGE_ABOUT', 'About PAS');
 
 /*
@@ -246,7 +248,10 @@ define('LANG_MONTH_12','December');
 			define('LANG_ADMIN_UTILISATEURS_MENU_BATCH_TABLE_RANG','User rights');			
 			define('LANG_ADMIN_USERS_MENU_BATCH_TODO_INSERT', 'Users to add');
 			define('LANG_ADMIN_USERS_MENU_BATCH_TODO_UPDATE', 'Users to update');
-
+		
+		// Campagnes d'envoi d'emails
+		define('LANG_ADMIN_MAIL_MENU_ITEM_LISTE', 'Campaign List');
+		
 		// Services
 		define('LANG_ADMIN_SERVICES_ID','Service ID');
 		define('LANG_ADMIN_SERVICES_NOM','Service\' name');		

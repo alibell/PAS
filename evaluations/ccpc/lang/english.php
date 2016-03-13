@@ -13,6 +13,7 @@ define('LANG_FORM_CCPC_FILTER_HOPITAL_OPTION_ALL','Any hospital');
 define('LANG_FORM_CCPC_FILTER_DATE_TITLE','Date');
 define('LANG_FORM_CCPC_FILTER_DATE_FROM','From');
 define('LANG_FORM_CCPC_FILTER_DATE_TO','To');
+define('LANG_FORM_CCPC_FILTER_FAST_FILTER','Fast selection');
 define('LANG_FORM_CCPC_FILTER_SEARCH_TITLE','Search');
 define('LANG_FORM_CCPC_LISTE_SERVICE_DATEINTERVAL_SELECT','Select an time period');
 define('LANG_FORM_CCPC_LISTE_SERVICE_NOSERVICEFOUND','No internship found with the selected options');

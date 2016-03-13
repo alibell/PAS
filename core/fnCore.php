@@ -101,32 +101,40 @@ function sendMail ($destinataire, $titre, $corps, $erreur = array(), $attach = a
 				}
 				
 				// On écrit le message
-				$message = Swift_Message::newInstance()
-					->setSubject($titre)
-					->setFrom(MAIL_SMTP_LOGIN)
-					->setTo($destinataire)
-					->setBody($corps, 'text/html');
-				
-				// Pièces jointes
-				if (isset($attach) && count ($attach) > 0)
-				{
-					foreach ($attach AS $attachement)
+				try {
+					$message = Swift_Message::newInstance()
+						->setSubject($titre)
+						->setFrom(MAIL_SMTP_LOGIN)
+						->setTo($destinataire)
+						->setBody($corps, 'text/html');
+					
+					// Pièces jointes
+					if (isset($attach) && count ($attach) > 0)
 					{
-						if (isset($attachement['name']) && isset($attachement['path']) && is_file($attachement['path']))
+						foreach ($attach AS $attachement)
 						{
-							$message->attach(
-								Swift_Attachment::fromPath($attachement['path'])->setFilename($attachement['name'])
-							);
+							if (isset($attachement['name']) && isset($attachement['path']) && is_file($attachement['path']))
+							{
+								$message->attach(
+									Swift_Attachment::fromPath($attachement['path'])->setFilename($attachement['name'])
+								);
+							}
 						}
 					}
+						
+					 $mailer = Swift_Mailer::newInstance($transport);
+					 $mailer->send($message);
 				}
-					
-				 $mailer = Swift_Mailer::newInstance($transport);
-				 $mailer->send($message);
+				catch(Swift_TransportException $STe) {
+					$erreur[21] = true;
+				}
+				catch(Exception $STe) {
+					$erreur[21] = true;
+				}
 			}
 			else
 			{
-				$erreur[21];
+				$erreur[21] = true;
 			}
 		}
 		else
