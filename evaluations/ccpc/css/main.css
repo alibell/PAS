@@ -78,7 +78,7 @@
 }
 
 #evalccpcContent{
-	width: calc(80% - 32px);
+	width: calc(80% - 35px);
 	float: right;
 	margin-left: 10px;
 	height: calc(100% - 20px);
@@ -431,6 +431,14 @@ canvas {
 
 #listePeriodeStage ul li a {
 	text-decoration: none;
+}
+
+#listePeriodeStage ul .selected {
+	background: #1C7BF1;
+}
+
+#listePeriodeStage ul .selected a {
+	color: white;
 }
 
 #listeServices {

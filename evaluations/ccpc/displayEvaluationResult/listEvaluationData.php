@@ -55,6 +55,13 @@
 		$whereSqlContent = ''; // Utilisé pour déterminer la liste des évaluations à proposer
 		$limitSqlContent = ''; // Utilisé pour déterminer la liste des évaluations à proposer
 		$groupbySqlContent = ' GROUP BY e.service';
+
+		// Liste des périodes de stages correspondant au filtre
+		$fastSelectSqlCore = 'SELECT DISTINCT e.debutStage debutStage, e.finStage finStage, e.promotion promotionId, p.nom promotionNom FROM eval_ccpc_resultats e INNER JOIN promotion p ON p.id = e.promotion 
+									   INNER JOIN service s ON s.id = e.service
+									   INNER JOIN hopital h ON h.id = s.hopital
+									   INNER JOIN specialite sp ON sp.id = s.specialite
+									   INNER JOIN user c ON c.id = s.chef  ';
 		
 		/*
 			Filtres (WHERE)
@@ -228,6 +235,7 @@
 		// On crée les requêtes SQL
 		$sqlFilter = $coreSql.$whereSqlFilter;
 		$sqlContent = $coreSql.$whereSqlContent.$groupbySqlContent.$limitSqlContent;
+		$fastSelectSql = $fastSelectSqlCore.$whereSqlFilter.' ORDER BY e.finStage DESC, e.debutStage DESC, e.promotion DESC';
 
 		/*
 			Création des catégories de filtres
@@ -306,7 +314,7 @@
 			else { $filtres['hopital'][$res_f['hopitalId']]['nb']++; }
 			
 		}
-
+		
 		/*
 			Récupération des données d'évaluations des stages sélectionnés
 		*/
@@ -317,6 +325,25 @@
 		while ($res_f = $res -> fetch())
 		{
 			$evaluationData[$res_f['serviceId']] = getEvaluationCCPCPartialData($res_f['serviceId'], $filtrePromotion, $filtres['dateMin'] ,$filtres['dateMax']);
+		}
+		
+		/*
+			Récupération de la liste des périodes de stage correspondant
+		*/
+		
+		$fastSelectData = array();
+		$res = $db -> prepare($fastSelectSql);
+		$res -> execute($preparedValue);
+		while ($res_f = $res -> fetch())
+		{
+			$fastSelectData[] = array(
+				'dateDebut' => DatetimeToTimestamp($res_f['debutStage']),
+				'dateFin' => DatetimeToTimestamp($res_f['finStage']),
+				'promotion' => array(
+					'id' => $res_f['promotionId'],
+					'nom' => $res_f['promotionNom']
+				)
+			);
 		}
 		
 		/*

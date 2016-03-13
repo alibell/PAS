@@ -623,7 +623,7 @@
 													if (!isset($listDisplayed[$service['date']['debut'].'-'.$service['date']['fin']]))
 													{
 														?>
-															<li data-Annee = "<?php echo date('Y', $service['date']['fin']); ?>"><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&dateDebut='.$service['date']['debut'].'&dateFin='.$service['date']['fin']; ?>"><?php echo date('d/m/Y', $service['date']['debut']).' - '.date('d/m/Y', $service['date']['fin']); ?></a></li>
+															<li class = "<?php if (isset($_GET['dateDebut']) && isset($_GET['dateFin']) && $_GET['dateDebut'] == $service['date']['debut'] && $_GET['dateFin'] == $service['date']['fin']) { echo 'selected'; } ; ?>" data-Annee = "<?php echo date('Y', $service['date']['fin']); ?>"><a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&dateDebut='.$service['date']['debut'].'&dateFin='.$service['date']['fin']; ?>"><?php echo date('d/m/Y', $service['date']['debut']).' - '.date('d/m/Y', $service['date']['fin']); ?></a></li>
 														<?php
 														$listDisplayed[$service['date']['debut'].'-'.$service['date']['fin']] = TRUE;
 													}

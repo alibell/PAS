@@ -38,6 +38,29 @@
 
 					<input type = "text" name = "FILTER[search]" style = "display: block; margin: auto;" value = "<?php if (isset($_GET['FILTER']['search'])) { echo $_GET['FILTER']['search']; } ?>" />
 				<?php
+				
+				/*
+					Accélère la sélection
+				*/
+				if (count($fastSelectData) > 0)
+				{
+				?>
+				<span class = "evalccpcFiltreCategorie">Sélection rapide</span>
+					<div style = "text-align: center;">
+						<select id = "fastSelectFilter"> 
+							<option></option>
+							<?php
+							foreach ($fastSelectData AS $key => $value)
+							{
+							?>
+							<option value = "<?php echo $key; ?>"><?php echo $value['promotion']['nom'].' - '.LANG_FORM_CCPC_FILTER_DATE_FROM.' '.date('d/m/Y', $value['dateDebut']).' '.LANG_FORM_CCPC_FILTER_DATE_TO.' '.date('d/m/Y', $value['dateFin']); ?></option>
+							<?php
+							}
+							?>
+						</select>
+					</div>
+				<?php
+				}		
 
 				/*
 					Date
@@ -67,7 +90,7 @@
 						<input type = "button" id = "dateRangeSelector" data-dateMin = "<?php echo $filtres['dateMin']; ?>" data-dateMax = "<?php echo $filtres['dateMax']; ?>" value = "<?php echo LANG_FORM_CCPC_LISTE_SERVICE_DATEINTERVAL_SELECT; ?>" />
 					<?php
 				}
-
+				
 				/*
 					Promotion
 				*/
@@ -250,9 +273,28 @@
 					if ($_SESSION['rang'] >= 3)
 					{
 				?>
-					<div id = "administration"><a href = "<?php echo ROOT.CURRENT_FILE.'?evaluationType='.$evaluationTypeData['id'].'&page=admin'; ?>"><i class="fa fa-cogs"></i></a></div>
+					<div id = "administration" style = "display: inline-block;"><a href = "<?php echo ROOT.CURRENT_FILE.'?evaluationType='.$evaluationTypeData['id'].'&page=admin'; ?>"><i class="fa fa-cogs"></i></a></div>
+					<div id = "administrationMail" style = "display: inline-block;"><a href = "<?php echo ROOT.CURRENT_FILE.'?evaluationType='.$evaluationTypeData['id'].'&page=adminMail'; ?>"><i class="fa fa-envelope"></i></a></div>
 				<?php
 					}
 				?>
 				</div>
 		</div>
+		
+<script>
+	// URL où on ajoute les variable
+	var fastSelectURI = "<?php echo ROOT.CURRENT_FILE.'?evaluationType='.$_GET['evaluationType'].'&'; ?>";
+	
+	// On stock l'array contenant les filtres rapides
+	var fastSelectData = <?php echo json_encode($fastSelectData); ?>;
+	
+	$('select#fastSelectFilter').on('change', function(){
+		if ($('select#fastSelectFilter option:selected').val() != '')
+		{
+			var filtreId = $('select#fastSelectFilter option:selected').val();
+			var selectedFastFiltre = fastSelectData[$('select#fastSelectFilter option:selected').val()];
+			
+			document.location.href = fastSelectURI+'FILTER[promotion]='+selectedFastFiltre['promotion']['id']+'&FILTER[date][min]='+selectedFastFiltre['dateDebut']+'&FILTER[date][max]='+selectedFastFiltre['dateFin'];
+		}
+	});
+</script>

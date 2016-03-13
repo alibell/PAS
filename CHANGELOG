@@ -37,3 +37,6 @@ Mise à jour de CCPC [1.3] : Passage du délai de consultation des évaluations 
 
 1.2.1 :
 Correction de bug : la fin de la campagne d'évaluation n'était pas fixé à minuit.
+
+1.2.2 :
+Correction de bug dans la fonction getPageUrl, les array sont maintenant correctement intégrés à l'URL.

@@ -13,6 +13,7 @@ define('LANG_FORM_CCPC_FILTER_HOPITAL_OPTION_ALL','Tous les hopitaux');
 define('LANG_FORM_CCPC_FILTER_DATE_TITLE','Date');
 define('LANG_FORM_CCPC_FILTER_DATE_FROM','Du');
 define('LANG_FORM_CCPC_FILTER_DATE_TO','Au');
+define('LANG_FORM_CCPC_FILTER_FAST_FILTER','Sélection rapide');
 define('LANG_FORM_CCPC_FILTER_SEARCH_TITLE','Rechercher');
 define('LANG_FORM_CCPC_LISTE_SERVICE_DATEINTERVAL_SELECT','Sélectionner un intervalle temporel');
 define('LANG_FORM_CCPC_LISTE_SERVICE_NOSERVICEFOUND','Aucun service ne correspond aux critères sélectionnés');
@@ -164,6 +165,10 @@ define('LANG_FORM_CCPC_ADMIN_FILTER_FILTER_MAIL_RULES','Format PNG, Taille : 128
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_NOCOMMENT','Sans commentaires');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT','Avec commentaires (modérés)');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT','Avec commentaires (non modérés)');
+
+/* Envoie de campagnes d'emails */
+define('LANG_FORM_CCPC_ADMIN_MAILER_NOYEARSELECTED','Aucune année sélectionnée');
+
 
 /* Paramètres */
 define('LANG_FORM_CCPC_SETTINGS_TITLE','Paramètres de l\'évaluation');
