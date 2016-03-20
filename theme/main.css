@@ -199,6 +199,15 @@ body {
     background-color: #ECECEC;
     cursor: pointer;
  }
+ 
+ #messagesAjax {
+	width: calc(100% - 40px);
+    font-size: 1.2em;
+    font-weight: bold;
+    font-style: italic;
+    padding: 20px;
+    text-align: right;
+ }
 	
 	
 /*

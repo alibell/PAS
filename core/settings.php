@@ -56,7 +56,7 @@
 	*/
 
 	define('PROGRAM_NAME', 'PAS');
-	define('PROGRAM_VERSION', '1.2.2');
+	define('PROGRAM_VERSION', '1.3.0');
 	define('LOCAL_PATH', ''); // Fix, @todo : supprimer tous les LOCAL_PATH du code
 	define('DEFAULT_LANG','english'); // Langue par défaut, si aucun fichier de langue n'est présent
 	

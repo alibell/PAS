@@ -168,7 +168,13 @@ define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT','Avec comm
 
 /* Envoie de campagnes d'emails */
 define('LANG_FORM_CCPC_ADMIN_MAILER_NOYEARSELECTED','Aucune année sélectionnée');
-
+define('LANG_FORM_CCPC_ADMIN_MAILER_NOCAMPAIGN','Il n\'y aucunes campagnes de mails pour cette période.');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_FROM','Début du stage');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_TO','Fin du stage');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_PROMOTION','Promotion');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CAMPAIGNSTART','Date de début la campagne d\'envoie d\'emails');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_STATE','Etat');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CREATECAMPAIGN','Créer la campagne d\'envoie d\'emails');
 
 /* Paramètres */
 define('LANG_FORM_CCPC_SETTINGS_TITLE','Paramètres de l\'évaluation');

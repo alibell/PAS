@@ -225,7 +225,7 @@
 				?>
 				</select>
 				
-				<input style = "display: inline-block;" type = "submit" value = "Créer la campagne d'envoie d'email" />
+				<input style = "display: inline-block;" type = "submit" value = "<?php echo LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CREATECAMPAIGN; ?>" />
 			</form>
 			</div>
 			<?php
@@ -260,11 +260,11 @@
 			<!-- Tableau affichant les campagnes de mail lancées -->
 			<table>
 				<tr class = "headTR" style = "text-align: center;">
-					<td>Début du stage</td>
-					<td>Fin du stage</td>
-					<td>Promotion</td>
-					<td>Date de début la campagne d'envoie d'emails</td>
-					<td>Etat</td>
+					<td><?php echo LANG_FORM_CCPC_ADMIN_MAILER_TABLE_FROM; ?></td>
+					<td><?php echo LANG_FORM_CCPC_ADMIN_MAILER_TABLE_TO; ?></td>
+					<td><?php echo LANG_FORM_CCPC_ADMIN_MAILER_TABLE_PROMOTION; ?></td>
+					<td><?php echo LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CAMPAIGNSTART; ?></td>
+					<td><?php echo LANG_FORM_CCPC_ADMIN_MAILER_TABLE_STATE; ?></td>
 					<td></td>
 				</tr>
 				<?php
@@ -288,7 +288,7 @@
 				{
 					?>
 					<tr style = "text-align: center;">
-						<td colspan = "6">Il n'y aucunes campagnes de mails pour cette période.</td>
+						<td colspan = "6"><?php echo LANG_FORM_CCPC_ADMIN_MAILER_NOCAMPAIGN; ?></td>
 					</tr>
 					<?php
 				}

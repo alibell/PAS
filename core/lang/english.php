@@ -352,6 +352,14 @@ define('LANG_MONTH_12','December');
 			define('LANG_ADMIN_MODULE_LISTE_TABLE_TITLE_RIGHT_OPTION_1', 'yes');
 			define('LANG_ADMIN_MODULE_RIGHT_FORM_SUBMIT', 'Validate');
 			
+		// Envoie de mails
+			define('LANG_ADMIN_SENDMAIL_TO', 'To');
+			define('LANG_ADMIN_SENDMAIL_OBJECT', 'Subject');
+			define('LANG_ADMIN_SENDMAIL_MESSAGE', 'Message');
+			define('LANG_ADMIN_SENDMAIL_SEND', 'Send');
+			define('LANG_ADMIN_SENDMAIL_SENT', 'All mail sent');
+			define('LANG_ADMIN_SENDMAIL_ALLCHANGESSAVED', 'All changes saved');
+			
 		// Paramètres
 		
 			define('LANG_ADMIN_PARAMETRE_TITLES','Settings');

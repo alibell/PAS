@@ -200,11 +200,7 @@
 							$attachment[] = array('name' => $key, 'path' => $value['path']);
 						}
 					}
-					
-					/*
-						A SUPPRIMER
-					*/
-					foreach ($destinataire AS $key => $value) { $destinataire[$key] = 'contact@alibellamine.me'; }
+
 					
 					// Envoie de l'email
 					$erreur = sendMail($destinataire, $res_f['objet'], $res_f['message'], array(), $attachment);
