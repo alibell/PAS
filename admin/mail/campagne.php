@@ -28,12 +28,34 @@
 	
 	if (isset($_GET['AJAX']) && $_GET['AJAX'] = true)
 	{
+		ob_end_clean();
 		if (isset($_GET['action']) && $_GET['action'] == 'sendmail' && isset($_GET['actionId']) && is_numeric($_GET['actionId']))
 		{
 			$test = sendMailFromCampaign($_GET['actionId']);
 			exit();
 		}
 	}
+	
+	if (isset($_POST['AJAX']) && $_POST['AJAX'] = true)
+	{
+		ob_end_clean();
+		if (isset($_POST['action']) && $_POST['action'] == 'savechanges' && isset($_POST['actionId']) && is_numeric($_POST['actionId']))
+		{
+			if (isset($_POST['objet']) && $_POST['objet'] != '' && isset($_POST['message']) && $_POST['message'] != '')
+			{
+				$sql = 'UPDATE mail SET objet = :objet, message = :message WHERE id = :id';
+				$res = $db -> prepare($sql);
+				$res -> bindValue(":objet", $_POST['objet'], PDO::PARAM_STR);
+				$res -> bindValue(":message", $_POST['message'], PDO::PARAM_STR);
+				$res -> bindValue(":id", $_POST['actionId']);
+				$res -> execute();
+				
+				print_r($_POST);
+			}
+			exit();
+		}
+	}
+	
 	
 	/**
 		1. Récupération des informations relative à une campagne d'envoie de mail
@@ -76,24 +98,27 @@
 	<!-- Message -->
 	<div id = "message">
 		<div>
-			<h1>Objet</h1>
+			<h1><?php echo LANG_ADMIN_SENDMAIL_OBJECT; ?></h1>
 			<input id = "objetInput" type = "text" style = "width: 90%;">
 		</div>
 		<div>
-			<h1>Message</h1>
+			<h1><?php echo LANG_ADMIN_SENDMAIL_MESSAGE; ?></h1>
 			<div style = "width: 92%; margin: auto;"><textarea style = "height: 300px;" id = "messageInput"></textarea></div>
 		</div>
 		<div id = "mailattachment">
+		</div>
+		
+		<div id = "messagesAjax">
 		</div>
 	</div> 
 	<!-- Envoie des messages -->
 	<button id = "sendMailButton" <?php if ($campaignData['statut'] == 1) { echo 'disabled'; } ?>>
 		<?php 
 			if ($campaignData['statut'] == 1) { 
-				echo 'Envoi terminé'; 
+				echo LANG_ADMIN_SENDMAIL_SENT;
 			} 
 			else {
-				echo 'Envoyer les emails';
+				echo LANG_ADMIN_SENDMAIL_SEND;
 			}
 		?>
 	</button>
@@ -109,6 +134,7 @@
 		selector: "textarea",
 		menubar: false,
 		statusbar: false,
+		setup: function(ed) { ed.on("change", function() { saveChanges(currentMail); }); },
 		init_instance_callback : function(editor) { // Chargement du premier mail à l'ouverture de la page
 			if (editor['id'] = 'messageInput')
 			{
@@ -144,6 +170,8 @@
 	{
 		if (typeof(mailData[id]) != 'undefined')
 		{
+			currentMail = id;
+			
 			<!-- Affichage des erreurs -->
 			$('.erreur').remove();
 			$('#message').prepend(mailData[id]['erreurs']);
@@ -163,6 +191,21 @@
 				$('#mailattachment').append('<div><a target = "_blank" href = "'+value['url']+'">'+key+'</a></div>'); // On affiche ceux du message actuel
 			});
 		}
+	}
+	
+	<!-- Enregistrement des modifications sur un mail -->
+	function saveChanges (id) {
+		// Récupère l'objet et le contenu de mail
+		var objet = $('#objetInput').val();
+		var message = tinyMCE.get('messageInput').getContent();
+		
+		// Enregistre les changements
+		$.post(ajaxURI, {AJAX: 1, action: 'savechanges', actionId: mailData[id]['messageId'], message: message, objet: objet}, function(e){
+			console.log(e);
+			$("#messagesAjax").css('color', 'green');
+			$("#messagesAjax").text('<?php echo LANG_ADMIN_SENDMAIL_ALLCHANGESSAVED; ?>');
+			setTimeout(function() { $("#messagesAjax").empty(); }, 2000);
+		});
 	}
 	
 	<!-- On affiche le contenu d'un message au clic -->
@@ -194,5 +237,10 @@
 				});
 			}
 		});
+	});
+	
+	<!-- Enregistre les changements de contenu de mail -->
+	$('#objetInput, #messageInput').on('change', function(){
+		saveChanges(currentMail);
 	});
 	</script>

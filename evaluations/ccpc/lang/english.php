@@ -166,6 +166,16 @@ define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_NOCOMMENT','Without comments'
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_MODERATECOMMENT','With comments (moderate)');
 define('LANG_FORM_CCPC_ADMIN_FILTER_TABLE_DOWNLOAD_UNMODERATECOMMENT','With commentaires (no moderate)');
 
+/* Envoie de campagnes d'emails */
+define('LANG_FORM_CCPC_ADMIN_MAILER_NOYEARSELECTED','No year selected');
+define('LANG_FORM_CCPC_ADMIN_MAILER_NOCAMPAIGN','There are no mail campaign for this period.');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_FROM','Beginning of the intership');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_TO','End of the internshit');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_PROMOTION','Classes');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CAMPAIGNSTART','Beginning of the mail campaign');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_STATE','State');
+define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CREATECAMPAIGN','Create a mail campaign');
+
 /* Paramètres */
 define('LANG_FORM_CCPC_SETTINGS_TITLE','Evaluation settings');
 define('LANG_FORM_CCPC_SETTINGS_PERIOD_TITLE','Time interval');

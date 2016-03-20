@@ -134,6 +134,29 @@
 					}
 					
 					/*
+						Accélère la sélection
+					*/
+					if (count($fastSelectData) > 0)
+					{
+					?>
+					<span class = "evalccpcFiltreCategorie">Sélection rapide</span>
+						<div style = "text-align: center;">
+							<select id = "fastSelectFilter"> 
+								<option></option>
+								<?php
+								foreach ($fastSelectData AS $key => $value)
+								{
+								?>
+								<option value = "<?php echo $key; ?>"><?php echo $value['promotion']['nom'].' - '.LANG_FORM_CCPC_FILTER_DATE_FROM.' '.date('d/m/Y', $value['dateDebut']).' '.LANG_FORM_CCPC_FILTER_DATE_TO.' '.date('d/m/Y', $value['dateFin']); ?></option>
+								<?php
+								}
+								?>
+							</select>
+						</div>
+					<?php
+					}		
+					
+					/*
 						Promotion
 					*/
 					if (isset($filtres['promotion']) && count ($filtres['promotion'])  > 0)
@@ -801,4 +824,21 @@
 		<?php
 	}
 ?>
+
+	// URL où on ajoute les variable
+	<?php $tempGET = $_GET; unset($tempGET['FILTER']['promotion']); unset($tempGET['FILTER']['date']); ?>
+	var fastSelectURI = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET); ?>";
+	
+	// On stock l'array contenant les filtres rapides
+	var fastSelectData = <?php echo json_encode($fastSelectData); ?>;
+	
+	$('select#fastSelectFilter').on('change', function(){
+		if ($('select#fastSelectFilter option:selected').val() != '')
+		{
+			var filtreId = $('select#fastSelectFilter option:selected').val();
+			var selectedFastFiltre = fastSelectData[$('select#fastSelectFilter option:selected').val()];
+			
+			document.location.href = fastSelectURI+'&FILTER[promotion]='+selectedFastFiltre['promotion']['id']+'&FILTER[date][min]='+selectedFastFiltre['dateDebut']+'&FILTER[date][max]='+selectedFastFiltre['dateFin'];
+		}
+	});
 </script>

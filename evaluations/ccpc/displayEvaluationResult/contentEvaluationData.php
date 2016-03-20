@@ -58,6 +58,13 @@
 					FROM eval_ccpc_resultats e
 					INNER JOIN promotion p ON p.id = e.promotion
 					WHERE e.service = ?';
+					
+			// Liste des périodes de stages correspondant au filtre
+			$fastSelectSqlCore = 'SELECT DISTINCT e.debutStage debutStage, e.finStage finStage, e.promotion promotionId, p.nom promotionNom FROM eval_ccpc_resultats e INNER JOIN promotion p ON p.id = e.promotion 
+							   INNER JOIN service s ON s.id = e.service
+							   INNER JOIN hopital h ON h.id = s.hopital
+							   INNER JOIN specialite sp ON sp.id = s.specialite
+							   INNER JOIN user c ON c.id = s.chef WHERE e.service = ?';
 		
 		if ($_SESSION['rang'] <= 1)
 		{
@@ -72,6 +79,7 @@
 			
 			$allowedDate = TimestampToDatetime(time()-$nbJourAllowedDate*24*3600);
 			$sql .= ' AND e.date <= "'.$allowedDate.'" ';
+			$fastSelectSqlCore .= ' AND e.date <= "'.$allowedDate.'" ';
 		}
 		
 		$res = $db -> prepare($sql);
@@ -99,6 +107,22 @@
 			{
 				$filtres['dateMax'] = DatetimeToTimestamp($res_f['dateFin']);
 			}
+		}
+		
+		// Récupération de la liste des périodes de stages acceptées
+		$fastSelectData = array();
+		$res = $db -> prepare($fastSelectSqlCore);
+		$res -> execute(array($_GET['service']));
+		while ($res_f = $res -> fetch())
+		{
+			$fastSelectData[] = array(
+				'dateDebut' => DatetimeToTimestamp($res_f['debutStage']),
+				'dateFin' => DatetimeToTimestamp($res_f['finStage']),
+				'promotion' => array(
+					'id' => $res_f['promotionId'],
+					'nom' => $res_f['promotionNom']
+				)
+			);
 		}
 		
 		/***
