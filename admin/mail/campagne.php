@@ -201,7 +201,8 @@
 		
 		// Enregistre les changements
 		$.post(ajaxURI, {AJAX: 1, action: 'savechanges', actionId: mailData[id]['messageId'], message: message, objet: objet}, function(e){
-			console.log(e);
+			mailData[id]['objet'] = objet;
+			mailData[id]['message'] = message;
 			$("#messagesAjax").css('color', 'green');
 			$("#messagesAjax").text('<?php echo LANG_ADMIN_SENDMAIL_ALLCHANGESSAVED; ?>');
 			setTimeout(function() { $("#messagesAjax").empty(); }, 2000);
