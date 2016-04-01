@@ -175,6 +175,8 @@ define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_PROMOTION','Promotion');
 define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CAMPAIGNSTART','Date de début la campagne d\'envoie d\'emails');
 define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_STATE','Etat');
 define('LANG_FORM_CCPC_ADMIN_MAILER_TABLE_CREATECAMPAIGN','Créer la campagne d\'envoie d\'emails');
+define('LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT', 'Evaluation de l\'accueil des étudiants de %PROMOTION% - Période du %DATEDEBUT% au %DATEFIN%');
+define('LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE', '<p>Chers collègues,</p><p>Les étudiants ont évalués leurs stages sur la plateforme PAS.<br /> Nous vous prions de trouvez ci-joint la synthèse des évaluations de votre service sur la période allant de %DATEDEBUT% à %DATEFIN%</p><p>Vous pouvez ainsi accéder aux commentaires des étudiants, avec les points positifs et les points négatifs en vous rendant à l\'adresse suivante : %URL%.<br /> Nous restons à votre disposition pour vous apporter des précisions et répondre à vos questions : %MAILCONTACT%.</p><p>Bien cordialement<p>');
 
 /* Paramètres */
 define('LANG_FORM_CCPC_SETTINGS_TITLE','Paramètres de l\'évaluation');

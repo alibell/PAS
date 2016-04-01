@@ -339,6 +339,9 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_ADD','Ajouter une évaluation');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_DELETE','Supprimer l\'évaluation et l\'ensemble des données associées');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_DELETE_CONFIRM','Confirmer la suppression de l\'évaluation et de l\'ensemble des données associées');
+			define('LANG_ADMIN_EVALUATION_CSV_STATE','Evaluation');
+			define('LANG_ADMIN_EVALUATION_CSV_COMPLETE','Evaluation remplis');
+			define('LANG_ADMIN_EVALUATION_CSV_NOT_COMPLETE','Evaluation non remplis');
 			
 		// Gestion des modules
 		

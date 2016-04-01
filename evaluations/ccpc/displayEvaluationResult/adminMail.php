@@ -34,20 +34,71 @@
 		1. Traitement des données / requêtes
 	**/
 	
-		// Création d'une campagne d'envoie d'email
-		if (isset($_POST['AJAX']) && isset($_POST['action']) && $_POST['action'] == 'addMail')
+		// Variable action
+		$allowedAction = array('viewMail', 'setMail', 'addMail');
+		if (isset($_POST['action'])) { $_GET['action'] = $_POST['action']; }
+		if (isset($_GET['action']) && in_array($_GET['action'], $allowedAction))
+		{
+			$action = $_GET['action'];
+		}
+		else
+		{
+			$action = 'viewMail';
+		}
+	
+		// Si action = addMail => Création d'une campagne d'envoie d'email
+		if (isset($_POST['AJAX']) && $action == 'addMail')
 		{
 			ob_end_clean();
 			
-			// Titre du mail
-			$title = 'Test';
+			// Récupération des informations
+				// Promotion
+				$promotionData = getPromotionData ($_POST['promotion']);
 				
-			// Objet du mail
-			$object = 'Test mail';
+			// Nom de la campagne de mail
+			$title = 'Campagne Evaluation '.$promotionData['nom'].' - Du '.date('d/m/Y',$_POST['debutStage']).' Au '.date('d/m/Y',$_POST['finStage']);
+				
+			// Récupération du contenu des mails : objet et message
+			$res = $db -> query('SELECT settings FROM typeevaluation WHERE id = '.$evaluationTypeData['id']);
+			$res_f = $res -> fetch();
 			
-			// Contenu du mail
-			$message = "Test 3";
+			if (isset($res_f[0])) { $settings = unserialize($res_f[0]); } else { $settings = array(); }
+			if (isset($settings['object'])) { $settings['object'] = LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT; }
+			if (isset($settings['message'])) { $settings['message'] = LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE; }
+
+						
+			$getArray = array(
+				'evaluationType' => $_GET['evaluationType'], 
+				'service' => $_POST['service'], 
+				'FILTER' => array(
+					'date' => array(
+						'min' => $_POST['debutStage'],
+						'max' => $_POST['finStage']
+					),
+					'promotion' => $_POST['promotion']
+				)
+			);
+			
+			// Tableau contenant les équivalents texte codé => variable
+			$textCode = array(
+				'%DATEDEBUT%' => date('d/m/Y',$_POST['debutStage']), 
+				'%DATEFIN%' => date('d/m/Y',$_POST['finStage']), 
+				'%PROMOTION%' => $promotionData['nom'], 
+				'%URL%' => getPageUrl('evalView',$getArray), 
+				'%MAILCONTACT%' => CONTACT_STAGE_MAIL
+			);
+			
+			// On remplace les codes %CODE% par les variables correspondante
+			foreach ($textCode AS $key => $value)
+			{
+				// Pour l'objet
+				$settings['object'] = str_replace($key, $value, $settings['object']);
 				
+				// Pour le message
+				$settings['message'] = str_replace($key, $value, $settings['message']);
+			}		
+			
+			
 			// Pièce jointe
 					
 				// On génère le PDF
@@ -62,15 +113,30 @@
 			// Destinataire
 			$chefId = getServiceInfo($_POST['service'])['chef']['id'];
 			// On crée le mail
-			addMailCampagne($_POST['codeCampagne'], $title, $chefId, $object, $message, $attachments);
+			addMailCampagne($_POST['codeCampagne'], $title, $chefId, $settings['object'], $settings['message'], $attachments);
 			
 			exit();
+		}
+		else if ($action == 'setMail')
+		{
+			// On enregistre les données du formulaire après les avoir sérialisé dans la table typeevaluation pour le module correspondant
+			if (isset($_POST['object']) && htmLawed($_POST['object']) && isset($_POST['message']) && htmLawed($_POST['message']))
+			{
+				$res = $db -> prepare('UPDATE typeevaluation SET settings = :settings WHERE id = :id');
+				$res -> execute(array(
+					'id' => $evaluationTypeData['id'],
+					'settings' => serialize($_POST)
+				));
+			}
 		}
 	
 	/**
 		2. Récupération de la liste des campagnes de mails envoyés
 	**/
 
+	// Lorsqu'on consulte les campagnes de mail
+	if ($action == 'viewMail')
+	{	
 		// Récupération de la liste des années
 		$yearList = array();
 		$campaignList = array();
@@ -156,11 +222,50 @@
 			
 			$campaignPossibilities[] = array('codeCampagne' => $codeCampagne, 'debutStage' => DatetimeToTimestamp($res_f['debutStage']), 'finStage' => DatetimeToTimestamp($res_f['finStage']), 'promotion' => getPromotionData($res_f['promotion']), 'services' => $res2 -> fetchAll());
 		}
+	}
+	else if ($action == 'setMail')
+	{
+		/**
+			Récupère les paramètres actuels
+		**/
 		
+		$sql = 'SELECT settings FROM typeevaluation WHERE id = :id';
+		$res = $db -> prepare($sql);
+		$res -> execute(array('id' => $evaluationTypeData['id']));
+		$res_f = $res -> fetch();
+		
+		if (isset($res_f[0]) || is_string($res_f[0]))
+		{
+			$settings = unserialize($res_f[0]);
+		}
+		
+		if (!isset($settings) || (!is_array($settings)))
+		{
+			$settings = array();
+		}
+
+		// Crée les variables nécessaire si elles sont inexistantes
+		$settingsVariables = array('object' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_OBJECT,'message' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE);
+		foreach ($settingsVariables AS $key => $value)
+		{
+			if (!isset($settings[$key])) {
+				if (is_string($settingsVariables[$key])) {
+					$settings[$key] = $settingsVariables[$key];
+				}
+				else {
+					$settings[$key] = ''; 
+				}
+			};
+		}
+	}
+
 	/**
 		3. Affichage de l'interface
 	**/
 
+	// Menu de navigation
+	if ($action == 'viewMail' || $action = 'setMail')
+	{
 	?>
 	<div id  = "evalccpcContentUnique">
 		<!-- Barre du haut -->
@@ -169,9 +274,12 @@
 				<!-- Bouton de retour en arrière -->
 				<?php
 					$tempGet = $_GET;
+					unset($tempGet['action']);
 				?>
-				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGet); ?>"><span style = "font-size: 1.2em; padding: 5px;"><i class="fa fa-arrow-circle-left"></i></span></a>				
-				
+				<a style = "font-size: 1.2em; padding: 5px;" href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGet); ?>"><span><i class="fa fa-arrow-circle-left"></i></span></a>				
+					
+				<?php if ($action == 'viewMail') { ?>
+
 				<select name = "year">
 					<?php
 						foreach ($yearList AS $item)
@@ -181,7 +289,7 @@
 							<?php
 						}
 					?>
-				</select>	
+				</select>
 				
 				<!-- On met toutes les variables $_GET en hidden -->
 				<?php
@@ -205,10 +313,19 @@
 					<?php
 				}
 				?>
+				
+				<a style = "font-size: 1.2em; padding: 5px;" href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGet).'&action=setMail'; ?>"><i class="fa fa-cog"></i></a>
+				
+				<?php } ?>
 			</form>
 		</div>
-		
+	
 	<?php
+	}
+	
+	// Lorsqu'on affiche les campagnes de mails
+	if ($action == 'viewMail') {
+	
 		// On affiche un form contenant les possibilités de créer une nouvelle campagne
 		if (count($campaignPossibilities) > 0) {
 			?>
@@ -298,8 +415,30 @@
 		
 	<!-- Div de création des mails -->
 	<div id = "grayBackground"></div> <!-- tableau noir, masqué de base -->
+	<?php
+	}
+	else if ($action == 'setMail')
+	{
+		?>
+		<form method = "POST" action = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET); ?>">
+			<div id="message" style = "width: 100%;">
+				<div>
+					<h1>Objet</h1>
+					<input id="objetInput" style="width: 90%;" type="text" name = "object" value = "<?php echo $settings['object']; ?>">
+				</div>
+				<div>
+					<h1>Message</h1>
+					<div style = "width: 92%; margin: auto;"><textarea style = "height: 300px;" name = "message" id = "messageInput"><?php echo $settings['message']; ?></textarea></div>					
+				</div>
+				
+				<input type = "submit" value = "<?php echo LANG_FORM_CCPC_SETTINGS_SUBMIT; ?>" />
+		</form>
+		<?php
+	}
+	?>
 	
 <script>
+<?php if ($action == 'viewMail') { ?>
 var ajaxURI = window.location.href;
 var mailURI = '<?php echo getPageUrl('mail', array('page' => 'campagne')); ?>'+'&id=';
 
@@ -331,17 +470,23 @@ $('#createCampaign').on('submit', function(e){
 	$('body').append('<div class="sendMailBox"><img src = "<?php echo ROOT.'/theme/img/loader.gif'; ?>" /><div class = "loadingBox"><div></div></div></div>');
 	$('.loadingBox div').css('width', Math.round(100*nbAdd/nbToAdd)+'%'); // Avancé des envoies
 	
-	// Ajout des mails un par un
-	var createMail = false; // Passe à false lorsqu'un mail n'est plus en cours d'envoie
-	
+	// Ajout des mails un par un	
 	$.each(campaignData['services'], function(key, value){	
 		$.post(ajaxURI, {AJAX: 1, action: 'addMail', debutStage: campaignData['debutStage'], finStage: campaignData['finStage'], promotion: campaignData['promotion']['id'], codeCampagne: campaignData['codeCampagne'], service: value[0]}, function(e){
 			$(document).ajaxStop(function() { window.location.href = mailURI+campaignData['codeCampagne']; }); // Affiche la page d'envoie à la fin
 
 			// Affichage de l'avancée
 			nbAdd++;
-			$('.loadingBox div').css('width', Math.round(100*nbAdd/nbToAdd)+'%');			
+			$('.loadingBox div').css('width', Math.round(100*nbAdd/nbToAdd)+'%');
 		});
 	});
 });
+<?php } else if ($action == 'setMail') { ?>
+	// Chargement de l'éditeur HTML
+	tinymce.init({
+		selector: "textarea",
+		menubar: false,
+		statusbar: false
+	});
+<?php } ?>
 </script>

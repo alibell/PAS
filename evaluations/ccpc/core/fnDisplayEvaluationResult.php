@@ -1037,6 +1037,9 @@
 	
 	function generatePDF ($data, $comment = FALSE, $commentMSG = FALSE) {
 		
+		// Accès à la BDD
+		global $db;
+		
 		// Array contenant les résultats
 		$output = array();
 	
@@ -1087,7 +1090,12 @@
 						}
 					}
 					
-					ob_end_clean();
+					try {
+						ob_end_clean();
+					} catch (Exception $e)
+					{
+						
+					}
 					
 					// On crée le PDF
 					$A4Height = 842;
@@ -1120,12 +1128,32 @@
 							// On affiche les informations concernant le service
 						
 								// Récupération des données
-								$textToDisplay = LANG_FORM_CCPC_FILTER_SERVICE_TITLE.' : '.$data['service']['FullName'].PHP_EOL.LANG_FORM_CCPC_PDF_STAGEPERIODE.' : '.date('d/m/Y', $data['service']['date']['min']).' - '.date('d/m/Y', $data['service']['date']['max']).PHP_EOL.LANG_FORM_CCPC_PDF_STUDENTPROMOTION.' : ';
+								$textToDisplay = LANG_FORM_CCPC_FILTER_SERVICE_TITLE.' : '.$data['service']['FullName'].PHP_EOL.LANG_FORM_CCPC_PDF_STAGEPERIODE.' : '.date('d/m/Y', $data['service']['date']['min']).' - '.date('d/m/Y', $data['service']['date']['max']);
 							
+									// Nombre d'étudiants par promotion
+										$nbEtudiantsService = array();
+										
+										$sql = 'SELECT p.nom promotion, COUNT( ae.userId ) nombre
+												FROM `affectationexterne` ae
+												INNER JOIN user u ON u.id = ae.userId
+												INNER JOIN promotion p ON p.id = u.promotion
+												WHERE `dateDebut` >= "'.TimestampToDatetime($data['service']['date']['min']).'" AND `dateFin` <= "'.TimestampToDatetime($data['service']['date']['max']).'" AND service = '.$data['service']['id'].'
+												GROUP BY u.promotion';
+
+										$res = $db -> query($sql);
+										while($res_f = $res -> fetch())
+										{
+											$nbEtudiantsService[$res_f['promotion']] = $res_f['nombre'];
+										}
+
 								$firstLoop = true;
-								foreach ($data['service']['promotion'] AS $promotionData) { 
-									if (!$firstLoop) { $textToDisplay .= ', '; } else { $firstLoop = FALSE; } 
-									$textToDisplay .= $promotionData['nom'].' ('.$promotionData['nb'].')'; 
+								if (count($nbEtudiantsService) > 0)
+								{
+									$textToDisplay .= PHP_EOL.LANG_FORM_CCPC_PDF_STUDENTPROMOTION.' : ';
+									foreach ($nbEtudiantsService AS $promotionNom => $promotionNombre) { 
+										if (!$firstLoop) { $textToDisplay .= ', '; } else { $firstLoop = FALSE; } 
+										$textToDisplay .= $promotionNom.' ('.$promotionNombre.')'; 
+									}
 								}
 							
 								$textToDisplay .= PHP_EOL.LANG_FORM_CCPC_PDF_STUDENTNB.' : '.$data['service']['nbEvaluation'].PHP_EOL.LANG_FORM_CCPC_PDF_EVALUATIONNB.' : '.$data['nb'];

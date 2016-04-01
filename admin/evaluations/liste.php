@@ -302,6 +302,34 @@
 		}
 	}
 	
+	if ($action == 'userList' && isset($_GET['download']))
+	{
+		// On récupère la liste des utilisateurs
+		$userCSVList = array();
+		
+		// Création de la première ligne
+		$userCSVList[] = array(LANG_ADMIN_UTILISATEURS_LISTE_TABLE_TITLE_NOM, LANG_ADMIN_UTILISATEURS_LISTE_TABLE_TITLE_PRENOM, LANG_ADMIN_UTILISATEURS_LISTE_TABLE_TITLE_NBETUDIANT, LANG_ADMIN_UTILISATEURS_LISTE_TABLE_TITLE_PROMOTION, LANG_ADMIN_UTILISATEURS_LISTE_TABLE_TITLE_MAIL, LANG_ADMIN_EVALUATION_CSV_STATE);
+		
+		foreach ($evaluation['orderedUsers'] AS $user)	{
+			
+			// Mise des mails sur une ligne
+			$mailText = '';
+			foreach ($user['mail'] AS $mail)
+			{
+				if ($mailText != '') { $mailText .= ';'; }
+				$mailText .= $mail;
+			}
+			
+			// Etat de l'évaluation
+			if ($user['statut'] == 0) { $state = LANG_ADMIN_EVALUATION_CSV_NOT_COMPLETE; } else { $state = LANG_ADMIN_EVALUATION_CSV_COMPLETE; }
+			
+			$userCSVList[] = array($user['nom'], $user['prenom'], $user['nbEtudiant'], $user['promotion']['nom'], $mailText, $state);
+		}
+		
+		// Téléchargement du CSV
+		downloadCSV($userCSVList, LANG_ADMIN_EVALUATION_CSV_STATE.' '.$evaluation['nom'].'.csv');
+	}
+	
 	if (isset($_SESSION['evaluationAdd']) && $action != 'settings' && $action != 'userList' && $action != 'add')
 	{
 		unset($_SESSION['evaluationAdd']); // Suppression automatique du traceur d'ajout d'évaluation
@@ -423,6 +451,7 @@
 		$tempGET = $_GET;
 		unset($tempGET['action']);
 		unset($tempGET['msg']);
+		unset($tempGET['download']);
 	?>
 		<h1><?php echo $evaluation['nom']; ?></h1> <!-- Nom de l'évaluation -->
 		<div class = "barreNavigation">
@@ -523,6 +552,7 @@
 			<div id = "evaluationUserListToolbox">
 				<div class = "button editUserList" style = "display: none; float: left;"><i class="fa fa-plus-square" data-action = "add"></i></div>
 				<div class = "button right"><i class="fa fa-desktop" data-action = "fullscreen"></i></div>
+				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($_GET).'&download'; ?>" style = "color: black;"><div class = "button right"><i class="fa fa-download" data-action = "download"></i></div></a>
 			</div>
 			
 			<!-- Div d'ajout des utilisateurs -->
