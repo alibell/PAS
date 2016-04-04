@@ -63,8 +63,8 @@
 			$res_f = $res -> fetch();
 			
 			if (isset($res_f[0])) { $settings = unserialize($res_f[0]); } else { $settings = array(); }
-			if (isset($settings['object'])) { $settings['object'] = LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT; }
-			if (isset($settings['message'])) { $settings['message'] = LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE; }
+			if (!isset($settings['object'])) { $settings['object'] = LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT; }
+			if (!isset($settings['message'])) { $settings['message'] = LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE; }
 
 						
 			$getArray = array(
@@ -245,7 +245,7 @@
 		}
 
 		// Crée les variables nécessaire si elles sont inexistantes
-		$settingsVariables = array('object' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_OBJECT,'message' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE);
+		$settingsVariables = array('object' => LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT,'message' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE);
 		foreach ($settingsVariables AS $key => $value)
 		{
 			if (!isset($settings[$key])) {
