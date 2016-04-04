@@ -288,6 +288,7 @@
 	$sql .= 'CREATE TABLE IF NOT EXISTS `typeevaluation` (
 				  `id` int(11) NOT NULL,
 				  `nom` varchar(255) NOT NULL,
+				  `settings` text NOT NULL,
 				  `nomDossier` varchar(255) NOT NULL,
 				  `actif` int(11) NOT NULL,
 				  `result_access_1` int(11) NOT NULL,
@@ -316,6 +317,25 @@
 	$sql .= 'ALTER TABLE `user`
 					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;';
 					
+	// mail
+	
+	$sql .= 'CREATE TABLE IF NOT EXISTS `mail` (
+				  `id` int(11) NOT NULL,
+				  `nom` varchar(255) DEFAULT NULL,
+				  `codeCampagne` varchar(255) NOT NULL,
+				  `statut` int(11) NOT NULL,
+				  `destinataire` int(11) NOT NULL,
+				  `objet` text DEFAULT NULL,
+				  `message` text DEFAULT NULL,
+				  `piecejointes` text DEFAULT NULL,
+				  `date` datetime DEFAULT NULL,
+				  `erreurs` varchar(255) NOT NULL DEFAULT \'1\'
+				) ENGINE=InnoDB AUTO_INCREMENT=273 DEFAULT CHARSET=latin1;';
+	$sql .= 'ALTER TABLE `mail`
+					ADD PRIMARY KEY (`id`)), ADD KEY `destinataire` (`destinataire`);';
+	$sql .= 'ALTER TABLE `mail`
+					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;';
+					
 	// On ajoute toutes les foreign key d'un coup
 	$sql .= 'ALTER TABLE `user`
 					ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`promotion`) REFERENCES `promotion` (`id`) ON DELETE SET NULL;';
@@ -339,6 +359,8 @@
 	$sql .= 'ALTER TABLE `affectationexterne`
 					ADD CONSTRAINT `affectationexterne_ibfk_1` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 					ADD CONSTRAINT `affectationexterne_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;';
+	$sql .= 'ALTER TABLE `mail`
+					ADD CONSTRAINT `mail_ibfk_1` FOREIGN KEY (`destinataire`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 					
 	// $sqlRemove : annule tout ce qui a été installé dans la BDD
 	$sqlRemove = '';
