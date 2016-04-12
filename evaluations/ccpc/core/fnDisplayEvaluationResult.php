@@ -264,7 +264,7 @@
 						
 						if ($listEvaluationItems[$key]['nb'] > 0)
 						{
-							$serviceEvaluation[$value['type']][$key]['moyenne'] = round($serviceEvaluation[$value['type']][$key]['moyenne']/$listEvaluationItems[$key]['nb'],2);						
+							$serviceEvaluation[$value['type']][$key]['moyenne'] = round(5*$serviceEvaluation[$value['type']][$key]['moyenne']/($listEvaluationItems[$key]['nb']*$listEvaluationItems[$key]['max']),2);						
 						}
 						else
 						{
@@ -273,11 +273,11 @@
 						
 						if (isset($serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne']))
 						{
-							$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = $serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] + round((5 * $serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient'])/($value['max']),1);
+							$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = $serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] + round(($serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient']),1);
 						}
 						else
 						{
-							$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = round((5 * $serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient'])/($value['max']),1);
+							$serviceEvaluation[$listEvaluationItems[$key]['type']]['moyenne'] = round(($serviceEvaluation[$value['type']][$key]['moyenne']*$listEvaluationItems[$key]['coefficient']),1);
 						}
 
 						$serviceEvaluation[$value['type']]['sommeCoefficients'] = $serviceEvaluation[$value['type']]['sommeCoefficients'] + $listEvaluationItems[$key]['coefficient'];
