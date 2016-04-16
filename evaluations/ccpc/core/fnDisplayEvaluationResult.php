@@ -109,7 +109,7 @@
 		*/
 	
 		$sqlData = array('id' => $id);
-		$sqlNbDate = 'SELECT COUNT(DISTINCT e.date) nombreDate FROM eval_ccpc_resultats e WHERE e.service = :id '; // Permet de calculer le nombre de date d'évaluations différentes dispo
+		$sqlNbDate = 'SELECT COUNT(DISTINCT e.date) nombreDate FROM eval_ccpc_resultats e INNER JOIN service s ON e.service = s.id WHERE e.service = :id '; // Permet de calculer le nombre de date d'évaluations différentes dispo
 		$sqlNbStudent = 'SELECT COUNT(DISTINCT u.id) nombreEtudiant FROM affectationexterne ae INNER JOIN user u ON u.id = ae.userId WHERE ae.service = :id '; // Permet de calculer le nombre d'étudiants en stage sur la période considérée
 		$sql = 'SELECT e.hide hide, e.id evaluationId, e.service serviceId, e.date evaluationDate, p.nom promotionNom, e.promotion promotionId';
 		foreach ($listEvaluationItems AS $key => $value)
@@ -118,6 +118,7 @@
 		}
 		$sql .= 'FROM eval_ccpc_resultats e
 					 INNER JOIN promotion p ON e.promotion = p.id
+					 INNER JOIN service s ON e.service = s.id
 					 WHERE e.service = :id ';
 		
 		if ($dateMin != 0 && $dateMax != 0)
@@ -152,6 +153,16 @@
 			$allowedDate = TimestampToDatetime(time()-$nbJourAllowedDate*24*3600);
 			$sql .= ' AND e.date <= "'.$allowedDate.'" ';
 			$sqlNbDate .= ' AND e.date <= "'.$allowedDate.'" ';
+		}
+		
+		/*
+			Ne pas afficher les évaluations des autres services aux chef de service
+		*/
+		
+		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE)
+		{			
+			$sql .= ' AND s.chef = "'.$_SESSION['id'].'"';
+			$sqlNbDate .= ' AND s.chef = "'.$_SESSION['id'].'"';
 		}
 		
 		$sql .= 'ORDER BY e.date DESC';
@@ -420,6 +431,7 @@
 		}
 		
 		$sql .= 'FROM eval_ccpc_resultats e
+					INNER JOIN service s ON e.service = s.id
 					 WHERE e.service = :id ';
 		
 		if ($dateMin != 0 && $dateMax != 0)
@@ -449,6 +461,15 @@
 			
 			$allowedDate = TimestampToDatetime(time()-$nbJourAllowedDate*24*3600);
 			$sql .= ' AND e.date <= "'.$allowedDate.'" ';
+		}
+
+		/*
+			Ne pas afficher les évaluations des autres services aux chef de service
+		*/
+		
+		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE)
+		{			
+			$sql .= ' AND s.chef = "'.$_SESSION['id'].'"';
 		}		
 		
 		$res = $db -> prepare($sql);
