@@ -25,5 +25,6 @@
 	define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL_STUDENT', 15); // Délai en jours avant de permettre l'accès aux évaluations pour les étudiants
 	define('CONFIG_EVAL_CCPC_DELAIDISPOEVAL_TEACHER', 30); // Délai en jours avant de permettre l'accès aux évaluations pour les enseignants
 	define('CONFIG_EVAL_CCPC_NBEVALPARPAGE', 10); // Nombre d'évaluations à afficher par page, 10 par défaut
+	define('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE', TRUE); // Si TRUE : empêche aux chefs de service d'accéder à d'autres évaluations que celles de son service
 	
 ?>

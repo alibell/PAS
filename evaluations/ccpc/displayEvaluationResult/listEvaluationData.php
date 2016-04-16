@@ -204,6 +204,19 @@
 		}
 		
 		/*
+			Ne pas afficher les évaluations des autres services aux chef de service
+		*/
+		
+		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE)
+		{
+			if ($whereSqlFilter == '') { $whereSqlFilter .= 'WHERE '; } else { $whereSqlFilter .= ' AND '; }
+			if ($whereSqlContent == '') { $whereSqlContent .= 'WHERE '; } else { $whereSqlContent .= ' AND '; }
+			
+			$whereSqlFilter .= ' s.chef = "'.$_SESSION['id'].'"';
+			$whereSqlContent .= ' s.chef = "'.$_SESSION['id'].'"';
+		}
+
+		/*
 			Pages (LIMIT)
 		*/
 		

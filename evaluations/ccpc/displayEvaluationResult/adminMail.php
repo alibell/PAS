@@ -103,12 +103,13 @@
 					
 				// On génère le PDF
 				$pdfPath = generatePDF(getEvaluationCCPCFullData($_POST['service'], $_POST['promotion'], $_POST['debutStage'], $_POST['finStage'], TRUE), FALSE, TRUE)['pdfPath'];
-				if (!file_exists(PLUGIN_PATH.'attachments/'.basename($pdfPath)) || !is_file(PLUGIN_PATH.'attachments/'.basename($pdfPath)))
+				
+				if (!file_exists(PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath)) || !is_file(PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath)))
 				{
-					copy($pdfPath, PLUGIN_PATH.'attachments/'.basename($pdfPath));
+					copy($pdfPath, PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath));
 				}
 								
-			$attachments = array('Evaluations.pdf' => array('path' => PLUGIN_PATH.'attachments/'.basename($pdfPath), 'url' => ROOT.'evaluations/ccpc/attachments/'.basename($pdfPath)));
+			$attachments = array('Evaluations.pdf' => array('path' => PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath), 'url' => ROOT.'evaluations/ccpc/attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath)));
 				
 			// Destinataire
 			$chefId = getServiceInfo($_POST['service'])['chef']['id'];
