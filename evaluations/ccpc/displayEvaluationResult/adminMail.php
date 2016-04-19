@@ -63,8 +63,8 @@
 			$res_f = $res -> fetch();
 			
 			if (isset($res_f[0])) { $settings = unserialize($res_f[0]); } else { $settings = array(); }
-			if (isset($settings['object'])) { $settings['object'] = LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT; }
-			if (isset($settings['message'])) { $settings['message'] = LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE; }
+			if (!isset($settings['object'])) { $settings['object'] = LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT; }
+			if (!isset($settings['message'])) { $settings['message'] = LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE; }
 
 						
 			$getArray = array(
@@ -103,12 +103,13 @@
 					
 				// On génère le PDF
 				$pdfPath = generatePDF(getEvaluationCCPCFullData($_POST['service'], $_POST['promotion'], $_POST['debutStage'], $_POST['finStage'], TRUE), FALSE, TRUE)['pdfPath'];
-				if (!file_exists(PLUGIN_PATH.'attachments/'.basename($pdfPath)) || !is_file(PLUGIN_PATH.'attachments/'.basename($pdfPath)))
+				
+				if (!file_exists(PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath)) || !is_file(PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath)))
 				{
-					copy($pdfPath, PLUGIN_PATH.'attachments/'.basename($pdfPath));
+					copy($pdfPath, PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath));
 				}
 								
-			$attachments = array('Evaluations.pdf' => array('path' => PLUGIN_PATH.'attachments/'.basename($pdfPath), 'url' => ROOT.'evaluations/ccpc/attachments/'.basename($pdfPath)));
+			$attachments = array('Evaluations.pdf' => array('path' => PLUGIN_PATH.'attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath), 'url' => ROOT.'evaluations/ccpc/attachments/'.$_POST['codeCampagne'].' - '.basename($pdfPath)));
 				
 			// Destinataire
 			$chefId = getServiceInfo($_POST['service'])['chef']['id'];
@@ -245,7 +246,7 @@
 		}
 
 		// Crée les variables nécessaire si elles sont inexistantes
-		$settingsVariables = array('object' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_OBJECT,'message' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE);
+		$settingsVariables = array('object' => LANG_FORM_CCPC_ADMIN_MAILER_SENDMAIL_DEFAULT_OBJECT,'message' => LANG_FORM_CCPC_ADMIN_MAILER_DEFAULT_MESSAGE);
 		foreach ($settingsVariables AS $key => $value)
 		{
 			if (!isset($settings[$key])) {

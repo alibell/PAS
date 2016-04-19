@@ -57,6 +57,7 @@
 		$sql = 'SELECT e.promotion promotionId, p.nom promotionNom, e.debutStage dateDebut, e.finStage dateFin
 					FROM eval_ccpc_resultats e
 					INNER JOIN promotion p ON p.id = e.promotion
+					INNER JOIN service s ON e.service = s.id
 					WHERE e.service = ?';
 					
 			// Liste des périodes de stages correspondant au filtre
@@ -82,6 +83,16 @@
 			$fastSelectSqlCore .= ' AND e.date <= "'.$allowedDate.'" ';
 		}
 		
+		/*
+			Ne pas afficher les évaluations des autres services aux chef de service
+		*/
+		
+		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE)
+		{			
+			$sql .= ' AND s.chef = "'.$_SESSION['id'].'"';
+			$fastSelectSqlCore .= ' AND s.chef = "'.$_SESSION['id'].'"';
+		}
+
 		$res = $db -> prepare($sql);
 		$res -> execute(array($_GET['service']));
 		
