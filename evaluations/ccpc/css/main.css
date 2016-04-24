@@ -267,6 +267,28 @@ overflow-x: hidden;
 	margin-top: 10px;
 }
 
+.EvaluationDataTextPediod {
+    margin-bottom: 10px;
+    border: solid 1px #050609;
+    border-radius: 5px;
+    box-shadow: #DFD3D3 1px 0px 3px;
+    padding: 5px;
+    background-color: white;
+}
+
+.EvaluationDataTextPediod > span {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.EvaluationDataTextPediodStudent {
+    border: solid 1px gray;
+    border-radius: 3px;
+	margin-top: 5px;
+}
+
 .moderateText {
   background-color: rgba(195, 12, 12, 0.43);
 }

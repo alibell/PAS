@@ -61,7 +61,6 @@
 				
 					/* On inclut la librairie */
 					require_once(PLUGIN_PATH.'core/pChart2.1.4/class/pData.class.php');
-					require_once(PLUGIN_PATH.'core/pChart2.1.4/class/pPie.class.php');
 					require_once(PLUGIN_PATH.'core/pChart2.1.4/class/pDraw.class.php');
 					require_once(PLUGIN_PATH.'core/pChart2.1.4/class/pImage.class.php');
 					
@@ -70,7 +69,7 @@
 						
 							$tempDataArray = array(); // Contient les données chiffrés de chaque part du camenbert
 							$tempLegendArray = array(); // Contient la légend chaque part de camenbert
-
+							
 							foreach ($data['data'] AS $tempDataLegend => $tempDataValue)
 							{
 								$tempLegendArray[] = $tempDataLegend;
@@ -81,28 +80,34 @@
 									return FALSE;
 								}
 							}
-
+							
 						$MyData = new pData();
 						$MyData->addPoints($tempDataArray, 'Values');  
-						$MyData->setSerieDescription("Values","Valeurs");
 						$MyData->addPoints($tempLegendArray, 'Label');  
-						$MyData->setAbscissa("Label");
+						$MyData->setAbscissa("Label"); 
 
 					/* On crée l'objet pChart */
 					
 					if (isset($data['settings']['width'])) { $width = $data['settings']['width']; } else { $width = 600; }
 					if (isset($data['settings']['height'])) { $height = $data['settings']['height']; } else { $height = 300; }
 					
-					$myPicture = new pImage($width,$height,$MyData, TRUE);				
+					$myPicture = new pImage($width,$height,$MyData);				
 										
-					/* On crée l'objet pPie */
-					$PieChart = new pPie($myPicture,$MyData);
+					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/verdana.ttf',"FontSize"=>8,"R"=>223,"G"=>223,"B"=>223));
+						
+					 /* Set the graph area */  
+					 $myPicture->setGraphArea(10,20,$width-20,$height-20); 
+					 $myPicture->drawGradientArea(10,20,$width-20,$height-20,DIRECTION_HORIZONTAL,array("StartR"=>200,"StartG"=>200,"StartB"=>200,"EndR"=>255,"EndG"=>255,"EndB"=>255,"Alpha"=>30)); 
 
-					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/verdana.ttf',"FontSize"=>13,"R"=>223,"G"=>223,"B"=>223));
-					$PieChart->draw3DPie($width/2,($height-75)/2,array("Radius"=>100,"DataGapAngle"=>12, "WriteValues" => TRUE, "DataGapRadius"=>10,"Border"=>TRUE, 'ValueR' => 0, 'ValueG' => 0, 'ValueB' => 0));
-					
-					$myPicture->setFontProperties(array("FontName"=> PLUGIN_PATH.'core/pChart2.1.4/fonts/verdana.ttf',"FontSize"=>8,"R"=>255,"G"=>255,"B"=>255));
-					$PieChart->drawPieLegend(10,$height-75,array("Style"=>LEGEND_ROUND,"Mode"=>LEGEND_VERTICAL, "R" => 0, "B" => 0, "G" => 0));
+					 /* Draw the chart scale */  
+					 $scaleSettings = array("RemoveXAxis" => TRUE, "AxisAlpha"=>10,"TickAlpha"=>10,"DrawXLines"=>FALSE,"Mode"=>SCALE_MODE_START0,"GridR"=>0,"GridG"=>0,"GridB"=>0,"GridAlpha"=>10,"Pos"=>SCALE_POS_TOPBOTTOM); 
+					 $myPicture->drawScale($scaleSettings);  
+
+					 /* Turn on shadow computing */  
+					 $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10)); 
+
+					 /* Draw the chart */  
+					 $myPicture->drawBarChartAli(array("DisplayValues"=>TRUE,"DisplayShadow"=>TRUE,"DisplayPos"=>LABEL_POS_INSIDE,"Rounded"=>TRUE,"Surrounding"=>30)); 
 					$myPicture->render($filePath);
 
 					return $filePathURI;

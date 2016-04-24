@@ -362,11 +362,19 @@
 												$tempData = array();
 
 												// Création de l'array permettant la génération du graphique
-												foreach ($evaluation['nb'] AS $key => $value)
-												{
-													$option = $input -> xpath('option[@value = "'.$key.'"]')[0];
-													$tempData['data'] [constant($option['text'])] = $value;
-												}
+												
+													// Ajout des valeurs remplis
+													foreach ($input -> option AS $key => $value)
+													{
+														if (isset($evaluation['nb'][(string) $value['value']]))
+														{
+															$tempData['data'][constant((string) $value['text'])] = $evaluation['nb'][(string) $value['value']];
+														}
+														else
+														{
+															$tempData['data'][constant((string) $value['text'])] = 0;
+														}
+													}
 												$tempData['settings'] = array('height' => 220, 'width' => 300);
 												?>
 												<div class = "EvaluationData">
@@ -431,6 +439,16 @@
 											{
 												$tempGET = $_GET;
 												$tempGET['evaluationContentType'] = 'data';
+												
+												// Création de l'array contenant les données à afficher sous forme [timestamp fin][timestamp début][timestamp commantaire][idCommentaire] => commentaire
+												$tempData = array();
+												foreach ($evaluationData[$dataName][$evaluationName] AS $commentId => $commentData)
+												{
+													if (isset($evaluationData['donnees'][$commentId]['infos']))
+													{
+														$tempData[$evaluationData['donnees'][$commentId]['infos']['dateFin']][$evaluationData['donnees'][$commentId]['infos']['dateDebut']][$evaluationData['donnees'][$commentId]['infos']['date']][$commentId] = $commentData;
+													}
+												}
 												?>
 												<div class = "EvaluationData EvaluationDataText EvaluationDataTextFullWidth">
 													
@@ -440,14 +458,31 @@
 													</h2>
 													
 													<?php
-														foreach ($evaluationData[$dataName][$evaluationName] AS $commentId => $commentData)
+														// On affiche les commentaires, pas ordre chronologique décroissant
+														krsort($tempData);
+														foreach ($tempData AS $dateFin => $value)
 														{
-															if (isset($evaluationData['donnees'][$commentId]['infos']))
+															krsort($value);
+															foreach ($value AS $dateDebut => $value2)
 															{
-														?>
-															<div class = "EvaluationDataTextDiv <?php if (isset($evaluationData['donnees'][$commentId]['Moderation'][(string) $input['nomBDD']])) { echo 'moderateText'; } ?>" data-nomBDD = "<?php echo (string) $input['nomBDD']; ?>" data-evaluationId = "<?php echo $commentId; ?>"><?php if ($_SESSION['rang'] >= 3) { ?><i class="modereComment fa fa-ban barreNavigationBouton"></i><?php } ?><span><?php echo $commentData; ?></span></div>
-															<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&id='.$commentId; ?>"><?php echo '#'.$commentId; ?></a> - <?php echo date('d/m/Y',$evaluationData['donnees'][$commentId]['infos']['date']); ?>
-														<?php
+																?>
+																<div class = "EvaluationDataTextPediod">
+																	<span><?php echo date('d/m/y', $dateDebut).' - '.date('d/m/y', $dateFin); ?></span>
+																	<?php
+																		krsort($value2);
+																		foreach ($value2 AS $key => $value3)
+																		{
+																			foreach ($value3 AS $commentId => $commentData)
+																			{
+																			?>
+																				<div class = "EvaluationDataTextDiv <?php if (isset($evaluationData['donnees'][$commentId]['Moderation'][(string) $input['nomBDD']])) { echo 'moderateText'; } ?>" data-nomBDD = "<?php echo (string) $input['nomBDD']; ?>" data-evaluationId = "<?php echo $commentId; ?>"><?php if ($_SESSION['rang'] >= 3) { ?><i class="modereComment fa fa-ban barreNavigationBouton"></i><?php } ?><span><?php echo $commentData; ?></span></div>
+																				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&id='.$commentId; ?>"><?php echo '#'.$commentId; ?></a> - <?php echo date('d/m/Y',$evaluationData['donnees'][$commentId]['infos']['date']); ?>
+																			<?php
+																			}
+																		}
+																	?>
+																</div>
+																<?php
 															}
 														}
 													?>
@@ -542,12 +577,10 @@
 											{
 												$textList[] = (string) $input['name'];
 											?>
-											<div class = "EvaluationData EvaluationDataText">
-												<h2>
-													<!-- Bouton de plein écran pour les mobiles --><i class="fa fa-arrows-alt mobileCommentFullscreenButton"></i>
-													<?php echo constant($input['label'].'_SHORT'); ?>
-												</h2>
+											
 												<?php
+												// Création de l'array contenant les données à afficher sous forme [timestamp fin][timestamp début][timestamp commantaire][idMessage][] => message
+												$tempData = array();
 												foreach ($input -> text AS $value)
 												{
 													if (isset($evaluationData[$dataName][(string) $value['nomBDD']])) {
@@ -555,17 +588,57 @@
 														{
 															if (isset($evaluationData['donnees'][$idEval]['infos']))
 															{
-														?>
-															<div class = "EvaluationDataTextDiv <?php if (isset($evaluationData['donnees'][$idEval]['Moderation'][(string) $value['nomBDD']])) { echo 'moderateText'; } ?>" data-nomBDD = "<?php echo (string) $value['nomBDD']; ?>" data-evaluationId = "<?php echo $idEval; ?>"><?php if ($_SESSION['rang'] >= 3) { ?><i class="modereComment fa fa-ban barreNavigationBouton"></i><?php } ?><span><?php echo $textValue; ?></span> </div>
-															<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&id='.$idEval; ?>"><?php echo '#'.$idEval; ?></a> - <?php echo date('d/m/Y',$evaluationData['donnees'][$idEval]['infos']['date']); ?>
-														<?php
+																$tempData[$evaluationData['donnees'][$idEval]['infos']['dateFin']][$evaluationData['donnees'][$idEval]['infos']['dateDebut']][$evaluationData['donnees'][$idEval]['infos']['date']][$idEval][] = $textValue;
 															}
 														}
 													}
 												}
 												?>
-											</div>
-											<?php
+												<div class = "EvaluationData EvaluationDataText">
+													<h2>
+														<!-- Bouton de plein écran pour les mobiles --><i class="fa fa-arrows-alt mobileCommentFullscreenButton"></i>
+														<?php echo constant($input['label'].'_SHORT'); ?>
+													</h2>
+													<?php
+														// On affiche les commentaires, pas ordre chronologique décroissant
+														krsort($tempData);
+														foreach ($tempData AS $dateFin => $tempvalue)
+														{
+															krsort($tempvalue);
+															foreach ($tempvalue AS $dateDebut => $value2)
+															{
+																?>
+																<div class = "EvaluationDataTextPediod">
+																	<span><?php echo date('d/m/y', $dateDebut).' - '.date('d/m/y', $dateFin); ?></span>
+																	<?php
+																		krsort($value2);
+																		foreach ($value2 AS $key => $value3)
+																		{
+																			foreach ($value3 AS $commentId => $comments)
+																			{
+																				?>
+																				<div class = "EvaluationDataTextPediodStudent">
+																				<?php
+																				foreach ($comments AS $comment)
+																				{
+																			?>
+																				<div class = "EvaluationDataTextDiv <?php if (isset($evaluationData['donnees'][$idEval]['Moderation'][(string) $value['nomBDD']])) { echo 'moderateText'; } ?>" data-nomBDD = "<?php echo (string) $value['nomBDD']; ?>" data-evaluationId = "<?php echo $idEval; ?>"><?php if ($_SESSION['rang'] >= 3) { ?><i class="modereComment fa fa-ban barreNavigationBouton"></i><?php } ?><span><?php echo $comment; ?></span> </div>
+																			<?php
+																				}
+																				?>
+																				</div>
+																				<a href = "<?php echo ROOT.CURRENT_FILE.'?'.http_build_query($tempGET).'&id='.$idEval; ?>"><?php echo '#'.$idEval; ?></a> - <?php echo date('d/m/Y',$evaluationData['donnees'][$idEval]['infos']['date']); ?>
+																				<?php
+																			}
+																		}
+																	?>
+																</div>
+																<?php
+															}
+														}
+													?>
+												</div>
+												<?php
 											}
 										}
 									}
@@ -758,7 +831,7 @@
 												}
 											}
 											else if ($input['type'] == 'text')
-											{
+											{ 
 												foreach($evaluationList AS $evaluationId)
 												{
 													foreach($input -> text AS $text)
