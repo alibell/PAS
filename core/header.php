@@ -92,6 +92,7 @@
 	<script type="text/javascript" src="<?php echo ROOT.'JS/featherlight.min.js'; ?>"></script> <!-- featherlight.min.js, license MIT -->
 	<script type="text/javascript" src="<?php echo ROOT.'JS/tinymce/tinymce.min.js'; ?>"></script> <!-- tinymce 4.2.1, license LGPL -->
 	<script type="text/javascript" src="<?php echo ROOT.'JS/stacktable/stacktable.js'; ?>"></script> <!-- stacktable, license MIT -->
+	<script type="text/javascript" src="<?php echo ROOT.'JS/modernizr-custom.js'; ?>"></script> <!-- modernizr, license MIT -->
 </head>
 
 <body>
