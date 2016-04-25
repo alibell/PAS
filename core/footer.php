@@ -84,4 +84,11 @@
 		
 		getDevice();
 		mobileTableDisplay();
+		
+		<!-- Correction des vh manquants -->
+		if (!Modernizr.cssvhunit || !Modernizr.csscalc) {
+			var height = window.innerHeight;
+			$('#body').css('height', height-40+'px');
+			$('#headerMenu').css('height', height-40+'px');
+		}
 	</script>

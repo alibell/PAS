@@ -7,7 +7,7 @@
 /*
 	Interface utilisateur
 */
-define('LANG_DISCONNECT','Deconnexion');
+define('LANG_DISCONNECT','Déconnexion');
 define('LANG_INTERFACE_SELECTEVALUATIONTYPE','Veuillez sélectionner le type d\'évaluation :');
 define('LANG_INTERFACE_SELECTBUTTON','Sélectionner');
 define('LANG_ADMIN_MENU_TITLE','Menu');
@@ -94,31 +94,31 @@ define('LANG_PAGE_ABOUT', 'A propos de PAS');
 	Erreurs
 */
 define('LANG_ERRORS','Erreurs');
-define('LANG_ERROR_USER_INVALID','L\'utilisateur sélectioné est invalide.');
+define('LANG_ERROR_USER_INVALID','L\'utilisateur sélectionné est invalide.');
 define('LANG_ERROR_NOT_REGISTERED','Vous n\'êtes pas enregistré dans le logiciel.');
-define('LANG_ERROR_SERVICE_INVALID','Le service sélectioné est invalide.');
-define('LANG_ERROR_EVALUATION_INVALID','L\'évaluation sélectionée est invalide.');
+define('LANG_ERROR_SERVICE_INVALID','Le service sélectionné est invalide.');
+define('LANG_ERROR_EVALUATION_INVALID','L\'évaluation sélectionnée est invalide.');
 define('LANG_ERROR_EVALUATIONTYPE_INVALID','Le module d\'évaluation est actuellement désactivé.');
-define('LANG_ERROR_EVALUATION_DONE','Vous avez déjà remplis le formulaire sélectionné.');
+define('LANG_ERROR_EVALUATION_DONE','Vous avez déjà rempli le formulaire sélectionné.');
 define('LANG_ERROR_EVALUATION_WRONGDATE','La période d\'évaluation ne correspond pas à la date actuelle.');
 define('LANG_ERROR_NAVIGATION_NORIGHT','Vous ne disposez pas des droits nécessaires à l\'affichage de la page sélectionnée.');
-define('LANG_ERROR_IMPORT_FILE','Erreur lors de l\'envoie du fichier.');
+define('LANG_ERROR_IMPORT_FILE','Erreur lors de l\'envoi du fichier.');
 define('LANG_ERROR_IMPORT_FILE_INVALID','Le fichier est dans un format invalide.');
 define('LANG_ERROR_CHECK_NB_ETUDIANT','Numéro d\'étudiant invalide.');
 define('LANG_ERROR_AFFECTATION_SERVICE_ALREADY','L\'étudiant est déjà affecté dans le service.');
 define('LANG_ERROR_AFFECTATION_DATE_DEBUT','La date de début de stage est dans un format invalide.');
 define('LANG_ERROR_AFFECTATION_DATE_FIN','La date de fin de stage est dans un format invalide.');
-define('LANG_ERROR_AFFECTATION_DATE_MISMATCH','La date de fin de stage doit être plus éloignée dans le temps que celles de début.');
-define('LANG_ERROR_DATE_MISMATCH','La date de fin doit être plus éloignée dans le temps que celles de début.');
+define('LANG_ERROR_AFFECTATION_DATE_MISMATCH','La date de fin de stage doit être plus éloignée dans le temps que celle de début.');
+define('LANG_ERROR_DATE_MISMATCH','La date de fin doit être plus éloignée dans le temps que celle de début.');
 define('LANG_ERROR_UNKNOWN','Erreur d\'origine inconnue.');
 define('LANG_ERROR_AFFECTATION_INVALID', 'L\'affectation sélectionnée n\'existe pas.');
 define('LANG_ERROR_DATA_INVALID_FORMAT', 'Les données sont dans un format invalide.');
 define('LANG_ERROR_MAIL_NOSETTINGS','Aucune adresse email n\'est configurée.');
-define('LANG_ERROR_MAIL_SEND','Une erreur s\'est produite durant l\'envoie de l\'email.');
+define('LANG_ERROR_MAIL_SEND','Une erreur s\'est produite durant l\'envoi de l\'email.');
 define('LANG_ERROR_MAIL_INVALID', 'L\'adresse email est dans un format invalide.');
 define('LANG_ERROR_MAIL_RELOAD', 'Actualisez la page pour continuer l\'envoi.');
-define('LANG_ERROR_URL_INVALID', 'L\'adresse fournit n\'est pas valide.');
-define('LANG_ERROR_EVALUATION_NOSETTINGS', 'Aucuns paramètres n\'a été remplis pour la campagne d\'évaluation sélectionnée');
+define('LANG_ERROR_URL_INVALID', 'L\'adresse fournie n\'est pas valide.');
+define('LANG_ERROR_EVALUATION_NOSETTINGS', 'Aucun paramètre n\'a été rempli pour la campagne d\'évaluation sélectionnée');
 define('LANG_ERROR_FORM_INCOMPLETE', 'Veuillez remplir tous les champs du formulaire');
 define('LANG_ERROR_DATA_INCOMPLETE', 'Données incomplètes');
 define('LANG_ERROR_PROMOTION_INEXISTANT', 'Promotion inexistante');
@@ -132,7 +132,7 @@ define('LANG_ERROR_EVAL_LOGINAS_FORBIDDEN', 'Accès interdit aux connexions dist
 	Message de confirmation
 */
 
-define('LANG_SUCCESS_LOGOUT','Deconnexion effectuée avec succès.');
+define('LANG_SUCCESS_LOGOUT','Déconnexion effectuée avec succès.');
 define('LANG_SUCCESS_EVALUATION_FORM','Evaluation enregistrée avec succès.');
 define('LANG_SUCCESS_EVALUATION_SETTING','Configuration enregistrée avec succès.');
 define('LANG_SUCCESS_MAIL_SEND','Messages envoyés avec succès.');
@@ -141,7 +141,7 @@ define('LANG_SUCCESS_MAIL_SEND','Messages envoyés avec succès.');
 	Mois de l'année
 */
 define('LANG_MONTH_1','Janvier');
-define('LANG_MONTH_2','Fevrier');
+define('LANG_MONTH_2','Février');
 define('LANG_MONTH_3','Mars');
 define('LANG_MONTH_4','Avril');
 define('LANG_MONTH_5','Mai');
@@ -189,7 +189,7 @@ define('LANG_MONTH_12','Decembre');
 	*/
 	
 	define('LANG_EVAL_LIST', 'Liste des évaluations');
-	define('LANG_EVAL_LIST_NOEVAL', 'Il n\'y a aucunes évaluations pour cette période.');
+	define('LANG_EVAL_LIST_NOEVAL', 'Il n\'y a aucune évaluation pour cette période.');
 	define('LANG_EVAL_LIST_OPTION_NEXT', 'A venir');
 	define('LANG_EVAL_LIST_OPTION_NOW', 'Actuellement');
 	define('LANG_EVAL_LIST_OPTION_OLD', 'Archives');
@@ -237,7 +237,7 @@ define('LANG_MONTH_12','Decembre');
 			
 			// Ajout des utilisateurs
 			define('LANG_ADMIN_UTILISATEURS_MENU_IMPORTCSV','Importer une liste d\'utilisateurs');			
-			define('LANG_ADMIN_UTILISATEURS_MENU_BATCH_IMPORTFILE','Veuillez importer un fichier CSV contenant le nom, prénom, adresse email (plusieurs adresses peuvent être misent, elle doivent être séparés d\'un point virgule), numéro d\'étudiant, identifiant de la promotion (peut être laissé vide), et le type d\'utilisateur (1 pour étudiant, 2 pour enseignant).<br /> Si un utilisateur existe déjà (numéro d\'étudiant déjà enregistré), les données le concernant seront alors actualisés.');			
+			define('LANG_ADMIN_UTILISATEURS_MENU_BATCH_IMPORTFILE','Veuillez importer un fichier CSV contenant le nom, prénom, adresse email (plusieurs adresses peuvent être mises, elle doivent être séparées d\'un point virgule), numéro d\'étudiant, identifiant de la promotion (peut être laissé vide), et le type d\'utilisateur (1 pour étudiant, 2 pour enseignant).<br /> Si un utilisateur existe déjà (numéro d\'étudiant déjà enregistré), les données le concernant seront alors actualisées.');			
 			define('LANG_ADMIN_UTILISATEURS_MENU_BATCH_DOWNLOADPROMOTIONLIST','Télécharger la liste des identifiants des promotions');			
 			define('LANG_ADMIN_UTILISATEURS_MENU_BATCH_DOWNLOADRAWCSV','Fichier CSV à compléter');			
 			define('LANG_ADMIN_UTILISATEURS_MENU_BATCH_TABLE_NOM','Nom');			
@@ -330,18 +330,18 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_EVALUATIONS_LISTE_TABLE_TITLE_PERIODE', 'Date');
 			define('LANG_ADMIN_EVALUATIONS_USERLIST_LASTUPDATE', 'Dernière actualisation : ');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_EDIT','Modifier les données concernant l\'évaluation');
-			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_BUTTON','Envoyer un email de rappel aux %d personnes n\'ayant pas remplis leurs évaluation.');
+			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_BUTTON','Envoyer un email de rappel aux %d personnes n\'ayant pas rempli leurs évaluation.');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_OBJET', 'Object');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_OBJET_DEFAULT', 'RAPPEL : Evaluation non remplie');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG', 'Message');
-			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG_DEFAULT', 'Vous n\'avez pas remplis l\'évaluation suivante : %s.<br />Veuillez vous rendre à l\'adresse suivante afin de la remplir : %s (copier-coller le lien dans votre barre d\'adresse)');
+			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_MSG_DEFAULT', 'Vous n\'avez pas rempli l\'évaluation suivante : %s.<br />Veuillez vous rendre à l\'adresse suivante afin de la remplir : %s (copier-coller le lien dans votre barre d\'adresse)');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_SEND_MAIL_CANCEL', 'Annuler l\'envoie');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_ADD','Ajouter une évaluation');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_DELETE','Supprimer l\'évaluation et l\'ensemble des données associées');
 			define('LANG_ADMIN_EVALUATION_FORM_SUBMIT_DELETE_CONFIRM','Confirmer la suppression de l\'évaluation et de l\'ensemble des données associées');
 			define('LANG_ADMIN_EVALUATION_CSV_STATE','Evaluation');
-			define('LANG_ADMIN_EVALUATION_CSV_COMPLETE','Evaluation remplis');
-			define('LANG_ADMIN_EVALUATION_CSV_NOT_COMPLETE','Evaluation non remplis');
+			define('LANG_ADMIN_EVALUATION_CSV_COMPLETE','Evaluation remplie');
+			define('LANG_ADMIN_EVALUATION_CSV_NOT_COMPLETE','Evaluation non remplie');
 			
 		// Gestion des modules
 		
@@ -360,7 +360,7 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_SENDMAIL_OBJECT', 'Objet');
 			define('LANG_ADMIN_SENDMAIL_MESSAGE', 'Message');
 			define('LANG_ADMIN_SENDMAIL_SEND', 'Envoyer les emails');
-			define('LANG_ADMIN_SENDMAIL_SENT', 'Envoie terminé');
+			define('LANG_ADMIN_SENDMAIL_SENT', 'Envoi terminé');
 			define('LANG_ADMIN_SENDMAIL_ALLCHANGESSAVED', 'Modifications enregistrées avec succès');
 		
 		// Paramètres
@@ -415,6 +415,6 @@ define('LANG_MONTH_12','Decembre');
 	// A propos
 		define('LANG_ABOUT_DESCRIPTION', '%1$s est un logiciel de gestion des évaluations de stage.<br />Souple et modulable, %1$s est adaptable à toutes les situations.');
 		define('LANG_ABOUT_LICENCE', '%1$s est distribué sous licence GPL V3.');
-		define('LANG_ABOUT_LIBRAIRIE', 'L\'envoi d\'email se fait à l\'aide de librairie <a href = "http://swiftmailer.org/">SwiftMailer</a>, aucune modification n\'a été apporté au code source de la librairie.<br />Les icones sont issues de la police d\'écriture <a href = "http://swiftmailer.org/">FontAwesome</a>.');	
+		define('LANG_ABOUT_LIBRAIRIE', 'L\'envoi d\'email se fait à l\'aide de librairie <a href = "http://swiftmailer.org/">SwiftMailer</a>, aucune modification n\'a été apportée au code source de la librairie.<br />Les icones sont issues de la police d\'écriture <a href = "http://swiftmailer.org/">FontAwesome</a>.');	
 		define('LANG_ABOUT_CONTACT', 'Contact : <a href = "mailto:contact@alibellamine.me">contact@alibellamine.me</a>');
 	?>

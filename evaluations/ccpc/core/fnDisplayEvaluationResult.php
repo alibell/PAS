@@ -39,6 +39,8 @@
 	  * ['service']['hide'] => (int) 1 si le service est masqué de la liste pour les utilisateurs, 0 sinon
 	  *   	['donnees'] => (array) Contient les données d'évaluation individuelles<br>
 	  * 	['donnees'][identifiant de l'évaluation]['infos']['date'] => (string) Date de l'évaluation<br>
+	  * 	['donnees'][identifiant de l'évaluation]['infos']['dateDebut'] => (string) Date de début de la période de stage évaluée<br>
+	  * 	['donnees'][identifiant de l'évaluation]['infos']['dateFin'] => (string) Date de fin de la période de stage évaluée<br>
 	  * 	['donnees'][identifiant de l'évaluation]['infos']['promotion']['id'] => (int) Identifiant de la promotion de l'utilisateur ayant remplis l'évaluation<br>
 	  * 	['donnees'][identifiant de l'évaluation]['infos']['promotion']['nom'] => (string) Nom de la promotion de l'utilisateur ayant remplis l'évaluation<br>
 	  * 	['donnees'][identifiant de l'évaluation][categorie de la question][nom du champs dans la BDD] => (int) Valeur de la réponse à la question (n'apparaissent que les questions ayant une valeur numérique en réponse)<br>
@@ -111,7 +113,7 @@
 		$sqlData = array('id' => $id);
 		$sqlNbDate = 'SELECT COUNT(DISTINCT e.date) nombreDate FROM eval_ccpc_resultats e INNER JOIN service s ON e.service = s.id WHERE e.service = :id '; // Permet de calculer le nombre de date d'évaluations différentes dispo
 		$sqlNbStudent = 'SELECT COUNT(DISTINCT u.id) nombreEtudiant FROM affectationexterne ae INNER JOIN user u ON u.id = ae.userId WHERE ae.service = :id '; // Permet de calculer le nombre d'étudiants en stage sur la période considérée
-		$sql = 'SELECT e.hide hide, e.id evaluationId, e.service serviceId, e.date evaluationDate, p.nom promotionNom, e.promotion promotionId';
+		$sql = 'SELECT e.hide hide, e.id evaluationId, e.service serviceId, e.date evaluationDate, e.debutStage dateDebut, e.finStage dateFin, p.nom promotionNom, e.promotion promotionId';
 		foreach ($listEvaluationItems AS $key => $value)
 		{
 			$sql .= ', e.'.$key.' '.$key.' ';
@@ -213,6 +215,8 @@
 					On enregistre les données de l'évaluation
 				*/
 				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['date'] = DatetimeToTimestamp($res_f['evaluationDate']);
+				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['dateDebut'] = DatetimeToTimestamp($res_f['dateDebut']);
+				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['dateFin'] = DatetimeToTimestamp($res_f['dateFin']);
 				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['promotion']['id'] = $res_f['promotionId'];
 				$serviceEvaluation['donnees'][$res_f['evaluationId']]['infos']['promotion']['nom'] = $res_f['promotionNom'];
 				
@@ -1369,26 +1373,51 @@
 							// Les commentaires
 							
 								$input = $form -> xpath('categorie/input[@pdfComment="1"]');
-											
+																
 								foreach ($input AS $theinput)
 								{
 									$categorie = $theinput -> xpath('..')[0];
 
 									if ($theinput['type'] == 'text')
 									{
+										// Création de l'array contenant les données à afficher sous forme [timestamp fin][timestamp début][timestamp commantaire][idMessage][] => message
+										$tempData = array();
+										foreach ($theinput -> text AS $value)
+										{
+											if (isset($data[(string) $categorie['nom']][(string) $value['nomBDD']])) {
+												foreach ($data[(string) $categorie['nom']][(string) $value['nomBDD']] AS $idEval => $textValue)
+												{
+													if (isset($data['donnees'][$idEval]['infos']))
+													{
+														$tempData[$data['donnees'][$idEval]['infos']['dateFin']][$data['donnees'][$idEval]['infos']['dateDebut']][$data['donnees'][$idEval]['infos']['date']][$idEval][] = $textValue;
+													}
+												}
+											}
+										}
+										
 										$textArea = '';
 										$firstLoop = TRUE;
 										
-										foreach ($theinput -> text AS $text)
+										// On affiche les commentaires
+										krsort($tempData);
+										foreach ($tempData AS $dateFin => $tempvalue)
 										{
-											if (isset($data[(string) $categorie['nom']][(string) $text['nomBDD']]))
+											krsort($tempvalue);
+											foreach ($tempvalue AS $dateDebut => $value2)
 											{
-												foreach ($data[(string) $categorie['nom']][(string) $text['nomBDD']] AS $comment)
+												krsort($value2);
+												foreach ($value2 AS $date => $value3)
 												{
-													if ($comment != '')
+													foreach ($value3 AS $commentId => $comments)
 													{
-														if (!$firstLoop) { $textArea .= PHP_EOL.PHP_EOL; } else { $firstLoop = FALSE; } // Saut de ligne
-														$textArea .= $comment;
+														foreach ($comments AS $comment)
+														{
+															if ($comment != '')
+															{
+																if (!$firstLoop) { $textArea .= PHP_EOL.PHP_EOL; } else { $firstLoop = FALSE; } // Saut de ligne
+																$textArea .= $comment.' - '.date('d/m/Y', $date).' #'.$commentId;
+															}
+														}
 													}
 												}
 											}
@@ -1408,15 +1437,38 @@
 									}
 									else if ($theinput['type'] == 'textarea')
 									{
+										// Création de l'array contenant les données à afficher sous forme [timestamp fin][timestamp début][timestamp commantaire][idCommentaire] => commentaire
+										$tempData = array();
+										foreach ($data[(string) $categorie['nom']][(string) $theinput['nomBDD']] AS $commentId => $commentData)
+										{
+											if (isset($data['donnees'][$commentId]['infos']))
+											{
+												$tempData[$data['donnees'][$commentId]['infos']['dateFin']][$data['donnees'][$commentId]['infos']['dateDebut']][$data['donnees'][$commentId]['infos']['date']][$commentId] = $commentData;
+											}
+										}
+										
 										$textArea = '';
 										$firstLoop = TRUE;
-										
-										if (isset($data[(string) $categorie['nom']][(string) $theinput['nomBDD']]))
+
+										// On affiche les commentaires
+										krsort($tempData);
+										foreach ($tempData AS $dateFin => $tempvalue)
 										{
-											foreach ($data[(string) $categorie['nom']][(string) $theinput['nomBDD']] AS $comment)
+											krsort($tempvalue);
+											foreach ($tempvalue AS $dateDebut => $value2)
 											{
-												if (!$firstLoop) { $textArea .= PHP_EOL.PHP_EOL; } else { $firstLoop = FALSE; } // Saut de ligne
-												$textArea .= $comment;
+												krsort($value2);
+												foreach ($value2 AS $date => $value3)
+												{
+													foreach ($value3 AS $commentId => $comment)
+													{
+														if ($comment != '')
+														{
+															if (!$firstLoop) { $textArea .= PHP_EOL.PHP_EOL; } else { $firstLoop = FALSE; } // Saut de ligne
+															$textArea .= $comment.' - '.date('d/m/Y', $date).' #'.$commentId;
+														}
+													}
+												}
 											}
 										}
 										

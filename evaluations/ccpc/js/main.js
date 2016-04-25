@@ -33,10 +33,9 @@
 // Compatibilité mobile
 
 // Affichage des menu d'admin
-
 $(".mobileCCPCMenuButton").on('click', function(){
 	// On masque le bouton et le contenu de la page
-	if ($('#evalccpcFiltres').css('width') == 100)
+	if (mobileSize == 'small')
 	{
 		$("#evalccpcContent").css('display', 'none');
 	}
@@ -48,12 +47,22 @@ $(".mobileCCPCMenuButton").on('click', function(){
 
 $(".mobileCCPCMenuButtonClose").on('click', function(){
 	// On masque le bouton et le contenu de la page
-	if ($('#evalccpcFiltres').css('width') == 100)
+	if (mobileSize == 'small')
 	{
-	$("#evalccpcContent").css('display', 'block');
+		$("#evalccpcContent").css('display', 'block');
 	}
 	$(".mobileCCPCMenuButton").css('display', 'block');
 	
 	// On affiche le menu
 	$('#evalccpcFiltres').css('display', 'none');
 });
+
+// Correction des propriétés CSS manquantes
+if (!Modernizr.cssvhunit || !Modernizr.csscalc) {
+		var height = window.innerHeight;
+		$('#evalccpcContentUnique').css('height', height-30+'px');
+		$('#divResultats').css('height', height-50+'px');
+		$('#evalccpcContentUniqueRetour').css('top', height/2+'px');
+		$('#evalccpcFiltres').css('height', height-90+'px');
+		$('#evalccpcContent').css('height', height-20+'px');
+}
