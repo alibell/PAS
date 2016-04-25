@@ -88,7 +88,7 @@ function displayErreur($erreur)
 function sendMail ($destinataire, $titre, $corps, $erreur = array(), $attach = array()) {
 	if (isset($destinataire) && isset($titre) && isset($corps))
 	{
-		if (defined('MAIL_SMTP_HOST') && constant('MAIL_SMTP_HOST') != '' && defined('MAIL_SMTP_LOGIN') && constant('MAIL_SMTP_LOGIN') != '' && defined('MAIL_SMTP_PORT') && defined('MAIL_SMTP_PASSWORD') && constant('MAIL_SMTP_PASSWORD') != '')
+		if (defined('MAIL_SMTP_HOST') && constant('MAIL_SMTP_HOST') != '' && defined('MAIL_SMTP_LOGIN') && constant('MAIL_SMTP_LOGIN') != '' && defined('MAIL_SMTP_PORT') && defined('MAIL_SMTP_PASSWORD'))
 		{
 			// Connexion au SMTP
 			if (MAIL_SMTP_PORT == 587 || MAIL_SMTP_PORT == 465) { $ssl = 'ssl'; } else { $ssl = ''; }
