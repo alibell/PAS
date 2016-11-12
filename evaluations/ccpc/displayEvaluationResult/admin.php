@@ -101,7 +101,7 @@
 		// 1. On récupère la liste de tous les services
 		$listeServices = getServiceList();
 		
-		// 2. Pour chaque service on teste le filtre sur une période de 1 an
+		// 2. Pour chaque service on teste le filtre sur une période de 12 mois
 		
 			// Détermination des dates minimales et maximales
 			$DateMax = time();

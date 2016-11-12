@@ -90,7 +90,11 @@
 									$value[] = $mailValue;
 								}
 							}
-							
+
+							if (is_string($value) && !is_numeric($value) && !mb_check_encoding($value,'UTF-8'))
+							{
+								$value =  utf8_encode($value);
+							}
 							$userData[array_search($key, $correspondance)] = $value;
 						}
 					

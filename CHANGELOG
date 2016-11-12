@@ -54,3 +54,8 @@ Correction de bug : problème mot de passe pour smtp
 1.3.3 :
 Correction orthographique
 Correction d'un problème d'affichage sur les terminaux mobiles
+
+1.3.4 :
+Correction de bug :
+- Correction d'un problème d'encodage dans l'importation des listes CSV
+- Corrections orthographique

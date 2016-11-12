@@ -54,6 +54,7 @@
 	function getEvaluationCCPCPartialData ($id, $promotion, $dateMin, $dateMax) 
 	{
 		global $db;
+		global $bypasslimit;
 		
 		/**
 			Vérification de l'id et des dates
@@ -141,7 +142,7 @@
 		}
 		
 		// Si il s'agit d'un étudiant, on affiche que les évaluations vielles de + de 30 jours
-		if ($_SESSION['rang'] <= 1)
+		if ($_SESSION['rang'] <= 1 && $bypasslimit == FALSE)
 		{
 			if (defined('CONFIG_EVAL_CCPC_DELAIDISPOEVAL') && is_numeric(constant('CONFIG_EVAL_CCPC_DELAIDISPOEVAL')) && constant('CONFIG_EVAL_CCPC_DELAIDISPOEVAL') >= 0)
 			{
@@ -161,7 +162,7 @@
 			Ne pas afficher les évaluations des autres services aux chef de service
 		*/
 		
-		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE)
+		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE && $bypasslimit == FALSE)
 		{			
 			$sql .= ' AND s.chef = "'.$_SESSION['id'].'"';
 			$sqlNbDate .= ' AND s.chef = "'.$_SESSION['id'].'"';
@@ -350,6 +351,7 @@
 	function getEvaluationCCPCFullData ($id, $promotion,$dateMin,$dateMax, $modere = FALSE) 
 	{	
 		global $db;
+		global $bypasslimit;
 
 		// On récupère des données de la page d'accueil
 		$evaluationData = getEvaluationCCPCPartialData($id,$promotion,$dateMin,$dateMax);
@@ -452,7 +454,7 @@
 		}
 
 		// Si il s'agit d'un étudiant, on affiche que les évaluations vielles de + de 30 jours
-		if ($_SESSION['rang'] <= 1)
+		if ($_SESSION['rang'] <= 1 && $bypasslimit == FALSE)
 		{
 			if (defined('CONFIG_EVAL_CCPC_DELAIDISPOEVAL') && is_numeric(constant('CONFIG_EVAL_CCPC_DELAIDISPOEVAL')) && constant('CONFIG_EVAL_CCPC_DELAIDISPOEVAL') >= 0)
 			{
@@ -471,7 +473,7 @@
 			Ne pas afficher les évaluations des autres services aux chef de service
 		*/
 		
-		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE)
+		if ($_SESSION['rang'] == 2 && defined('CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE') && CONFIG_EVAL_CCPC_RESTRICTEVALUATIONACCESSSERVICE == TRUE && $bypasslimit == FALSE)
 		{			
 			$sql .= ' AND s.chef = "'.$_SESSION['id'].'"';
 		}		

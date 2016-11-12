@@ -28,6 +28,7 @@
 	}	
 
 	// Insertion du fichier de fonctions
+	$bypasslimit = false; // Variable permettant de bypasser les limites d'accès aux évaluations (chef de service, étudiants ...)
 	require(PLUGIN_PATH.'core/fnDisplayEvaluationResult.php'); // Fonctions propres à l'affichage des résultats d'épreuves
 	require(PLUGIN_PATH.'core/fnGraphGen.php'); // Affichage des graphiques
 	include(PLUGIN_PATH.'core/fnAdmin.php'); // Administration du module

@@ -88,7 +88,7 @@
 					FROM user u
 					LEFT JOIN promotion p ON u.promotion = p.id
 					WHERE u.rang = 1 ';
-					
+
 			/*
 				On crée le $whereSQL
 			*/

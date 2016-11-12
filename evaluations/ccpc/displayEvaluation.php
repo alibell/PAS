@@ -34,6 +34,7 @@
 			Fichiers de fonctions
 		*/
 		
+		$bypasslimit = false; // Variable permettant de bypasser les limites d'accès aux évaluations (chef de service, étudiants ...)
 		require(PLUGIN_PATH.'core/fnDisplayEvaluationResult.php'); // Fonctions propres à l'affichage des résultats d'épreuves
 		require(PLUGIN_PATH.'core/fnDisplayEvaluation.php'); // Fonctions propres à l'affichage des formulaires d'évaluation
 		require(PLUGIN_PATH.'core/fnGraphGen.php'); // Affichage des graphiques

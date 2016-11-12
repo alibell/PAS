@@ -559,21 +559,21 @@
 					if (isset($promotion) && is_numeric($promotion) && count(checkPromotion($promotion, array())) == 0)
 					{
 						$sqlData['promotion'] = $promotion;
-						$sql = 'SELECT id_filtre filtre FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage = :debutStage AND finStage = :finStage AND (promotion = :promotion OR promotion IS NULL)';
+						$sql = 'SELECT id_filtre id FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage = :debutStage AND finStage = :finStage AND (promotion = :promotion OR promotion IS NULL)';
 					}
 					else
 					{
 						$sql = 'SELECT id_filtre filtre FROM eval_ccpc_filtres_detected WHERE id_service = :service AND debutStage = :debutStage AND finStage = :finStage';
 					}
+echo $sql;
 					$res = $db -> prepare($sql);
 					$res -> execute($sqlData);
-
-					if ($res) {
-						while ($res_f = $res -> fetch())
-						{
-							$filtres[$res_f['filtre']] = eval_ccpc_getFilterDetails($res_f['filtre']);
-						}
+					
+					while ($res_f = $res -> fetch())
+					{
+						$filtres[$res_f['id']] = eval_ccpc_getFilterDetails($res_f['id']);
 					}
+					print_r($filtres); exit();
 					return $filtres;
 				}
 				else
@@ -615,9 +615,6 @@
 					$filtres = eval_ccpc_getFilterList();
 					
 					// Données d'évaluation
-
-						// On récupère toutes les informations, même temporaires
-						$bypasslimit = TRUE;
 						
 						// Pour la promotion
 						$dataPromo = getEvaluationCCPCFullData($id, $promotion, $dateDebut, $dateFin, FALSE);
@@ -625,9 +622,6 @@
 						// Sans la promotion (toutes les promotions)
 						$dataAllPromo = getEvaluationCCPCFullData($id, FALSE, $dateDebut, $dateFin, FALSE);
 
-						// On ferme la dérogation à l'accès aux données
-						$bypasslimit = FALSE;
-						
 					if (!isset($form)) { return FALSE; }
 				
 				/**

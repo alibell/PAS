@@ -313,8 +313,8 @@
 	  * @category : checkFunction
 	  * @param int $etudiant Identifiant de l'étudiant
 	  * @param int $service Identifiant du service
-	  * @param timestamp $dateDebut Date du début de l'affectation
-	  * @param timestamp $dateFin Date de fin de l'affectation
+	  * @param frenchdate $dateDebut Date du début de l'affectation
+	  * @param frenchdate $dateFin Date de fin de l'affectation
 	  * @param array $erreur Array contenant la liste des erreurs rencontrées avant execution de la fonction
 	  * @return array Array contenant la liste des erreurs rencontrées après execution de la fonction
 	  *
@@ -348,9 +348,15 @@
 		// Si le service et l'étudiant sont disponibles, on vérifie que l'étudiant n'est pas déjà inscrit dans le service
 		if (isset($userData) && $serviceCheck)
 		{
-			if (isset($userData['service'][$service]))
+			if (isset($userData['service']))
 			{
-				$erreur[10] = TRUE;
+				foreach ($userData['service'] AS $affectationId => $affectationData)
+				{
+					if (isset($affectationData['id']) && DatetimeToTimestamp(FrenchdateToDatetime($dateDebut)) == $affectationData['dateDebut'] && DatetimeToTimestamp(FrenchdateToDatetime($dateFin)) == $affectationData['dateFin'])
+					{
+						$erreur[10] = TRUE;
+					}
+				}
 			}
 		}
 		
