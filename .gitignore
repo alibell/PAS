@@ -1,0 +1,6 @@
+install/
+install_old/
+core/bddAccess.php
+evaluations/ccpc/settings.php
+evaluations/ccpc/formulaire.xml
+evaluations/ccpc/cache
