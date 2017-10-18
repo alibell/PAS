@@ -360,7 +360,7 @@
 					ADD CONSTRAINT `affectationexterne_ibfk_1` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 					ADD CONSTRAINT `affectationexterne_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;';
 	$sql .= 'ALTER TABLE `mail`
-					ADD CONSTRAINT `mail_ibfk_1` FOREIGN KEY (`destinataire`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+					ADD CONSTRAINT `mail_ibfk_1` FOREIGN KEY (`destinataire`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;';
 					
 	// $sqlRemove : annule tout ce qui a été installé dans la BDD
 	$sqlRemove = '';
