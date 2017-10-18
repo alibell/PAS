@@ -421,7 +421,6 @@
 					{
 						// On charge le fichier contenant le requête
 						require('query.php');
-						
 						try
 						{
 							$db -> query($sqlRemove);

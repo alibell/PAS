@@ -266,7 +266,7 @@
 				  `valeur` TEXT NOT NULL
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
 	$sql .= "INSERT INTO `setting` (`alias`, `valeur`) VALUES
-					('CHARTE', '')";
+					('CHARTE', '');";
 	$sql .= 'ALTER TABLE `setting`
 					ADD PRIMARY KEY (`id`);';
 	$sql .= 'ALTER TABLE `setting`
@@ -332,7 +332,7 @@
 				  `erreurs` varchar(255) NOT NULL DEFAULT \'1\'
 				) ENGINE=InnoDB AUTO_INCREMENT=273 DEFAULT CHARSET=latin1;';
 	$sql .= 'ALTER TABLE `mail`
-					ADD PRIMARY KEY (`id`)), ADD KEY `destinataire` (`destinataire`);';
+					ADD PRIMARY KEY (`id`), ADD KEY `destinataire` (`destinataire`);';
 	$sql .= 'ALTER TABLE `mail`
 					MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;';
 					
