@@ -44,6 +44,9 @@
 		// Afficher les erreurs à l'écran
 		ini_set('display_errors', 0);
 		error_reporting(E_ALL);
+                
+                // Introduction d'un compteur
+                $timeStart = microtime(true);
 	}
 	
 	

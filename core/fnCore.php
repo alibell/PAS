@@ -23,6 +23,25 @@
 	*/
 
 	/**
+	  * getExecutionTime - Retourne le temps d'execution du Script. Fonctionne uniquement en mode développeur.
+	  *
+	  * @category : coreFunction
+	  * @return int Valeur numérique indiquant le temps d'execution du script à l'endroit où la fonction est appelée
+	  *
+	  * @Author Ali Bellamine
+	  */
+
+function getExecutionTime()
+{
+	if (DEVMODE == 1) {
+            $timeEnd = microtime(true);
+            $time = $timeEnd - $timeStart;
+            
+            return $time;
+        }
+}
+
+        /**
 	  * login - Identifie l'utilisateur
 	  *
 	  * @category : coreFunction
