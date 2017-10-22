@@ -23,6 +23,33 @@
 	*/
 
 	/**
+	  * login - Identifie l'utilisateur
+	  *
+	  * @category : coreFunction
+	  * @param array $userId (int) Identifiant de l'utilisateur
+	  *
+	  * @Author Ali Bellamine
+	  */
+
+function login($userId)
+{
+	global $db;
+	
+        if (!isset($userId) || !is_numeric ($userId)) {
+            return FALSE;
+        }
+        
+        $userData = getUserData($userId);
+        $_SESSION['id'] = $userData['id'];
+        $_SESSION['nom'] = $userData['nom'];
+        $_SESSION['prenom'] = $userData['prenom'];
+        $_SESSION['rang'] = $userData['rang'];
+	if (isset($userData['promotion'])) {
+            $_SESSION['promotion'] = $userData['promotion']['id'];
+	}
+}
+
+        /**
 	  * displayErreur - Affiche les erreurs à partir d'un array contenant les codes d'erreur
 	  *
 	  * @category : coreFunction
@@ -351,6 +378,36 @@ function getPageUrl ($alias, $get = array()) {
 	{
 		return FALSE;
 	}
+}
+
+	/**
+	  * makeURIWithGetParameter - Ajouter des paramètres GET à la page en cours
+	  *
+	  * @category : coreFunction
+	  * @param array $add Array de valeurs à rajouter en variables $_GET à la fin de l'URL de la forme array(variable1 => valeur, variable2 => valeur...)
+	  * @param array $del Array de valeurs à supprimer des variables GET actuelles de la forme array(variable1, variable2, ...)
+	  * @return string URL de la page demandée accompagné des variables $_GET
+	  *
+	  * @Author Ali Bellamine
+	  */
+
+function makeURIWithGetParameter ($add = array(), $del = array()) {
+    if (is_array($add) && is_array($del)){
+            $current_page = getCurrentPageData();
+            $tempGET = $_GET;
+            foreach($del AS $key) {
+                if (isset($tempGET[$key])) {
+                    unset($tempGET[$key]);
+                }
+            }
+            foreach ($add AS $key => $value) {
+                $tempGET[$key] = $value;
+            }
+        
+        return ROOT.$current_page['file'].'?'.http_build_query($tempGET);
+    } else {
+        return FALSE;
+    }
 }
 
 	/**

@@ -230,10 +230,12 @@ define('LANG_MONTH_12','Decembre');
 			define('LANG_ADMIN_PROMOTION_LIST_ETUDIANTS','Etudiants enregistrés dans la promotion');
 			define('LANG_ADMIN_PROMOTION_NOM_TITRE','Nom de la promotion');
 			define('LANG_ADMIN_PROMOTION_ADD_PROMOTION','Ajouter une promotion');
+			define('LANG_ADMIN_PROMOTION_CLEAN','Nettoyer la promotion');
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_EDIT','Valider les modifications');		
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_ADD','Ajouter la promotion');		
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_DELETE','Supprimer la promotion et l\'ensemble des profils associés');		
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_DELETE_CONFIRM','Confirmer la suppression de la promotion et de l\'ensemble des profils associés');		
+			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_CLEAN_CONFIRM','Confirmer le retrait de l\'ensemble des utilisateurs associés à cette promotion');		
 			
 			// Ajout des utilisateurs
 			define('LANG_ADMIN_UTILISATEURS_MENU_IMPORTCSV','Importer une liste d\'utilisateurs');			

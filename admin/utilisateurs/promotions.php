@@ -54,6 +54,13 @@
 		// On récupère les données sur la promotion
 		if (count(checkPromotion($_GET['id'], array())) == 0)
 		{
+                        // On nettoie la promotion si l'option a été sélectionnée
+                        if (isset($_GET['empty'])) {
+                            $sql = 'UPDATE user SET promotion = NULL WHERE promotion = ?';
+                            $res = $db -> prepare($sql);
+                            $res -> execute(array($_GET['id']));
+                        }
+                
 			$promotionData = getPromotionData($_GET['id']);
 		}
 		else
@@ -249,6 +256,9 @@
 			<h1><?php echo $promotionData['nom']; ?></h1>
 		
 			<h2><?php echo LANG_ADMIN_PROMOTION_LIST_ETUDIANTS; ?> (<?php echo $promotionData['nb']; ?>) :</h2>
+                        
+                        <!-- Bouton permettant de nettoyer la promotion -->
+                        <a href = "<?php echo makeURIWithGetParameter(array('empty' => 'true')); ?>"><button id = "cleanPromotion"><?php echo LANG_ADMIN_PROMOTION_CLEAN; ?></button></a>
 		
 			<div id = "donnees">
 				<table  style = "margin-top: 10px;">
@@ -304,9 +314,16 @@
 
 <script>
 	$('#submit_delete').on('click', function(e){
-			if (!confirm("<?php echo LANG_ADMIN_PROMOTION_FORM_SUBMIT_DELETE_CONFIRM; ?>"))
-			{
-				e.preventDefault();
-			}
+            if (!confirm("<?php echo LANG_ADMIN_PROMOTION_FORM_SUBMIT_DELETE_CONFIRM; ?>"))
+            {
+		e.preventDefault();
+            }
 	});
+        
+        $('#cleanPromotion').on('click', function(e)) {
+            if (!confirm("<?php echo LANG_ADMIN_PROMOTION_FORM_SUBMIT_CLEAN_CONFIRM; ?>"))
+            {
+		e.preventDefault();
+            }
+        }
 </script>

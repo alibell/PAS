@@ -230,10 +230,12 @@ define('LANG_MONTH_12','December');
 			define('LANG_ADMIN_PROMOTION_LIST_ETUDIANTS','Student registered in the class');
 			define('LANG_ADMIN_PROMOTION_NOM_TITRE','Class\'s name');
 			define('LANG_ADMIN_PROMOTION_ADD_PROMOTION','Add an class');
+			define('LANG_ADMIN_PROMOTION_CLEAN','Clean the classe');
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_EDIT','Valid changes');		
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_ADD','Add the classe');		
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_DELETE','Delete the class and related data');		
 			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_DELETE_CONFIRM','Confirm');		
+			define('LANG_ADMIN_PROMOTION_FORM_SUBMIT_CLEAN_CONFIRM','Confirm');		
 
 			// Ajout des utilisateurs
 			define('LANG_ADMIN_UTILISATEURS_MENU_IMPORTCSV','Import an user list file');			
