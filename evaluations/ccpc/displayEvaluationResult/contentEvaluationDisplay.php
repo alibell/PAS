@@ -333,10 +333,22 @@
 					<?php
 					if (isset($evaluationData['service']) && count($evaluationData['service']) > 0)
 					{
-					foreach ($evaluationData AS $dataName => $data)
-					{
-					
-						/**
+                                        
+                                        // Fix du code initial qui parcourais l'array $evaluationData, à la place on parcours le fichier XML pour respecter l'ordre des questions et on rétablis un équivalent de parcours de l'array $evaluationData
+                                        $categorieListe = array();
+                                        foreach ($form -> categorie AS $categorie)
+                                        {
+                                            $categorieListe[] = (string) $categorie['nom'];
+                                        }
+
+                                        foreach($categorieListe AS $categorieName)
+                                        {
+                                            if (isset($evaluationData[(string) $categorie['nom']]))
+                                            {
+                                                $dataName = $categorieName;
+                                                $data = $evaluationData[$dataName];
+
+                                                /**
 							On crée la div de catégorie
 						**/
 						
@@ -646,6 +658,7 @@
 							</div>
 							<?php
 						}
+                                            }
 					}
 					}
 					else
