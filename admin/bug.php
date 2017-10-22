@@ -139,7 +139,7 @@
 		<!-- Liste des année disponibles -->
 		<div style = "margin: 10px;">
 			<form method = "GET">
-				<select name = "annee">
+				<select id = "selectYear" name = "annee">
 					<option value = ""><?php echo LANG_ADMIN_BUG_MANAGER_SELECT_YEAR; ?></option>
 					<?php
 						foreach ($listeAnnee AS $annee)
@@ -167,9 +167,9 @@
 					{
 						?>
 						<tr class = "bodyTR">
-							<td><? echo date('d/m/Y', DatetimeToTimestamp($bug['date'])); ?></td>
-							<td><? echo $bug['description']; ?></td>
-							<td style = "color: <?php if ($bug['state'] == 1) { echo 'green'; } else { echo 'red'; } ?>;"><? echo constant('LANG_ADMIN_BUG_MANAGER_TABLE_TITLE_STATUT_VALUE_'.$bug['state']); ?></td>
+							<td><?php echo date('d/m/Y', DatetimeToTimestamp($bug['date'])); ?></td>
+							<td><?php echo $bug['description']; ?></td>
+							<td style = "color: <?php if ($bug['state'] == 1) { echo 'green'; } else { echo 'red'; } ?>;"><?php echo constant('LANG_ADMIN_BUG_MANAGER_TABLE_TITLE_STATUT_VALUE_'.$bug['state']); ?></td>
 							<td>
 								<a href = "<?php echo ROOT.CURRENT_FILE.'?action=view&id='.$bug['id']; ?>"><i class="fa fa-bug"></i></a> <!-- Bouton pour voir le détail du bug  -->
 								<!-- Bouton pour checker ou dechecker un bug -->
@@ -290,3 +290,9 @@
 	
 	require '../core/footer.php';
 ?>
+
+<script>
+    $('#selectYear').on('change', function(){
+       $(this).parent().submit(); 
+    });
+</script>
