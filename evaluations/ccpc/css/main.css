@@ -53,7 +53,7 @@
 #evalccpcFiltresFormContent {
 	height: calc(100% - 60px);
 	overflow-y: auto;
-	overflow-x: hidder;
+	overflow-x: hidden;
 }
 
 #evalccpcFiltresFormContent label {
@@ -486,28 +486,28 @@ div:-webkit-full-screen {
   width: calc(100vw - 20px) !important;
   height: calc(100vh - 20px) !important;
   max-width: calc(100vw - 20px) !important;
-  max-height: calc(100vh - 20px) !important:
+  max-height: calc(100vh - 20px) !important;
   margin: 10px;
 }
 div:-moz-full-screen {
   width: calc(100vw - 20px) !important;
   height: calc(100vh - 20px) !important;
   max-width: calc(100vw - 20px) !important;
-  max-height: calc(100vh - 20px) !important:
+  max-height: calc(100vh - 20px) !important;
   margin: 10px;
 }
 div:-ms-fullscreen {
   width: calc(100vw - 20px) !important;
   height: calc(100vh - 20px) !important;
   max-width: calc(100vw - 20px) !important;
-  max-height: calc(100vh - 20px) !important:
+  max-height: calc(100vh - 20px) !important;
   margin: 10px;
 }
 div:fullscreen {
   width: calc(100vw - 20px) !important;
   height: calc(100vh - 20px) !important;
   max-width: calc(100vw - 20px) !important;
-  max-height: calc(100vh - 20px) !important:
+  max-height: calc(100vh - 20px) !important;
   margin: 10px;
 }
 

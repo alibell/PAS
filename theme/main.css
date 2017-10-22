@@ -525,7 +525,7 @@ select {
 	margin-top: 5px;
 }
 
-/** FIX de CHOSEN pour le style des select *//
+/** FIX de CHOSEN pour le style des select **/
 .chosen-container {
 	width: 204px !important;
 	height: 35px !important;

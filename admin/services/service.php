@@ -591,7 +591,7 @@
 					<?php
 					
 						// Récupération de la liste des étudiants affectés au service
-						$sql = 'SELECT userId idEtudiant, ae.id affectationId FROM affectationexterne ae INNER JOIN user u ON u.id = ae.userId WHERE ae.service = :service AND ae.dateDebut <= :now AND ae.dateFin >= :now ORDER BY u.promotion ASC, nom ASC, prenom ASC';
+						$sql = 'SELECT ae.userId idEtudiant, ae.id affectationId FROM affectationexterne ae INNER JOIN user u ON u.id = ae.userId WHERE ae.service = :service AND ae.dateDebut <= :now AND ae.dateFin >= :now ORDER BY u.promotion ASC, u.nom ASC, u.prenom ASC';
 						$res = $db -> prepare($sql);
 						$res -> execute(array('service' => $serviceInfo['id'], 'now' => TimestampToDatetime(time())));
 					

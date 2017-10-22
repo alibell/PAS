@@ -26,7 +26,7 @@
 	require 'core/header.php';
 ?>
 
-<div id = "presentation" style = "display: overflow: auto;">
+<div id = "presentation" style = "overflow: auto;">
 	<div class = "divBox" style = "text-align: center;">
 		<span style = "padding: 10px; display: inline-block; margin-top: 10px; margin-top: 10px; background-color: #BBB5B5; border-radius: 5px; color: white;"><?php echo PROGRAM_NAME; ?> (<?php echo PROGRAM_VERSION; ?>)</span>
 		<p>
