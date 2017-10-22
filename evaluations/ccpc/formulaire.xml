@@ -43,13 +43,13 @@
 		</input>
 	</categorie>
 	<categorie nom = "investissement" legend = "LANG_FORM_CCPC_FIELDSET_INVESTISSEMENT">
-		<input type = "select" label = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE" name = "tempsService" coefficient = "1" nomBDD = "tempsService">
-			<option value = "-3" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS3"></option>
-			<option value = "-2" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS2"></option>
-			<option value = "-1" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS1"></option>
-			<option value = "1" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS1"></option>
-			<option value = "2" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS2"></option>
-			<option value = "3" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS3"></option>
+		<input type = "radio" label = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE" name = "tempsService" coefficient = "1" nomBDD = "tempsService">
+			<radio value = "-3" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS3"></radio>
+			<radio value = "-2" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS2"></radio>
+			<radio value = "-1" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_MINUS1"></radio>
+			<radio value = "1" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS1"></radio>
+			<radio value = "2" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS2"></radio>
+			<radio value = "3" text = "LANG_FORM_CCPC_QUESTION_TEMPSSERVICE_ITEM_PLUS3"></radio>
 		</input>
 		<input type = "radio" label = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE" name = "rythmeServiceNbDemiJournee" required = "1" nomBDD = "rythmeServiceNbDemiJournee">
 			<radio value = "5dj" text = "LANG_FORM_CCPC_QUESTION_RYTHMESERVICE_ITEM_5DJ"></radio>
