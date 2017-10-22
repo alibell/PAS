@@ -59,7 +59,6 @@
 				}
 			}
 		}		
-
 	}
 		
 		/**
@@ -238,7 +237,7 @@
 					
 					?>
 					
-					<div class = "catEvaluationData" style = "padding: 5px";>
+					<div class = "catEvaluationData" style = "padding: 5px;">
 						<?php	
 						// Date des données d'évaluation
 						echo '<div style = "padding-bottom: 5px;"><b>'.date('d/m/Y', $evaluationData['service']['date']['min']).' - '.date('d/m/Y', $evaluationData['service']['date']['max']).'</b></div>';
