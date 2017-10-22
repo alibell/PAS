@@ -83,7 +83,7 @@
 		if ($action == 'listEvaluation')
 		{
 			include(PLUGIN_PATH.'displayEvaluationResult/listEvaluationData.php');
-		}
+		} 
 		// Données propres à une évaluation
 		else if ($action == 'evaluationDetails')
 		{

@@ -160,7 +160,6 @@
 					}
 				}
 			}
-			echo 'a';
 			$tempGET = $_GET;
 			unset($tempGET['action']);
 			header('Location: '.ROOT.CURRENT_FILE.'?'.http_build_query($tempGET));

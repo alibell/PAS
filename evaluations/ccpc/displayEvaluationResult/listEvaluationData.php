@@ -62,7 +62,7 @@
 									   INNER JOIN hopital h ON h.id = s.hopital
 									   INNER JOIN specialite sp ON sp.id = s.specialite
 									   INNER JOIN user c ON c.id = s.chef  ';
-		
+		 
 		/*
 			Filtres (WHERE)
 		*/
@@ -255,79 +255,99 @@
 		*/
 		$res = $db -> prepare($sqlFilter);
 		$res -> execute($preparedValue);
-		
-		while ($res_f = $res -> fetch())
-		{
-			/*
-				Promotions
-			*/
-			if (!isset($filtres['promotion'][$res_f['promotionId']]['nom']))
-			{
-				$filtres['promotion'][$res_f['promotionId']]['id'] = $res_f['promotionId'];
-				$filtres['promotion'][$res_f['promotionId']]['nom'] = $res_f['promotionNom'];
-			}
-			if (!isset($filtres['promotion'][$res_f['promotionId']]['nb'])) { $filtres['promotion'][$res_f['promotionId']]['nb'] = 1; }
-			else { $filtres['promotion'][$res_f['promotionId']]['nb']++; }
+                $resAll = $res -> fetchAll();
+                
+                // On réalise un md5 de $resAll : si il est dans le cache on le charge, sinon on le re-détermine
+                $hash = md5(serialize($resAll));
+                $filePath = PLUGIN_PATH.'cache/'.$hash.'.txt';
+                
+                    // Si le hash existe déjà : on récupère les calculs stockés dans le cache
+                    if (is_file($filePath)) 
+                    {
+                            $file = fopen($filePath, 'r');
+                            $filtres = (unserialize(fread($file, filesize($filePath))));
+                            fclose($file);
+                    } // Sinon on recalcule tout
+                    else
+                    {
+                        foreach ($resAll AS $res_f)
+                        {
+                                /*
+                                        Promotions
+                                */
+                                if (!isset($filtres['promotion'][$res_f['promotionId']]['nom']))
+                                {
+                                        $filtres['promotion'][$res_f['promotionId']]['id'] = $res_f['promotionId'];
+                                        $filtres['promotion'][$res_f['promotionId']]['nom'] = $res_f['promotionNom'];
+                                }
+                                if (!isset($filtres['promotion'][$res_f['promotionId']]['nb'])) { $filtres['promotion'][$res_f['promotionId']]['nb'] = 1; }
+                                else { $filtres['promotion'][$res_f['promotionId']]['nb']++; }
 
-			/*
-				Certificat
-			*/
-			
-			if ($tempService = getServiceInfo($res_f['serviceId']))
-			{
-				if (isset($tempService['certificat']))
-				{
-					foreach ($tempService['certificat'] AS $certificat)
-					{
-						if (!isset($filtres['certificat'][$certificat['id']]))
-						{
-							$filtres['certificat'][$certificat['id']] = $certificat;
-						}
-						if (!isset($filtres['certificat'][$certificat['id']]['nb'])) { $filtres['certificat'][$certificat['id']]['nb'] = 1; }
-						else { $filtres['certificat'][$certificat['id']]['nb']++; }
-					}
-				}
-			}
-			
-			/*
-				Date
-			*/
-			
-			if (!isset($filtres['dateMin']) || (isset($filtres['dateMin']) && DatetimeToTimestamp($res_f['dateDebut']) < $filtres['dateMin'])) { 
-				if (isset($_GET['FILTER']) && count($_GET['FILTER']) > 0)
-				{	
-					$filtres['dateMin'] = DatetimeToTimestamp($res_f['dateDebut']); 
-				}
-				else
-				{
-					$filtres['dateMin'] = time()-31536000; 
-				}
-			}
-			
-			if (!isset($filtres['dateMax']) || (isset($filtres['dateMax']) && DatetimeToTimestamp($res_f['dateFin']) > $filtres['dateMax'])) { 
-				if (isset($_GET['FILTER']) && count($_GET['FILTER']) > 0)
-				{	
-					$filtres['dateMax'] = DatetimeToTimestamp($res_f['dateFin']); 
-				}
-				else
-				{
-					$filtres['dateMax'] = time(); 
-				}
-			}
+                                /*
+                                        Certificat
+                                */
 
-			/*
-				Hopitaux
-			*/
-			if (!isset($filtres['hopital'][$res_f['hopitalId']]['nom']))
-			{
-				$filtres['hopital'][$res_f['hopitalId']]['id'] = $res_f['hopitalId'];
-				$filtres['hopital'][$res_f['hopitalId']]['nom'] = $res_f['hopitalNom'];
-			}
-			if (!isset($filtres['hopital'][$res_f['hopitalId']]['nb'])) { $filtres['hopital'][$res_f['hopitalId']]['nb'] = 1; }
-			else { $filtres['hopital'][$res_f['hopitalId']]['nb']++; }
-			
-		}
-		
+                                if ($tempService = getServiceInfo($res_f['serviceId']))
+                                {
+                                        if (isset($tempService['certificat']))
+                                        {
+                                                foreach ($tempService['certificat'] AS $certificat)
+                                                {
+                                                        if (!isset($filtres['certificat'][$certificat['id']]))
+                                                        {
+                                                                $filtres['certificat'][$certificat['id']] = $certificat;
+                                                        }
+                                                        if (!isset($filtres['certificat'][$certificat['id']]['nb'])) { $filtres['certificat'][$certificat['id']]['nb'] = 1; }
+                                                        else { $filtres['certificat'][$certificat['id']]['nb']++; }
+                                                }
+                                        }
+                                }
+
+                                /*
+                                        Date
+                                */
+
+                                if (!isset($filtres['dateMin']) || (isset($filtres['dateMin']) && DatetimeToTimestamp($res_f['dateDebut']) < $filtres['dateMin'])) { 
+                                        if (isset($_GET['FILTER']) && count($_GET['FILTER']) > 0)
+                                        {	
+                                                $filtres['dateMin'] = DatetimeToTimestamp($res_f['dateDebut']); 
+                                        }
+                                        else
+                                        {
+                                                $filtres['dateMin'] = time()-31536000; 
+                                        }
+                                }
+
+                                if (!isset($filtres['dateMax']) || (isset($filtres['dateMax']) && DatetimeToTimestamp($res_f['dateFin']) > $filtres['dateMax'])) { 
+                                        if (isset($_GET['FILTER']) && count($_GET['FILTER']) > 0)
+                                        {	
+                                                $filtres['dateMax'] = DatetimeToTimestamp($res_f['dateFin']); 
+                                        }
+                                        else
+                                        {
+                                                $filtres['dateMax'] = time(); 
+                                        }
+                                }
+
+                                /*
+                                        Hopitaux
+                                */
+                                if (!isset($filtres['hopital'][$res_f['hopitalId']]['nom']))
+                                {
+                                        $filtres['hopital'][$res_f['hopitalId']]['id'] = $res_f['hopitalId'];
+                                        $filtres['hopital'][$res_f['hopitalId']]['nom'] = $res_f['hopitalNom'];
+                                }
+                                if (!isset($filtres['hopital'][$res_f['hopitalId']]['nb'])) { $filtres['hopital'][$res_f['hopitalId']]['nb'] = 1; }
+                                else { $filtres['hopital'][$res_f['hopitalId']]['nb']++; }
+
+                        }
+                        
+                        // On enregistre le tout dans le cache
+                            $file = fopen($filePath, 'w+');
+                            fputs($file, serialize($filtres));
+                            fclose($file);
+                    }
+                    
 		/*
 			Récupération des données d'évaluations des stages sélectionnés
 		*/
@@ -339,7 +359,7 @@
 		{
 			$evaluationData[$res_f['serviceId']] = getEvaluationCCPCPartialData($res_f['serviceId'], $filtrePromotion, $filtres['dateMin'] ,$filtres['dateMax']);
 		}
-		
+		 
 		/*
 			Récupération de la liste des périodes de stage correspondant
 		*/
