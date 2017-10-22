@@ -18,10 +18,6 @@
 **/
 
 
-	// Afficher les erreurs à l'écran
-	ini_set('display_errors', 0);
-
-
 	session_start();
 	ob_start();
 	mb_internal_encoding("UTF-8");
@@ -43,8 +39,16 @@
 	// Paramètres
 	require_once 'settings.php';
 	
+	// Paramètre du mode développeur
+	if (DEVMODE == 1) {
+		// Afficher les erreurs à l'écran
+		ini_set('display_errors', 0);
+		error_reporting(E_ALL);
+	}
+	
+	
 	// Librairies
-    require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/CAS-1.3.3/CAS.php'; // CAS
+        require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/CAS-1.3.3/CAS.php'; // CAS
 	require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/swiftmailer-5.x/lib/swift_required.php'; // Mail
 	require_once $_SERVER['DOCUMENT_ROOT'].LOCAL_PATH.'/core/htmLawed.php'; // htmLawed : permet de se protéger des failles XSS, licence LGPL
 	
@@ -106,6 +110,7 @@
 	{
 		if ($currentPageData['fullRight'][$_SESSION['rang']] == 0)
         {
+                    
             // On invite l'utilisateur à se connecter au CAS
 			phpCAS::client(CAS_VERSION_2_0,CAS_SERVER_URI, (int) constant('CAS_SERVER_PORT'),'');
 			phpCAS::setServerServiceValidateURL(CAS_SERVER_VALIDATEURI);
@@ -125,24 +130,14 @@
 				$test = phpCAS::checkAuthentication();
 				
                 // Récupération des données utilisateur
-                $sql = 'SELECT * FROM user WHERE nbEtudiant = :nbEtu LIMIT 1';
-                $res = $db->prepare($sql);
-                $res->execute(array('nbEtu' => phpCAS::getUser()));
-                if ($res_f = $res->fetch()) {
-                    $_SESSION['id'] = $res_f['id'];
-                    $_SESSION['nom'] = $res_f['nom'];
-                    $_SESSION['prenom'] = $res_f['prenom'];
-                    $_SESSION['rang'] = $res_f['rang'];
-					if (isset($res_f['promotion']))
-					{
-						$_SESSION['promotion'] = $res_f['promotion'];
-					}
-                }
-				else
-				{
-					$errorCode = serialize(array(32 => true));
-					phpCAS::logout(array('service'=>ROOT.'index.php?erreur='.$errorCode));
-				}
+                $userId = getUserIdFromNbEtudiant(phpCAS::getUser());
+
+                if (isset($userId) && $userId != FALSE) {
+                    login($userId);
+                } else {
+                    $errorCode = serialize(array(32 => true));
+                    phpCAS::logout(array('service'=>ROOT.'index.php?erreur='.$errorCode));
+		}
             }
 
             // On revérifie l'état de la connexion
@@ -182,14 +177,7 @@
 			$_SESSION['loginAS']['oldUser'] = $_SESSION;
 			
 			// On switch les utilisateurs
-			$_SESSION['id'] = $userData['id'];
-			$_SESSION['nom'] = $userData['nom'];
-			$_SESSION['prenom'] = $userData['prenom'];
-			$_SESSION['rang'] = $userData['rang'];
-			if (isset($userData['promotion']))
-			{
-				$_SESSION['promotion'] = $userData['promotion'];
-			}
+                        login($userData['id']);
 		}
 	}
 	

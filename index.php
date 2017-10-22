@@ -24,6 +24,13 @@
 	
 	require 'core/main.php';
 	require 'core/header.php';
+        
+        if (DEVMODE == 1) {
+            if (isset($_POST) && isset($_POST['devModeId'])) {
+                login($_POST['devModeId']);
+                header('Location: index.php');
+            }            
+        }
 ?>
 
 <div id = "presentation">
@@ -46,6 +53,25 @@
 			?>
 				<a class = "connexionBouton" href = "<?php echo getPageUrl('login'); ?>"><?php echo LANG_ACCUEIL_CONNEXION; ?></a>
 			<?php
+				if (DEVMODE == 1) {
+                                        $sql = 'SELECT * FROM user';
+                                        $res = $db -> query($sql);
+                                    
+					?>
+					<form class = 'form-inline' method = "POST" action = "">
+                                                <select name = "devModeId" class = "form-control" id = "devModeLogin">
+						<?php
+                                                    while ($user = $res -> fetch()) {
+                                                    ?>
+                                                        <option value = "<?php echo $user['id']; ?>"><?php echo $user['nom'].' '.$user['prenom'].' ('.$user['rang'].')'; ?></option>
+                                                    <?php
+                                                    }
+                                                ?>
+						</select>
+                                            <button type = "submit"><?php echo LANG_ACCUEIL_CONNEXION; ?></button>
+					</form>
+					<?php
+				}
 			}
 			?>		
 		</div>
@@ -57,3 +83,13 @@
 <?php
 	require 'core/footer.php';
 ?>
+
+<script>
+    <?php
+        if (DEVMODE == 1) {
+        ?>
+            $('#devModeLogin').chosen();
+        <?php
+        }
+    ?>
+</script>
