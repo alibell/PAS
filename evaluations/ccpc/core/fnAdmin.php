@@ -441,12 +441,60 @@
 				
 				return $filtres;
 			}
+                        
+                  /**
+		  * eval_ccpc_getFilterYearList - Retourne la liste des années pour lesquelles il y a un résultat dans la liste de filtres
+		  *
+		  * @category : eval_ccpc_functions
+		  * @param int $id Identifiant du filtre
+		  * @return array Array contenant la liste des années pour lesquelles il y a un résultat dans la liste de filtres
+		  * 
+		  * @Author Ali Bellamine
+		  *
+		  * Contenu de l'array retourné :<br>
+		  *	[année] => (array) Array contenant la liste des années
+		  *
+		  */
+			
+			function eval_ccpc_getFilterYearList ($id) {
+
+                                // Récupère l'accès à la BDD
+				global $db;
+				
+				$annee = array();
+
+                                if (count(eval_ccpc_checkFiltre($id, array())) == 0)
+				{
+                                       $sql = 'SELECT YEAR(debutStage) AS annee FROM eval_ccpc_filtres_detected WHERE id_filtre = '.$id;
+                                       $res = $db -> query($sql);
+
+                                       while($res_f = $res -> fetch()) {
+                                          if (!isset($annee[$res_f['annee']])) { $annee[$res_f['annee']] = TRUE; }
+                                       }
+                                       
+                                       $sql = 'SELECT YEAR(finStage) AS annee FROM eval_ccpc_filtres_detected WHERE id_filtre = '.$id;
+                                       $res = $db -> query($sql);
+                                       
+                                       while($res_f = $res -> fetch()) {
+                                           if (!isset($annee[$res_f['annee']])) { $annee[$res_f['annee']] = TRUE; }
+                                       }
+                                       
+                                       // On tri par ordre décroissant
+                                       krsort($annee);
+                                       
+                                       return($annee);
+                                } else {
+                                    return false;
+                                }
+			}
 			
 		 /**
 		  * eval_ccpc_getFilterDetails - Retourne les informations relatives à un filtre à partir de son identifiant
 		  *
 		  * @category : eval_ccpc_functions
 		  * @param int $id Identifiant du filtre
+		  * @param int $dateMin Date en dessous de laquelle on refuse le résultat
+		  * @param int $dateMax Date au dessus de laquelle on refuse le résultat
 		  * @return array Array contenant les informations relatives au filtre
 		  * 
 		  * @Author Ali Bellamine
@@ -463,11 +511,13 @@
 		  *
 		  */
 			
-			function eval_ccpc_getFilterDetails ($id) {
+			function eval_ccpc_getFilterDetails ($id, $dateMin, $dateMax) {
 				if (count(eval_ccpc_checkFiltre($id, array())) == 0)
 				{
 					global $db;
 					$filtre = array();
+					if (!isset($dateMin)) { $dateMin = TimestampToDatetime(0); }
+                                        if (!isset($dateMax)) { $dateMax = TimestampToDatetime(time()); }
 					
 					/**
 						Informations relative aux réglages du filtre
@@ -498,10 +548,9 @@
 						Liste des stages détectés par le filtre
 					**/
 					
-					$sql = 'SELECT id, id_service serviceId, debutStage dateDebut, finStage dateFin, promotion promotion FROM eval_ccpc_filtres_detected WHERE id_filtre = ?';
-					$res = $db -> prepare($sql);
-					$res -> execute(array($filtre['id']));
-					
+					$sql = 'SELECT id, id_service serviceId, debutStage dateDebut, finStage dateFin, promotion promotion FROM eval_ccpc_filtres_detected WHERE id_filtre = :id AND finStage >= :dateMin AND debutStage <= :dateMax';
+                                        $res = $db -> prepare($sql);
+					$res -> execute(array('id' => $filtre['id'], 'dateMin' => $dateMin, 'dateMax' => $dateMax));
 					// De la forme : $filtre['detected'][timestamp supérieur de l'intervale][timestamp inférieur de l'intervale][id du service]
 					while ($res_f = $res -> fetch())
 					{

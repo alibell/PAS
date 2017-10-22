@@ -37,6 +37,9 @@
 		unset($_GET['msg']);
 		unset($_GET['erreur']);
 	
+                // Filtre par data
+                
+                
 		// Variable permettant la génération des fichiers
 		$allowedDownloadAction = array(
 			'CSVmoderateComment' => array('type' => 'CSV', 'comment' => TRUE, 'moderation' => TRUE),
@@ -65,7 +68,20 @@
 		// On récupère les donnée propre au filtre sélectionnée
 		if (isset($_GET['filtreId']) && count(eval_ccpc_checkFiltre($_GET['filtreId'], array())) == 0)
 		{
-			$filtreData = eval_ccpc_getFilterDetails($_GET['filtreId']);
+                    // Liste des années pour lesquelles il y a des données
+                    $yearList = eval_ccpc_getFilterYearList($_GET['filtreId']);
+                    
+                    // L'année est sélectionnée par la variable annee, si elle est absente on prent l'année en cours, si elle vaut "all" on affiche tout
+                    if (isset($_GET['selectDate']) && ($_GET['selectDate'] == 'all' || $yearList[$_GET['selectDate']] == 1)) {
+                        $selectedYear = $_GET['selectDate'];
+                    } else {
+                        $selectedYear = date('Y', time());
+                    }
+                    if ($selectedYear == 'all') { 
+                        $filtreData = eval_ccpc_getFilterDetails($_GET['filtreId'], TimestampToDatetime(0), TimestampToDatetime(time()));
+                    } else {
+                        $filtreData = eval_ccpc_getFilterDetails($_GET['filtreId'], $selectedYear.'-01-01', $selectedYear.'-12-31');
+                    }
 		}
 		
 	/**
@@ -144,7 +160,7 @@
 					}
 				}
 			}
-			
+			echo 'a';
 			$tempGET = $_GET;
 			unset($tempGET['action']);
 			header('Location: '.ROOT.CURRENT_FILE.'?'.http_build_query($tempGET));
@@ -317,7 +333,7 @@
 			{
 				// On crée l'archive
 				$zip = new ZipArchive(); 
-				$zipPath = PLUGIN_PATH.'cache/'.$filtreData['nom'].'.zip';
+				$zipPath = PLUGIN_PATH.'cache/'.$filtreData['nom'].'_'.date('Y-d-m',$_GET['dateDebut']).'_'.date('Y-d-m',$_GET['dateFin']).'.zip';
 				if($zip->open($zipPath, ZipArchive::CREATE) === true)
 				{
 					foreach ($filtreData['detected'][$_GET['dateFin']][$_GET['dateDebut']] AS $serviceDetected)
@@ -574,33 +590,31 @@
 							<!-- Liste des périodes de stage à gauche -->
 							<div id = "listePeriodeStage">
 								<!-- Filtre par année -->
-								
-								<?php
-									// On récupère la liste des années pour lesquelles il y a une évaluation
-									$listeAnnee = array();
-									if (isset($filtreData['detected']))
-									{
-										foreach ($filtreData['detected'] AS $dateFin => $value)
-										{
-											if (!isset($listeAnnee[date('Y', $dateFin)]))
-											{
-												$listeAnnee[date('Y', $dateFin)] = TRUE;
-											}
-										}
-									}
-								?>
 
-								<select name = "selectDate" id = "selectDate">
-									<option value = "all">Toutes les périodes</option>
-									<?php
-										foreach ($listeAnnee AS $Annee => $AnneeValue)
-										{
-											?>
-												<option value = "<?php echo $Annee; ?>"><?php echo $Annee; ?></option>
-											<?php
-										}
-									?>
-								</select>
+                                                                <form method = "GET">
+                                                                   <!-- On conserve les variables actuelles dans un champs hidden -->
+                                                                    <?php
+                                                                    foreach ($_GET AS $key => $value) {
+                                                                        if ($key != 'dateDebut' && $key != 'dateFin' && $key != 'serviceId' && $key != 'selectDate') {
+                                                                            ?>
+                                                                                <input type ="hidden" name ="<?php echo $key; ?>" value ="<?php echo $value; ?>" />
+                                                                            <?php
+                                                                        }
+                                                                    }
+                                                                    ?>
+                                                                                
+                                                                    <select name = "selectDate" id = "selectDate">
+                                                                            <option value = "all">Toutes les périodes</option>
+                                                                            <?php
+                                                                                    foreach ($yearList AS $Annee => $AnneeValue)
+                                                                                    {
+                                                                                            ?>
+                                                                                                    <option value = "<?php echo $Annee; ?>" <?php if ($selectedYear == $Annee) { echo 'selected'; } ?>><?php echo $Annee; ?></option>
+                                                                                            <?php
+                                                                                    }
+                                                                            ?>
+                                                                    </select>
+                                                                </form>
 								
 								<ul>
 								<?php
@@ -862,17 +876,8 @@
 	});
 	
 	<!-- Filtre par date -->
-	$('#selectDate').on('change', function(){
-		var value = $(this).val();
-		if (value == 'all')
-		{
-			$('#listePeriodeStage ul li').show();
-		}
-		else
-		{
-			$('#listePeriodeStage ul li').hide();
-			$('#listePeriodeStage ul li[data-Annee="'+value+'"]').show();
-		}
+ 	$('#selectDate').on('change', function(){
+		$(this).parent().submit();
 	});
 	
 	<!-- Editeur de texte -->
