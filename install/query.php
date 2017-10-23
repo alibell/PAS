@@ -267,6 +267,8 @@
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
 	$sql .= "INSERT INTO `setting` (`alias`, `valeur`) VALUES
 					('CHARTE', '');";
+	$sql .= "INSERT INTO `setting` (`alias`, `valeur`) VALUES
+					('DEVMODE', 0);";
 	$sql .= 'ALTER TABLE `setting`
 					ADD PRIMARY KEY (`id`);';
 	$sql .= 'ALTER TABLE `setting`
