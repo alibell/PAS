@@ -54,6 +54,7 @@
 		Routage -- On détermine la variable $action
 	**/
 		$action = 'listEvaluation'; // Page par défault
+                $allowedAjax = array('ajaxContentEvaluationDisplay'); // Page Ajax dont on autorise l'execution
 		
 		if (isset($_GET['service'])) // Si on a cliqué sur un service : on affiche la page du service, si ce dernier existe
 		{
@@ -62,7 +63,7 @@
 				$action = 'evaluationDetails';
 			}
 		}
-		else if (isset($_GET['ajax']) && is_file (PLUGIN_PATH.'ajax/'.$_GET['ajax'].'.php'))
+		else if (isset($_GET['ajax']) && is_file (PLUGIN_PATH.'ajax/'.$_GET['ajax'].'.php') && in_array($_GET['ajax'], $allowedAjax))
 		{
 			$action = 'loadAjax';
 		}
@@ -78,7 +79,7 @@
 		/***
 			Page spécifique à l'affichage de la liste des évaluations
 		***/
-		
+		                
 		// Liste des évaluations
 		if ($action == 'listEvaluation')
 		{
