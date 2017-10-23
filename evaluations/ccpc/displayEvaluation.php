@@ -38,15 +38,24 @@
 		require(PLUGIN_PATH.'core/fnDisplayEvaluationResult.php'); // Fonctions propres à l'affichage des résultats d'épreuves
 		require(PLUGIN_PATH.'core/fnDisplayEvaluation.php'); // Fonctions propres à l'affichage des formulaires d'évaluation
 		require(PLUGIN_PATH.'core/fnGraphGen.php'); // Affichage des graphiques
-		include(PLUGIN_PATH.'core/fnAdmin.php'); // Administration du module		
+		include(PLUGIN_PATH.'core/fnAdmin.php'); // Administration du module	
+                
+                /*
+                 *  Action Ajax : Simple routage pour chargement d'une page Ajax
+                 */
+                
+                $allowedAjax = array('ajaxContentEvaluation');
+                if (isset($_GET['ajax']) && is_file (PLUGIN_PATH.'ajax/'.$_GET['ajax'].'.php') && in_array($_GET['ajax'], $allowedAjax)) {
+                    include(PLUGIN_PATH.'ajax/'.$_GET['ajax'].'.php'); // On charge la page
+                }
 		
 		/*
 			On récupère la liste des services à évaluer
 		*/
 		
 		$nonEvaluationData = eval_ccpc_getNoFormData($evaluationData,array());
-		
-		/*
+
+                /*
 			On récupère la liste des services déjà évalués
 		*/
 		
@@ -58,7 +67,7 @@
 		{
 			$evaluateService = array();
 		}
-		
+                
 		/*
 			On retire les services déjà évalués de la liste des services à évaluer
 		*/
@@ -111,7 +120,19 @@
 					
 					if (!in_array($formData['service'], $evaluateServiceTemp))
 					{
-						$evaluateServiceTemp[] = $formData['service'];
+                                                /**
+                                                 *  On supprime les données temporaires pour garantir l'anonymat
+                                                 */
+                                            
+                                                if (isset($evaluateServiceTemp['data'])) {
+                                                    $tempData = json_decode($evaluateServiceTemp['data'], true);
+                                                    if (isset($tempData[$formData['service']])) {
+                                                        unset($tempData[$formData['service']]);
+                                                        $evaluateServiceTemp['data'] = json_encode($tempData);
+                                                    }
+                                                }
+                                                
+                                                $evaluateServiceTemp[] = $formData['service'];
 						setEvaluationRegisterData(serialize($evaluateServiceTemp));
 						header('Location: '.ROOT.CURRENT_FILE.'?'.http_build_query($_GET));
 					}
@@ -157,4 +178,90 @@
 			e.preventDefault();
 		}
 	});
+
+        ajaxURI = "<?php echo ROOT.CURRENT_FILE.'?id='.$evaluationData['register']['id'].'&ajax=ajaxContentEvaluation'; ?>";
+
+        // Variable contenant les données de formulaires remplies
+        tempFormData = {};
+        
+        // On récupère les données du serveur
+        <?php        
+        if (isset($evaluateService['data'])) { 
+        ?>
+            tempFormData = JSON.parse('<?php echo $evaluateService['data']; ?>');
+        <?php
+        }
+        ?>
+                
+        // Enregistrement à la volée des changement
+        $('select, input, textarea').on('change', function(e){    
+           // Service concerné
+           var service = $('select[name = "service"] option:selected').val();
+           
+           // Type de case
+           if ($(this).attr('name') != 'service') {
+            var nodeName = e.target.nodeName.toLowerCase();
+            if (nodeName == 'input') {
+                nodeName = $(this).attr('type');
+            }
+
+           // Nom du champs
+           if (nodeName == 'radio' || nodeName == 'checkbox' || nodeName == 'select') {
+               var inputId = $(this).attr('id');
+           } else {
+               var inputId = $(this).attr('name');
+           }
+
+            // Valeur du champs
+            if (nodeName == 'radio' || nodeName == 'checkbox') {
+                var value = $(this).attr('value');
+            } else if (nodeName == 'text' || nodeName == 'textarea') {
+                var value = $(this).val();
+            } else if (nodeName == 'select') {
+                var value = $(this).children('option:selected').val();
+            }
+           }
+           
+           // On enregistre le tout dans la variable tempFormData
+           if (typeof(tempFormData[service]) == 'undefined') { tempFormData[service] = {}; }
+           if (typeof(tempFormData[service][inputId]) == 'undefined') { tempFormData[service][inputId] = {}; }
+           tempFormData[service][inputId]['Type'] = nodeName;
+           if (nodeName)
+           tempFormData[service][inputId]['Value'] = value;
+           
+           // On envoie le tout au serveur
+           $.post(ajaxURI, {action: 'saveDraftEval', draft: JSON.stringify(tempFormData)});
+        });
+        
+        // Fonction rétablissant l'état du formulaire
+        function loadFormData (service) {
+            $('form').get(0).reset();
+            $('input[type = "checkbox"]').prop('checked', false);
+            $('select[name = "service"]').val(service);
+                
+            if (typeof(tempFormData[service]) !== 'undefined') {
+                $.each(tempFormData[service], function(id, data) {;
+                    if (data['Type'] == 'radio' || data['Type'] == 'checkbox') {
+                        $('#'+id).prop('checked',true);
+                    } else if (data['Type'] == 'select') {
+                        $('#'+id).val(data['Value']);
+                    } else if (data['Type'] == 'text') {
+                        $('input[name = "'+id+'"]').val(data['Value']);
+                    } else if (data['Type'] == 'textarea') {
+                        $('textarea[name = "'+id+'"]').val(data['Value']);
+                    }
+                });
+            }
+        }
+        
+        // Au chargement de la page --> On charge les données en mémoire
+        var service = $('select[name = "service"] option:selected').val();
+        loadFormData(service);
+        
+        // Au changement de service
+        $('select[name = "service"]').on('change', function(){
+            var service = $('select[name = "service"] option:selected').val();
+            loadFormData(service);
+        });
+        
 	</script>
