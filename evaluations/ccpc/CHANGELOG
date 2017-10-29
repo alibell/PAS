@@ -1,0 +1,59 @@
+
+PAS - Plateforme d'Appréciation des Stages - Module CCPC
+=======
+
+LISTE DES MODIFICATIONS
+-------
+
+1.1.0 :
+- Ajout de la possibilité de masquer un service.
+
+1.3.1 :
+- Correction d'un bug majeur empechant la remplissage des évaluations.
+
+1.3.2 :
+- Ajout d'un message de confirmation lors de la validation d'une évaluation.
+
+1.3.3 :
+- Mise en place d'un cache afin d'accélerer l'affichage des évaluations.
+
+1.5.0 :
+- Ajout d'un espace permettant d'envoyer la synthèse des évaluations d'une période de stage
+- Ajout de filtres de sélection rapide des périodes de stages lors de la consultation des évaluations
+- Corrections de bug
+
+1.5.1 :
+- Ajout de la possibilité de personnaliser les mails envoyés aux services
+-  Correction de bug dans la génération des archives Zip
+-  Correction de bug dans le calcul des étudiants affectés à un service dans la fiche PDF
+
+1.5.2 :
+- Correction d'un bug dans la génération des mails automatiques
+
+1.5.3 :
+- Correction d'un bug majeur : les fiches PDF contenaient des notes incorrectement calculées
+
+1.5.4 :
+- Correction de bug : nom des pièces jointes maintenant unique
+- Ajout d'une option dans settings, permettant d'interdire aux utilisateurs de rang 2 d'accéder à des données d'évaluation d'autres services que le leurs
+
+1.6.0 :
+- Les données de commentaire textuelles, de type text et textarea sont maintenant affichés chronologiquement avec une mise en évidence des
+période de stages.
+Dans les fiches PDF, les données textuelles sont affichés chronologiquement, la date de ces dernières est maintenant indiqué ainsi que l'identifiant de l'évaluation.
+
+- Le type de graphique affiché pour les type "select" est maintenant de type Bar plutôt que Camenbert, afin de faciliter la lisibilité.
+
+1.6.1 :
+- Correction de bug dans l'application des filtres
+
+1.7.0 :
+- Correction de bug :
+Ordre d'affichage des données lors de la consultation du profil d'évaluations d'un service
+Renforcement de la sécurité lors de l'inclusion d'un fichier ajax dans la module : en plus de devoir exister, le fichier doit être attendu comme pouvant être inclus
+Bug dans le module de gestion des filtres : d'abord affichage des années puis des données (autrement, lourdeur du chargement de la page)
+Bug dans la génération des archives ZIP dans la page filtres
+
+- Enregistrement des évaluations à la volée
+- Optimisation du temps de chargement de la page d'affichage des évaluation : mise en charge des options d'affinement des recherches
+- Modification du formulaire initial d'évaluation : modification du critère temps passé dans le service
