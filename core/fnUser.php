@@ -36,15 +36,13 @@
 	function getUserIdFromNbEtudiant ($nbEtu)
 	{
 		global $db;
-		if (count(checkNbEtudiant($nbEtu, array())) == 0)
+		
+		$sql = 'SELECT id FROM user WHERE nbEtudiant = ? LIMIT 1';
+		$res = $db -> prepare($sql);
+		$res -> execute(array($nbEtu));
+		if ($res_f = $res -> fetch())
 		{
-			$sql = 'SELECT id FROM user WHERE nbEtudiant = ? LIMIT 1';
-			$res = $db -> prepare($sql);
-			$res -> execute(array($nbEtu));
-			if ($res_f = $res -> fetch())
-			{
-				$id = $res_f['id'];
-			}
+			$id = $res_f['id'];
 		}
 		
 		if (isset($id)) { return $id; }
