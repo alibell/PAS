@@ -71,3 +71,7 @@ Mise en place d'un mode développeur (Variable DEVMODE dans settings) :
 Nettoyage de code
 
 Ajout de la possibilité de vider le contenu d'une promotion
+
+1.3.6 :
+Correction de bug :
+- Impossible de se connecter au CAS lorsque l'identifier était de type non textuel.
