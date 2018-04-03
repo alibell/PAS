@@ -431,10 +431,10 @@
 		  *
 		  */
 			
-			function eval_ccpc_getFilterList ($dateMin, $dateMax) {
+			function eval_ccpc_getFilterList ($dateMin = '', $dateMax = '') {
                             
-                                if (!isset($dateMin)) { $dateMin = TimestampToDatetime(0); }
-                                if (!isset($dateMax)) { $dateMax = TimestampToDatetime(time()); }
+                                if (!isset($dateMin) || $dateMin == '') { $dateMin = TimestampToDatetime(0); }
+                                if (!isset($dateMax) || $dateMax == '') { $dateMax = TimestampToDatetime(time()); }
 				
 				// Récupère l'accès à la BDD
 				global $db;

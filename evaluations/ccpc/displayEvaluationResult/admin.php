@@ -112,7 +112,7 @@
 	}
 	
 	// Mise à jour des données stages détectées par un filtre
-	if ($action == 'update' && isset($filtreData))
+	if ($action == 'update')
 	{
 		// 1. On récupère la liste de tous les services
 		$listeServices = getServiceList();
