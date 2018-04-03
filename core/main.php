@@ -42,7 +42,7 @@
 	// Paramètre du mode développeur
 	if (DEVMODE == 1) {
 		// Afficher les erreurs à l'écran
-		ini_set('display_errors', 0);
+		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
                 
                 // Introduction d'un compteur
