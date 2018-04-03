@@ -58,5 +58,8 @@ Bug dans la génération des archives ZIP dans la page filtres
 - Optimisation du temps de chargement de la page d'affichage des évaluation : mise en charge des options d'affinement des recherches
 - Modification du formulaire initial d'évaluation : modification du critère temps passé dans le service
 
-1.7.0 :
+1.7.1 :
 - Correction de bug relatifs aux systèmes de filtres
+
+1.7.2 :
+- Correction d'un bug au niveau de l'actualisation des stages détectés par les filtres.
