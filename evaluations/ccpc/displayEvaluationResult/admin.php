@@ -117,15 +117,16 @@
 		// 1. On récupère la liste de tous les services
 		$listeServices = getServiceList();
 		
-		// 2. Pour chaque service on teste le filtre sur une période de 12 mois
+		// 2. Pour chaque service on teste le filtre sur une période de 6 mois
 		
 			// Détermination des dates minimales et maximales
 			$DateMax = time();
-			$DateMin = time()-365*24*3600;
+			$DateMin = time()-180*24*3600;
 			
 			// On lance la recherche pour chaque service
 			foreach ($listeServices AS $service)
 			{
+                            
 				$listePromotion = array();
 				$listeDate = array();
 				
@@ -141,25 +142,31 @@
 				}
 				
 				// On détermine les couples de dates à tester
-				$sql = 'SELECT DISTINCT debutStage, finStage FROM `eval_ccpc_resultats` WHERE service = ? AND debutStage >= ? AND finStage <= ?';
+				$sql = 'SELECT DISTINCT debutStage, finStage FROM `eval_ccpc_resultats` WHERE service = ? AND promotion = ? AND debutStage >= ? AND finStage <= ?';
 				$res = $db -> prepare ($sql);
-				$res -> execute(array($service['id'], TimestampToDatetime($DateMin), TimestampToDatetime($DateMax)));
 				
-				while ($res_f = $res -> fetch())
-				{
-					$listeDate[] = array('DateMin' => DatetimeToTimestamp($res_f['debutStage']), 'DateMax' => DatetimeToTimestamp($res_f['finStage']));
-				}
+                                foreach ($listePromotion AS $promotionId) 
+                                {
+                                    $res -> execute(array($service['id'], $promotionId, TimestampToDatetime($DateMin), TimestampToDatetime($DateMax)));
 				
+                                    while ($res_f = $res -> fetch())
+                                    {
+                                            $listeDate[$promotionId][] = array('DateMin' => DatetimeToTimestamp($res_f['debutStage']), 'DateMax' => DatetimeToTimestamp($res_f['finStage']));
+                                    }
+                                }
+                                
 				// On peux lancer le scan du service
 				
-				foreach ($listeDate AS $IntervalleDates)
+				foreach ($listePromotion AS $promotionId)
 				{
-					foreach ($listePromotion AS $promotionId)
+                                    echo $promotionId;
+					foreach ($listeDate[$promotionId] AS $IntervalleDates)
 					{
-						eval_ccpc_applyFilter($service['id'], $promotionId, $IntervalleDates['DateMin'], $IntervalleDates['DateMax']);
+                                            eval_ccpc_applyFilter($service['id'], $promotionId, $IntervalleDates['DateMin'], $IntervalleDates['DateMax']);
 					}
 				}
 			}
+                        
 			$tempGET = $_GET;
 			unset($tempGET['action']);
 			header('Location: '.ROOT.CURRENT_FILE.'?'.http_build_query($tempGET));

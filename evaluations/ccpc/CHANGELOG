@@ -57,3 +57,6 @@ Bug dans la génération des archives ZIP dans la page filtres
 - Enregistrement des évaluations à la volée
 - Optimisation du temps de chargement de la page d'affichage des évaluation : mise en charge des options d'affinement des recherches
 - Modification du formulaire initial d'évaluation : modification du critère temps passé dans le service
+
+1.7.0 :
+- Correction de bug relatifs aux systèmes de filtres

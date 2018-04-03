@@ -147,7 +147,7 @@
 			}
 		}
 
-		// On parcours toutes les conditions
+                // On parcours toutes les conditions
 		for($i = 0; $i <= $n; $i++)
 		{
 			if (isset($delimiters[$i]) && $delimiters[$i] == 'OR' && isset($treatOR) && $treatOR == FALSE) { break; } // On zappe les OR lorsque $treatOR est sur false
@@ -175,7 +175,7 @@
 					$valueToTest = FALSE; // Valeur à tester, si elle reste à false à la fin, on considère qu'il y a une erreur dans la redaction de la requête
 					$nbr = count($leftTerm)-1; // Profondeur d'exploration dans le xml
 					$function = $leftTerm[count($leftTerm)-1]; // Fonction appliquer
-						
+                                        
 					if ($nbr > 0)
 					{
 						if ($nbr == 1)
@@ -277,20 +277,26 @@
 									{
 										if ($type == 'select')
 										{
-											if (isset($data[(string) $typeObject -> xpath('..')[0]['nom']][(string) $typeObject['nomBDD']]['nb'][(string) $objectToTest['value']]))
-											{
-												$total = 0;
+                                                                                    if (isset($data[(string) $typeObject -> xpath('..')[0]['nom']][(string) $typeObject['nomBDD']]['nb'][(string) $objectToTest['value']]))
+                                                                                    {
+                                                                                        $valeur = $data[(string) $typeObject -> xpath('..')[0]['nom']][(string) $typeObject['nomBDD']]['nb'][(string) $objectToTest['value']];
+                                                                                    } else {
+                                                                                        $valeur = 0;
+                                                                                    }
+
+                                                                                    $total = 0;
+
+                                                                                    foreach ($data[(string) $typeObject -> xpath('..')[0]['nom']][(string) $typeObject['nomBDD']]['nb'] AS $value => $nb)
+                                                                                    {
+                                                                                            $total += $nb;
+                                                                                    }
 												
-												foreach ($data[(string) $typeObject -> xpath('..')[0]['nom']][(string) $typeObject['nomBDD']]['nb'] AS $value => $nb)
-												{
-													$total += $nb;
-												}
-												
-												if ($total != 0)
-												{
-													$valueToTest = ceil(($data[(string) $typeObject -> xpath('..')[0]['nom']][(string) $typeObject['nomBDD']]['nb'][(string) $objectToTest['value']]/$total)*100);
-												}
-											}
+                                                                                    if ($total != 0)
+                                                                                    {
+                                                                                            $valueToTest = ceil(($valeur/$total)*100);
+                                                                                    } else {
+                                                                                        $valueToTest = 0;
+                                                                                    }
 										}
 										else if ($type == 'checkbox')
 										{
@@ -311,7 +317,7 @@
 							}
 						}
 					}
-			if (!isset($valueToTest) || $valueToTest == FALSE) { return 'error'; }
+			if (!isset($valueToTest)) { return 'error'; }
 			
 			/**
 				On test la valeur
@@ -417,13 +423,18 @@
 		  * @return array Array contenant la liste des filtres existants
 		  * 
 		  * @Author Ali Bellamine
-		  *
+		  * @param int $dateMin Date en dessous de laquelle on refuse certains résultat (stages détectés)
+		  * @param int $dateMax Date au dessus de laquelle on refuse certains résultat (stages détectés)	  *
+                  * 
 		  * Contenu de l'array retourné :<br>
 		  *	[identifiant du filtre][] => (array) Array contenant les informations relatives au filtre, voir {@link eval_ccpc_getFilterDetails}
 		  *
 		  */
 			
-			function eval_ccpc_getFilterList () {
+			function eval_ccpc_getFilterList ($dateMin, $dateMax) {
+                            
+                                if (!isset($dateMin)) { $dateMin = TimestampToDatetime(0); }
+                                if (!isset($dateMax)) { $dateMax = TimestampToDatetime(time()); }
 				
 				// Récupère l'accès à la BDD
 				global $db;
@@ -436,7 +447,7 @@
 				
 				while ($res_f = $res -> fetch())
 				{
-					$filtres[$res_f['id']] = eval_ccpc_getFilterDetails($res_f['id']);
+					$filtres[$res_f['id']] = eval_ccpc_getFilterDetails($res_f['id'], $dateMin, $dateMax);
 				}
 				
 				return $filtres;
@@ -659,9 +670,9 @@
 					{
 						$form = simplexml_load_file(PLUGIN_PATH.'formulaire.xml');
 					}
-					
+
 					// Liste des filtres
-					$filtres = eval_ccpc_getFilterList();
+					$filtres = eval_ccpc_getFilterList(TimestampToDatetime($dateDebut), TimestampToDatetime($dateFin));
 					
 					// Données d'évaluation
 
@@ -696,7 +707,7 @@
 						$res = eval_ccpc_exploreQuery($filtre['query'], $form, $dataPromo);
 					}
 
-					// Si le filtre est vérifié
+                                        // Si le filtre est vérifié
 					
 					if ($res == 'success')
 					{
